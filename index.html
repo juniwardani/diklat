@@ -80,6 +80,43 @@
         <form class="bg-white form-shadow rounded-b-2xl p-6 sm:p-8 lg:p-10" id="registrationForm">
             <!-- Data Pribadi Section -->
             <div class="mb-10">
+                <!-- Registrant Counter -->
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 sm:p-8 mb-6 border border-blue-200 shadow-sm">
+                    <div class="text-center">
+                        <div class="flex items-center justify-center mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-3">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl sm:text-2xl font-bold text-blue-800">Status Pendaftaran</h4>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-white rounded-xl p-4 border border-blue-200">
+                                <p class="text-sm text-gray-600 mb-1">Jumlah Pendaftar</p>
+                                <p class="text-2xl sm:text-3xl font-bold text-blue-600" id="registrantCount">-</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-blue-200">
+                                <p class="text-sm text-gray-600 mb-1">Status</p>
+                                <p class="text-lg font-bold" id="registrationStatus">
+                                    <span class="text-green-600">🟢 Buka</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="bg-white rounded-lg p-3 border border-blue-200">
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Kuota Tersisa:</span>
+                                    <span class="font-bold text-blue-600" id="remainingQuota">-</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                    <div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-500" id="quotaProgress" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Header Section -->
                 <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 sm:p-8 mb-8 border border-green-200 shadow-sm">
                     <div class="flex flex-col sm:flex-row sm:items-center">
@@ -95,8 +132,24 @@
                     </div>
                 </div>
 
+                <!-- Registration Closed Message -->
+                <div id="registrationClosedMessage" class="hidden bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl p-8 mb-8 border border-red-200 shadow-sm">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-red-800 mb-2">Pendaftaran Ditutup</h3>
+                        <p class="text-red-700 mb-4">Maaf, kuota pendaftaran sudah penuh (200 peserta). Pendaftaran untuk diklat ini sudah ditutup.</p>
+                        <div class="bg-white rounded-lg p-4 border border-red-200">
+                            <p class="text-sm text-gray-600">Terima kasih atas minat Anda. Silakan tunggu informasi diklat selanjutnya.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Form Fields -->
-                <div class="space-y-6 sm:space-y-8">
+                <div id="formFields" class="space-y-6 sm:space-y-8">
                     <!-- Nama -->
                     <div class="bg-gradient-to-r from-gray-50 to-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200">
                         <label class="block text-sm sm:text-base font-semibold text-gray-700 mb-4 flex items-center">
@@ -475,6 +528,239 @@
         const supabaseUrl = 'https://iwnwqcxigtywetgcmlou.supabase.co'
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bndxY3hpZ3R5d2V0Z2NtbG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU4MjQ4MTUsImV4cCI6MjA1MTQwMDgxNX0.fjdJlTVav4Gm8ku9rBmRuLoae5ViFxas7Uu069ItfnY'
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+
+        // Konstanta untuk batas pendaftar
+        const MAX_REGISTRANTS = 200
+        let currentRegistrantCount = 0
+        let isRegistrationOpen = true
+
+        // Fungsi untuk mengecek jumlah pendaftar
+        async function checkRegistrantCount() {
+            try {
+                const { data, error } = await supabase
+                    .from('pendaftaran_diklat')
+                    .select('id', { count: 'exact' })
+                
+                if (error) {
+                    console.error('Error fetching registrant count:', error)
+                    return
+                }
+                
+                currentRegistrantCount = data ? data.length : 0
+                isRegistrationOpen = currentRegistrantCount < MAX_REGISTRANTS
+                
+                updateRegistrationStatus()
+                
+            } catch (error) {
+                console.error('Error checking registrant count:', error)
+            }
+        }
+
+        // Fungsi untuk mengupdate status pendaftaran
+        function updateRegistrationStatus() {
+            const registrantCountEl = document.getElementById('registrantCount')
+            const registrationStatusEl = document.getElementById('registrationStatus')
+            const remainingQuotaEl = document.getElementById('remainingQuota')
+            const quotaProgressEl = document.getElementById('quotaProgress')
+            const formFieldsEl = document.getElementById('formFields')
+            const registrationClosedMessageEl = document.getElementById('registrationClosedMessage')
+            const submitButtonEl = document.querySelector('button[type="submit"]')
+            
+            // Update counter
+            registrantCountEl.textContent = currentRegistrantCount
+            
+            // Update status
+            if (isRegistrationOpen) {
+                registrationStatusEl.innerHTML = '<span class="text-green-600">🟢 Buka</span>'
+                const remaining = MAX_REGISTRANTS - currentRegistrantCount
+                remainingQuotaEl.textContent = remaining
+                
+                // Update progress bar
+                const progress = (currentRegistrantCount / MAX_REGISTRANTS) * 100
+                quotaProgressEl.style.width = progress + '%'
+                
+                // Show form, hide closed message
+                formFieldsEl.classList.remove('hidden')
+                registrationClosedMessageEl.classList.add('hidden')
+                submitButtonEl.disabled = false
+                
+                // Change progress bar color based on remaining quota
+                if (remaining <= 10) {
+                    quotaProgressEl.className = 'bg-gradient-to-r from-red-500 to-pink-600 h-2 rounded-full transition-all duration-500'
+                } else if (remaining <= 50) {
+                    quotaProgressEl.className = 'bg-gradient-to-r from-yellow-500 to-orange-600 h-2 rounded-full transition-all duration-500'
+                } else {
+                    quotaProgressEl.className = 'bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-500'
+                }
+                
+            } else {
+                registrationStatusEl.innerHTML = '<span class="text-red-600">🔴 Tutup</span>'
+                remainingQuotaEl.textContent = '0'
+                quotaProgressEl.style.width = '100%'
+                quotaProgressEl.className = 'bg-gradient-to-r from-red-500 to-pink-600 h-2 rounded-full transition-all duration-500'
+                
+                // Hide form, show closed message
+                formFieldsEl.classList.add('hidden')
+                registrationClosedMessageEl.classList.remove('hidden')
+                submitButtonEl.disabled = true
+            }
+        }
+
+        // Fungsi untuk mengecek duplikasi data
+        async function checkDuplicateRegistration(namaLengkap, tanggalLahir) {
+            try {
+                const { data, error } = await supabase
+                    .from('pendaftaran_diklat')
+                    .select('id, nama_lengkap, tanggal_lahir')
+                    .eq('nama_lengkap', namaLengkap)
+                    .eq('tanggal_lahir', tanggalLahir)
+                
+                if (error) {
+                    console.error('Error checking duplicate registration:', error)
+                    return false
+                }
+                
+                return data && data.length > 0
+                
+            } catch (error) {
+                console.error('Error checking duplicate registration:', error)
+                return false
+            }
+        }
+
+        // Fungsi untuk menampilkan pesan duplikasi
+        function showDuplicateMessage() {
+            document.querySelector('.max-w-4xl').innerHTML = `
+                <div class="bg-white rounded-2xl form-shadow p-8 text-center">
+                    <!-- Warning Icon -->
+                    <div class="mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <span class="text-white text-3xl">⚠️</span>
+                        </div>
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">Pendaftaran Sudah Pernah Dilakukan!</h1>
+                        <p class="text-gray-600 mb-8"></p>
+                    </div>
+
+                    <!-- Warning Message -->
+                    <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-6 mb-8 border border-yellow-200">
+                        <h3 class="text-lg font-semibold text-yellow-800 mb-4">Informasi Penting:</h3>
+                        <div class="text-left space-y-3 text-sm text-yellow-700">
+                            <div class="flex items-start">
+                                <span class="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">1</span>
+                                <span>Anda sudah pernah mendaftar untuk diklat ini sebelumnya</span>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">2</span>
+                                <span>Setiap peserta hanya diperbolehkan mendaftar satu kali</span>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs mr-3 mt-0.5">3</span>
+                                <span>Jika ada kesalahan data, silakan hubungi panitia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-4">
+                        <button onclick="location.reload()" 
+                                class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-600 hover:to-indigo-700 transform hover:scale-105 transition-all duration-200 shadow-lg">
+                            🔄 Coba Lagi
+                        </button>
+                        <button onclick="window.history.back()" 
+                                class="bg-gray-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-600 transform hover:scale-105 transition-all duration-200 shadow-lg ml-4">
+                            ← Kembali
+                        </button>
+                    </div>
+
+                    <!-- Contact Support -->
+                    <div class="mt-8 bg-gray-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-gray-800 mb-4">Butuh Bantuan?</h4>
+                        <p class="text-sm text-gray-600 mb-4">Jika Anda yakin belum pernah mendaftar atau ada kesalahan data, silakan hubungi:</p>
+                        <div class="space-y-2">
+                            <a href="https://wa.me/6285248462707" target="_blank" 
+                               class="inline-flex items-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.63"/>
+                                </svg>
+                                Ustadz Abdur Rahim
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fungsi untuk mengecek duplikasi real-time
+        async function checkDuplicateRealTime() {
+            const namaInput = document.querySelector('input[name="nama_lengkap"]');
+            const tanggalInput = document.querySelector('input[name="tanggal_lahir"]');
+            
+            if (namaInput && tanggalInput && namaInput.value.trim() && tanggalInput.value) {
+                const isDuplicate = await checkDuplicateRegistration(namaInput.value.trim(), tanggalInput.value);
+                
+                // Tampilkan peringatan jika duplikasi ditemukan
+                if (isDuplicate) {
+                    showDuplicateWarning();
+                } else {
+                    hideDuplicateWarning();
+                }
+            } else {
+                hideDuplicateWarning();
+            }
+        }
+
+        // Fungsi untuk menampilkan peringatan duplikasi
+        function showDuplicateWarning() {
+            let warningDiv = document.getElementById('duplicateWarning');
+            if (!warningDiv) {
+                warningDiv = document.createElement('div');
+                warningDiv.id = 'duplicateWarning';
+                warningDiv.className = 'bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-4 mb-6 border border-yellow-200 shadow-sm';
+                warningDiv.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center mr-3">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-yellow-800">⚠️ Peringatan!</h4>
+                            <p class="text-yellow-700 text-sm">Data dengan nama dan tanggal lahir ini sudah pernah terdaftar sebelumnya.</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Insert warning setelah registrant counter
+                const registrantCounter = document.querySelector('.bg-gradient-to-r.from-blue-50.to-indigo-50');
+                if (registrantCounter) {
+                    registrantCounter.parentNode.insertBefore(warningDiv, registrantCounter.nextSibling);
+                }
+            }
+        }
+
+        // Fungsi untuk menyembunyikan peringatan duplikasi
+        function hideDuplicateWarning() {
+            const warningDiv = document.getElementById('duplicateWarning');
+            if (warningDiv) {
+                warningDiv.remove();
+            }
+        }
+
+        // Panggil fungsi check saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            checkRegistrantCount()
+            
+            // Tambahkan event listener untuk pengecekan real-time
+            const namaInput = document.querySelector('input[name="nama_lengkap"]');
+            const tanggalInput = document.querySelector('input[name="tanggal_lahir"]');
+            
+            if (namaInput) {
+                namaInput.addEventListener('blur', checkDuplicateRealTime);
+            }
+            if (tanggalInput) {
+                tanggalInput.addEventListener('change', checkDuplicateRealTime);
+            }
+        })
   
         // File upload handling
         const fileUpload = document.getElementById('photoUpload');
@@ -569,6 +855,31 @@
         document.getElementById('registrationForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            // Cek apakah pendaftaran masih terbuka
+            if (!isRegistrationOpen) {
+                alert('Maaf, pendaftaran sudah ditutup karena kuota sudah penuh.');
+                return;
+            }
+            
+            // Cek ulang jumlah pendaftar sebelum submit
+            await checkRegistrantCount();
+            if (!isRegistrationOpen) {
+                alert('Maaf, pendaftaran sudah ditutup karena kuota sudah penuh.');
+                return;
+            }
+
+            // Collect form data untuk pengecekan duplikasi
+            const formData = new FormData(e.target);
+            const namaLengkap = formData.get('nama_lengkap') || document.querySelector('input[placeholder*="nama lengkap"]').value;
+            const tanggalLahir = formData.get('tanggal_lahir') || document.querySelector('input[type="date"]').value;
+
+            // Cek duplikasi data
+            const isDuplicate = await checkDuplicateRegistration(namaLengkap, tanggalLahir);
+            if (isDuplicate) {
+                showDuplicateMessage();
+                return;
+            }
+            
             // Show loading state
             const submitBtn = document.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
@@ -582,8 +893,7 @@
             submitBtn.disabled = true;
             
             try {
-                // Collect form data
-                const formData = new FormData(e.target);
+                // Collect form data (sudah dibuat sebelumnya untuk pengecekan duplikasi)
                 const data = {
                     nama_lengkap: formData.get('nama_lengkap') || document.querySelector('input[placeholder*="nama lengkap"]').value,
                     tempat_lahir: formData.get('tempat_lahir') || document.querySelector('input[placeholder*="Kota tempat lahir"]').value,
@@ -732,6 +1042,9 @@
                         ip_address: data.ip_address,
                         user_agent: data.user_agent
                     }]);
+                
+                // Update registrant count after successful submission
+                await checkRegistrantCount();
                 
                 // Show success page
                 showSuccessPage(insertData[0]);
