@@ -175,7 +175,7 @@ const dataPeserta = [
 { nama: "M.Hasanul", ttl: "Tajau Landung, 21 Mei 1984" },
 { nama: "M.Syaifullah", ttl: "Barabai, 28 September 1977" },
 { nama: "Mahmudatus sopia", ttl: "Kotabaru, 15 September 1999" },
-{ nama: "Mardi", ttl: "Sepit, 14 September 1989" },
+{ nama: "Mardi", ttl: "Sepit, 31 Desember 1989" },
 { nama: "Mardiana ", ttl: "Kotabaru, 11 Mei 1977" },
 { nama: "Mariana ", ttl: "Banjarmasin, 06 April 1985" },
 { nama: "Mariatul Adawiyah", ttl: "Kotabaru, 31 Desember 2002" },
@@ -353,3 +353,4 @@ adjustKontakInfoPosition();
 window.addEventListener("resize", function() {
 adjustKontakInfoPosition();
 });
+
