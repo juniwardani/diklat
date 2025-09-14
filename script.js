@@ -144,7 +144,7 @@ const dataPeserta = [
 { nama: "Idawati", ttl: "Sekapung, 05 Juli 1973" },
 { nama: "Ilda Hendevi ", ttl: "Kotabaru, 29 Desember 1996" },
 { nama: "IMAS MASHLAHAH, S.Si", ttl: "KRAYAN, 28 Februari 1992" },
-{ nama: "Indra Asmara", ttl: "Kotabaru, 24 September 1983" },
+{ nama: "Indra Asmara", ttl: "Kotabaru, 24 Februari 1983" },
 { nama: "Indra riawan", ttl: "KOTABARU, 03 Juni 2008" },
 { nama: "Jailani", ttl: "Seratak, 29 Oktober 1996" },
 { nama: "Jamiatul Mardiah, S. Pd", ttl: "Kotabaru, 31 Maret 1990" },
@@ -193,7 +193,8 @@ const dataPeserta = [
 { nama: "MUKHTAR SOFIYAN", ttl: "BERANGAS, 06 Agustus 1976" },
 { nama: "Mulia", ttl: "Banua lawas, 27 September 2007" },
 { nama: "Mulyati", ttl: "Martapura, 12 September 1975" },
-{ nama: "Murliani", ttl: "Kotabaru, 25 Februari 1966" },
+{ nama: "Murliani", ttl: "Kotabaru, 25 Februari 1966" }, 
+    {  nama: "M. Rezki Ramadhan", ttl: "Kotabaru, 20 Maret 2003" },
 { nama: "Murtasiah", ttl: "Kotabaru, 28 Agustus 1971" },
 { nama: "Mustika Amani", ttl: "Kotabaru, 12 Mei 1986" },
 { nama: "Nahdatul Ihsan Hidayatullah", ttl: "KOTABARU, 16 Mei 2001" },
@@ -353,5 +354,6 @@ adjustKontakInfoPosition();
 window.addEventListener("resize", function() {
 adjustKontakInfoPosition();
 });
+
 
 
