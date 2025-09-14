@@ -4,7 +4,7 @@ window.addEventListener('load', () => {
     gsap.from("#mainTitle", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out" });
     gsap.from("#subTitle", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out", delay: 0.2 });
     gsap.from("#methodText", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out", delay: 0.4 });
-    gsap.from("#eventInfo", { duration: 1, x: -100, opacity: 0, ease: "power3.out", delay: 0.6 });
+    // Animasi untuk eventInfo dihapus
     gsap.from("#closedNotice", { duration: 1, x: 100, opacity: 0, ease: "power3.out", delay: 0.8 });
     
     // Counter animation
