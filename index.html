@@ -192,21 +192,47 @@
     </section>
 
     <!-- Registration Closed Notice -->
-    <section id="closedNotice" class="glass-card rounded-2xl p-6 md:p-8 mb-10 md:mb-12 border-l-4 border-red-500 transform hover:scale-[1.02] transition-all duration-300">
-        <div class="flex flex-col md:flex-row items-center text-center md:text-left leading-relaxed">
-            <svg class="w-12 h-12 md:w-16 md:h-16 text-red-500 mr-0 md:mr-6 mb-4 md:mb-0 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-            </svg>
-            <div>
-                <h2 class="text-xl md:text-2xl font-bold text-red-800 mb-2">Pendaftaran Ditutup</h2>
-                <p class="text-base md:text-lg text-red-700 mb-4">Maaf, kuota peserta untuk Diklat Standarisasi Guru Al Qur'an Metode Tilawati Level 1 telah penuh. Terima kasih atas minat Anda.</p>
-                <p class="text-sm text-gray-600">Silakan pantau halaman ini untuk informasi pendaftaran periode selanjutnya.</p>
-            </div>
+    <section id="konfirmasiPeserta" class="glass-card rounded-2xl p-6 md:p-8 mb-6 space-y-6">
+        <!-- Judul & Instruksi -->
+        <div class="text-center">
+          <h2 class="text-xl font-semibold mb-2">
+            Verifikasi Peserta Diklat
+          </h2>
+          <p class="text-gray-700">
+            Tuliskan nama Anda untuk memastikan anda telah terdaftar sebagai peserta 
+            <span class="font-bold">Diklat Standarisasi Metode Tilawati Level 1</span>.
+          </p>
         </div>
-    </section>
+      
+        <!-- Input Pencarian Nama -->
+        <div class="relative z-50">
+          <input 
+            type="text" 
+            id="namaInput" 
+            placeholder="Ketik minimal 3 huruf nama Anda..." 
+            class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition relative z-50"
+          />
+          <!-- Dropdown Suggestion -->
+          <ul 
+            id="suggestions" 
+            class="absolute left-0 right-0 mt-2 bg-white border rounded-xl shadow-lg hidden max-h-56 overflow-y-auto z-50 divide-y">
+            <!-- Nama hasil pencarian akan tampil di sini -->
+          </ul>
+        </div>
+      
+        <!-- Card Detail Peserta -->
+        <div 
+          id="detailCard" 
+          class="hidden p-5 rounded-2xl shadow-md bg-white border transition-all duration-300"
+        >
+          <h3 class="text-lg font-bold text-blue-600 mb-1" id="detailNama"></h3>
+          <p class="text-gray-600" id="detailTTL"></p>
+        </div>
+      </section>
+      
 
     <!-- Contact Information -->
-    <section class="glass-card rounded-2xl p-6 md:p-8 border-t-4 border-blue-600 transform hover:scale-[1.02] transition-all duration-300">
+    <section id="kontakInfo" class="glass-card rounded-2xl p-6 md:p-8 border-t-4 border-blue-600 transform hover:scale-[1.02] transition-all duration-300 relative z-10">
         <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
             <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -215,7 +241,7 @@
         </h2>
         <div class="grid lg:grid-cols-2 gap-6 md:gap-8 leading-relaxed">
             <div class="space-y-4">
-                <p class="text-gray-700 text-lg">Untuk informasi lebih lanjut mengenai diklat selanjutnya atau pertanyaan lainnya, silakan hubungi:</p>
+                <p class="text-gray-700 text-lg">Untuk informasi lebih lanjut mengenai diklat, perbaikan data, atau pertanyaan lainnya, silakan hubungi:</p>
                 <a href="https://wa.me/6285754048672?text=Assalamu%27alaikum%2C%20saya%20ingin%20bertanya%20tentang%20Diklat%20Standarisasi%20Guru%20Al%20Qur%27an%20Metode%20Tilawati" 
                    target="_blank" 
                    class="flex items-center text-gray-700 hover:text-green-600 transition-all duration-300 group p-4 bg-green-50 rounded-lg hover:bg-green-100">
@@ -236,6 +262,8 @@
     </section>
 </main>
 
+
+
         <!-- Enhanced Footer -->
         <footer class="text-center mt-12 py-8">
             <p class="text-white text-xl mb-2 arabic-font">بارك الله فيكم</p>
@@ -248,81 +276,7 @@
         </footer>
     </div>
 
-    <script>
-        // Animation on load
-        window.addEventListener('load', () => {
-            // GSAP Animations
-            gsap.from("#mainTitle", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out" });
-            gsap.from("#subTitle", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out", delay: 0.2 });
-            gsap.from("#methodText", { duration: 1.5, y: -50, opacity: 0, ease: "power3.out", delay: 0.4 });
-            gsap.from("#eventInfo", { duration: 1, x: -100, opacity: 0, ease: "power3.out", delay: 0.6 });
-            gsap.from("#closedNotice", { duration: 1, x: 100, opacity: 0, ease: "power3.out", delay: 0.8 });
-            
-            // Counter animation
-            const counters = document.querySelectorAll('.counter');
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-target'));
-                const increment = target / 100;
-                let current = 0;
-                
-                const updateCounter = () => {
-                    if (current < target) {
-                        current += increment;
-                        counter.textContent = Math.ceil(current);
-                        setTimeout(updateCounter, 20);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-                
-                setTimeout(updateCounter, 1000);
-            });
-            
-            // Pulse animation for status badge
-            const statusBadge = document.getElementById('statusBadge');
-            setInterval(() => {
-                statusBadge.classList.add('scale-110');
-                setTimeout(() => statusBadge.classList.remove('scale-110'), 300);
-            }, 2000);
-        });
-        
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            section.style.transition = 'all 0.6s ease-out';
-            observer.observe(section);
-        });
-        
-        // Add blob animation CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes animate-blob {
-                0% { transform: translate(0px, 0px) scale(1); }
-                33% { transform: translate(30px, -50px) scale(1.1); }
-                66% { transform: translate(-20px, 20px) scale(0.9); }
-                100% { transform: translate(0px, 0px) scale(1); }
-            }
-            .animation-delay-2000 { animation-delay: 2s; }
-            .animation-delay-4000 { animation-delay: 4s; }
-        `;
-        document.head.appendChild(style);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-
 
