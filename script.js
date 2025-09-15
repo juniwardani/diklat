@@ -181,7 +181,7 @@ const dataPeserta = [
 { nama: "Mariatul Adawiyah", ttl: "Kotabaru, 31 Desember 2002" },
 { nama: "Mastaniah, A.Ma", ttl: "Kotabaru, 06 Agustus 1979" },
 { nama: "Miftahul Jannah", ttl: "Kotabaru, 28 Februari 1992" },
-{ nama: "Mimi saâ€™adah ", ttl: "Sang sang, 15 Oktober 1994" },
+{ nama: "Mimi Sa'adah", ttl: "Sang Sang, 15 Oktober 1994" },
 { nama: "Mislawati", ttl: "Marajam, 15 April 2004" },
 { nama: "Muh. Syar'i", ttl: "Bongor, 31 Desember 1990" },
 { nama: "Muhammad", ttl: "BANJARMASIN, 10 Februari 1991" },
@@ -391,5 +391,6 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
