@@ -217,7 +217,6 @@ const dataPeserta = [
 { nama: "nur khalishatul azmi", ttl: "desa langadai, 23 September 2003" },
 { nama: "Nur Shifa Apreyani", ttl: "Kotabaru, 07 April 2002" },
 { nama: "Nurjanah", ttl: "Kotabaru, 18 April 1988" },
-{ nama: "NURJANAH", ttl: "Kotabaru, 29 Mei 1980" },
 { nama: "Nurul Aulia Putri", ttl: "Kotabaru, 28 Juli 2001" },
 { nama: "Nurul faridah S.Pd", ttl: "Kotabaru, 20 Juli 1979" },
 { nama: "Nurul Hidayah,S.Pd I", ttl: "Batuah, 11 Februari 1992" },
@@ -391,6 +390,7 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
 
