@@ -126,7 +126,8 @@ const dataPeserta = [
 { nama: "Fahrul Rozi Maulana ", ttl: "Kotabaru, 30 September 2002" },
 { nama: "fariati", ttl: "amuntai, 02 Oktober 1974" },
 { nama: "Faridah", ttl: "Kotabaru, 10 Desember 1969" },
-{ nama: "FATHIR M. KHAIKAL", ttl: "KAB. KOTABARU, 16 Januari 2004" },
+{ nama: "FATHIR M. KHAIKAL", ttl: "KOTABARU, 16 Januari 2004" },
+    { nama: "FATHOR RAHMAN, S.Si", ttl: "Sumenep, 02 Juli 1991" },
 { nama: "Fatimahul Jannah", ttl: "Kotabaru, 02 Desember 1969" },
 { nama: "Hadiatul Adawiyah ", ttl: "Kotabaru, 26 Juni 1979" },
 { nama: "Haerun Nisa", ttl: "Tanjung Sungkai, 12 Mei 1985" },
@@ -390,6 +391,7 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
 
