@@ -355,6 +355,40 @@ window.addEventListener("resize", function() {
 adjustKontakInfoPosition();
 });
 
+// Countdown Timer untuk Event
+function startEventCountdown() {
+    // Target date: 27 September 2025, 08:00 WITA
+    const eventDate = new Date('2025-09-27T08:00:00+08:00');
+    
+    function updateCountdown() {
+        const now = new Date();
+        const timeLeft = eventDate - now;
+        
+        if (timeLeft > 0) {
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            // Update display
+            document.getElementById('eventDays').textContent = days.toString().padStart(2, '0');
+            document.getElementById('eventHours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('eventMinutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('eventSeconds').textContent = seconds.toString().padStart(2, '0');
+        } else {
+            // Event has started
+            document.getElementById('eventDays').textContent = '00';
+            document.getElementById('eventHours').textContent = '00';
+            document.getElementById('eventMinutes').textContent = '00';
+            document.getElementById('eventSeconds').textContent = '00';
+        }
+    }
+    
+    // Update immediately and then every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
 
-
+// Start countdown when page loads
+window.addEventListener('load', startEventCountdown);
 

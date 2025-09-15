@@ -237,7 +237,7 @@
             <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
             </svg>
-            Informasi Kontak
+            Hubungi Kamiqaz
         </h2>
         <div class="grid lg:grid-cols-2 gap-6 md:gap-8 leading-relaxed">
             <div class="space-y-4">
@@ -260,6 +260,49 @@
             </div>
         </div>
     </section>
+
+    <!-- Countdown to Event Section -->
+    <section id="countdownEvent" class="glass-card rounded-2xl p-6 md:p-8 mb-6 mt-8">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
+            <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            Hitung Mundur Menuju Acara
+        </h2>
+        <div class="text-center">
+            <p class="text-gray-700 mb-6 text-lg">Diklat Standarisasi Guru Al Qur'an akan dimulai pada:</p>
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200 mb-6">
+                <p class="text-2xl font-bold text-blue-800 mb-2">27 September 2025</p>
+                <p class="text-lg text-blue-600">Pukul 08:00 WITA</p>
+            </div>
+            
+            <!-- Countdown Display -->
+            <div class="grid grid-cols-4 gap-2 md:gap-4 lg:gap-6">
+                
+
+                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
+                      <div id="eventDays" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
+                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Hari</div>
+                    </div>
+                  
+                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
+                      <div id="eventHours" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
+                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Jam</div>
+                    </div>
+                  
+                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
+                      <div id="eventMinutes" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
+                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Menit</div>
+                    </div>
+                  
+                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
+                      <div id="eventSeconds" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
+                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Detik</div>
+                    </div>
+                  
+                  </div>                  
+        </div>
+    </section>
 </main>
 
 
@@ -279,4 +322,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
