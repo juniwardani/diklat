@@ -118,7 +118,7 @@ const dataPeserta = [
 { nama: "Dwi Ella Noviarini", ttl: "Kotabaru, 12 November 1992" },
 { nama: "Dwi Ratna Maulida,S.Pd.I.", ttl: "Ponorogo, 27 Januari 1983" },
 { nama: "Dynda Faramidha", ttl: "Kotabaru, 16 Juli 1995" },
-{ nama: "Edy tansil", ttl: "Tanjung sungkai, 14 Maret 2000" },
+{ nama: "Edy Tansil", ttl: "Tanjung Sungkai, 14 Maret 2000" },
 { nama: "Eka Mustika", ttl: "Tarjun, 21 Juli 1990" },
 { nama: "Ella Mairatnawati", ttl: "Kotabaru, 27 Mei 1981" },
 { nama: "ELVANA NURLAILA", ttl: "KOTABARU, 18 Mei 1990" },
@@ -129,12 +129,12 @@ const dataPeserta = [
 { nama: "FATHIR M. KHAIKAL", ttl: "KAB. KOTABARU, 16 Januari 2004" },
 { nama: "Fatimahul Jannah", ttl: "Kotabaru, 02 Desember 1969" },
 { nama: "Hadiatul Adawiyah ", ttl: "Kotabaru, 26 Juni 1979" },
-{ nama: "Haerun Nisa", ttl: "Tg. Sungkai, 12 Mei 1985" },
+{ nama: "Haerun Nisa", ttl: "Tanjung Sungkai, 12 Mei 1985" },
 { nama: "Hairunnisa ", ttl: "Kotabaru, 05 Mei 1995" },
 { nama: "Haryati", ttl: "Kotabaru, 08 Februari 1980" },
 { nama: "Heliani", ttl: "Kotabaru, 25 November 1983" },
 { nama: "Herdiyanti", ttl: "Makassar, 30 September 1998" },
-{ nama: "Herlinawati, S.sos", ttl: "Kotabaru, 26 Maret 1974" },
+{ nama: "Herlinawati, S.Sos", ttl: "Kotabaru, 26 Maret 1974" },
 { nama: "HJ. Gusnawati", ttl: "Soppeng, 01 Juli 1972" },
 { nama: "Hj. Jurmiah", ttl: "KOTABARU, 02 Februari 1963" },
 { nama: "HJ. Sri Wahyuni", ttl: "Samarinda, 28 Januari 1977" },
@@ -233,7 +233,7 @@ const dataPeserta = [
 { nama: "Refa Margarita", ttl: "Banyuwangi, 20 Maret 2002" },
 { nama: "Renna Ratna Sari, S. Pd. I", ttl: "Magalau hulu, 15 Juni 1993" },
 { nama: "Riana Oktaraharti", ttl: "Kotabaru, 28 Oktober 1993" },
-{ nama: "RICO SAPUTRA ", ttl: "kota baru, 13 Desember 2006" },
+{ nama: "RICO SAPUTRA ", ttl: "kota baru, 03 Desember 2006" },
 { nama: "RINA FITRIANI PRATIWI", ttl: "MARTAPURA, 26 Mei 1986" },
 { nama: "RISDAWATI", ttl: "Tanjung Seloka, 11 November 1997" },
 { nama: "Rizkie Amelia, S.Si", ttl: "Surabaya, 02 April 1986" },
@@ -391,4 +391,5 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
