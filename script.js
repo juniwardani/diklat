@@ -173,7 +173,7 @@ const dataPeserta = [
 { nama: "M. NUR IMANSYAH", ttl: "TG. MANGKOK, 29 Desember 2000" },
 { nama: "M. Syaifullah", ttl: "Barabai, 28 September 1977" },
 { nama: "M.Hasanul", ttl: "Tajau Landung, 21 Mei 1984" },
-{ nama: "Kurnia", ttl: "Banjarmasin, 10 Oktober 1974" },
+{ nama: "Kurnia", ttl: "Banjarmasin, 06 Oktober 1974" },
 { nama: "Mahmudatus sopia", ttl: "Kotabaru, 15 September 1999" },
 { nama: "Mardi", ttl: "Sepit, 31 Desember 1989" },
 { nama: "Mardiana ", ttl: "Kotabaru, 11 Mei 1977" },
@@ -391,6 +391,7 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
 
