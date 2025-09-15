@@ -94,10 +94,10 @@ const dataPeserta = [
 { nama: "Alya Azizah", ttl: "Kotabaru, 22 Juli 2006" },
 { nama: "Alya Zuhratun Nisa", ttl: "Banjarmasin, 13 Januari 2002" },
 { nama: "Amelia", ttl: "Kotabaru, 06 Februari 1984" },
-{ nama: "Ana fitrotul laili", ttl: "Bulitar, 15 Mei 1991" },
 { nama: "Andi Sulman R", ttl: "Teluk Kemuning, 05 Agustus 1998" },
 { nama: "Andi sulman R ", ttl: "Teluk kemuning, 05 Agustus 1998" },
 { nama: "Arbaiyah", ttl: "Hulu Sungai Tengah, 16 Oktober 1997" },
+{ nama: "ASRI KRISWULANDARI", ttl: "Banyuwangi, 18 April 1973" },
 { nama: "Aulia Rahmah", ttl: "Kotabaru, 14 Januari 2006" },
 { nama: "AWALIYAH", ttl: "Tanjung Selayar, 10 Desember 1999" },
 { nama: "AZIZAH", ttl: "JEDDAH, 10 November 1989" },
@@ -183,7 +183,6 @@ const dataPeserta = [
 { nama: "Mastaniah, A.Ma", ttl: "Kotabaru, 06 Agustus 1979" },
 { nama: "Miftahul Jannah", ttl: "Kotabaru, 28 Februari 1992" },
 { nama: "Mimi Sa'adah", ttl: "Sang Sang, 15 Oktober 1994" },
-{ nama: "Mislawati", ttl: "Marajam, 15 April 2004" },
 { nama: "Muh. Syar'i", ttl: "Bongor, 31 Desember 1990" },
 { nama: "Muhammad", ttl: "BANJARMASIN, 10 Februari 1991" },
 { nama: "Muhammad Hafiz Anshari", ttl: "Kotabaru, 06 Mei 1998" },
@@ -391,6 +390,7 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
 
