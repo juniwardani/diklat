@@ -89,7 +89,7 @@ const dataPeserta = [
 { nama: "Akhmad rifani", ttl: "pantai, 24 Februari 1972" },
 { nama: "Alfa Nurjannah", ttl: "Banjarnegara, 21 Desember 1995" },
 { nama: "Ali zaenal abidin", ttl: "Kotabaru, 08 Juni 2002" },
-{ nama: "ALPISAH ", ttl: "KOTABARU, 20 Juni 1982" },
+{ nama: "ALPISAH, S.Pd.I. Gr.", ttl: "KOTABARU, 20 Juni 1982" },
 { nama: "Alvira Amalia", ttl: "Kotabaru, 19 Agustus 2007" },
 { nama: "Alya Azizah", ttl: "Kotabaru, 22 Juli 2006" },
 { nama: "Alya Zuhratun Nisa", ttl: "Banjarmasin, 13 Januari 2002" },
@@ -354,6 +354,7 @@ adjustKontakInfoPosition();
 window.addEventListener("resize", function() {
 adjustKontakInfoPosition();
 });
+
 
 
 
