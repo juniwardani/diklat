@@ -197,6 +197,7 @@ const dataPeserta = [
     {  nama: "M. Rezki Ramadhan", ttl: "Kotabaru, 20 Maret 2003" },
 { nama: "Murtasiah", ttl: "Kotabaru, 28 Agustus 1971" },
 { nama: "Mustika Amani", ttl: "Kotabaru, 12 Mei 1986" },
+{ nama: "MOCH. ARJUN FENDI PRADANA", ttl: "Kotabaru, 12 Juli 2024" },
 { nama: "Nahdatul Ihsan Hidayatullah", ttl: "KOTABARU, 16 Mei 2001" },
 { nama: "NANING LAILATUL AZIZAH", ttl: "NGANJUK, 15 Mei 1991" },
 { nama: "Nida Hasanah, S. Pd", ttl: "Simpang Tiga, 23 Juli 1993" },
@@ -390,6 +391,7 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
 
