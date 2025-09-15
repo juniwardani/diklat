@@ -77,6 +77,7 @@ const dataPeserta = [
 { nama: "Abdu Dhohir Fatahillah", ttl: "Kotabaru, 13 Januari 1998" },
 { nama: "ABDUL HALIM", ttl: "Kotabaru, 26 Oktober 1988" },
 { nama: "Adelia Sukma Budi Hartanti ", ttl: "Kotabaru, 10 Oktober 2001" },
+{ nama: "ASHFI RAEHANI, SE ", ttl: "Kotabaru, 06 Maret 1979" },
 { nama: "Agustin", ttl: "Sarang Tiung, 17 Agustus 1996" },
 { nama: "agustina", ttl: "kotabaru, 05 Agustus 1969" },
 { nama: "Ahmad Dailami", ttl: "Mundar, 13 Juli 1979" },
@@ -138,7 +139,6 @@ const dataPeserta = [
 { nama: "Herlinawati, S.Sos", ttl: "Kotabaru, 26 Maret 1974" },
 { nama: "HJ. Gusnawati", ttl: "Soppeng, 01 Juli 1972" },
 { nama: "Hj. Jurmiah", ttl: "KOTABARU, 02 Februari 1963" },
-{ nama: "HJ. Sri Wahyuni", ttl: "Samarinda, 28 Januari 1977" },
 { nama: "HJ.SITI AISYAH", ttl: "BANJARMASIN, 26 Oktober 1977" },
 { nama: "Husnur Rabiah", ttl: "Kotabaru, 17 Oktober 1991" },
 { nama: "Ida Isnawati", ttl: "Kotabaru, 22 November 1984" },
@@ -391,6 +391,7 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
 
