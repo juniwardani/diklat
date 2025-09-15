@@ -1,308 +1,613 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulir Pendaftaran Diklat Standarisasi Guru Al Qur'an</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
-        
-        .arabic-font {
-            font-family: 'Amiri', serif;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
-        }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-        }
-        
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-        
-        @keyframes floating {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .pulse-glow {
-            animation: pulseGlow 2s ease-in-out infinite;
-        }
-        
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
-        }
-        
-        .countdown-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #3b82f6;
-        }
-        
-        @media (max-width: 768px) {
-            .countdown-number {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
-</head>
-<body class="gradient-bg min-h-screen overflow-x-hidden">
-    <!-- Animated Background Elements -->
-    
-    <!-- Animated Header -->
-    <header class="relative z-10 text-white py-8 md:py-12">
-        <div class="max-w-6xl mx-auto px-4 md:px-6 text-center">
-            <!-- Enhanced Logos Section -->
-<div class="flex justify-center items-center gap-4 md:gap-8 mb-6 floating">
-  <!-- Logo 1 -->
-  <div class="glass-card rounded-xl p-3 md:p-4 transform hover:scale-105 transition-transform duration-300">
-    <img src="logo.jpg" 
-         alt="Logo Rumah Tahfidz Saijaan" 
-         class="w-32 md:w-48 aspect-[2/1] object-contain" 
-         onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=\'text-sm text-gray-400\'>Logo gagal dimuat</span>');">
-  </div>
-  <!-- Logo 2 -->
-  <div class="glass-card rounded-xl p-3 md:p-4 transform hover:scale-105 transition-transform duration-300">
-    <img src="logo2.jpg" 
-         alt="Logo Partner" 
-         class="w-32 md:w-48 aspect-[2/1] object-contain" 
-         onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=\'text-sm text-gray-400\'>Logo gagal dimuat</span>');">
-  </div>
-</div>
-            
-            <!-- Animated Title -->
-            <h1 id="mainTitle" class="text-3xl md:text-4xl lg:text-6xl font-bold mb-2 arabic-font bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200">
-                Formulir Pendaftaran
-            </h1>
-            <h2 id="subTitle" class="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 arabic-font text-white/90">
-                Diklat Standarisasi Guru Al Qur'an
-            </h2>
-            <p id="methodText" class="text-lg md:text-xl lg:text-2xl font-medium text-white/80">
-                Metode Tilawati Level 1
-            </p>
-            
-            <!-- Countdown Timer -->
-            <div id="countdown" class="mt-8 glass-card rounded-xl p-4 md:p-6 max-w-md mx-auto hidden">
-                <h3 class="text-white font-semibold mb-4">Waktu Menuju Pendaftaran Dibuka:</h3>
-                <div class="grid grid-cols-4 gap-2 md:gap-4">
-                    <div class="text-center">
-                        <div id="days" class="countdown-number">00</div>
-                        <div class="text-xs text-white/80">Hari</div>
-                    </div>
-                    <div class="text-center">
-                        <div id="hours" class="countdown-number">00</div>
-                        <div class="text-xs text-white/80">Jam</div>
-                    </div>
-                    <div class="text-center">
-                        <div id="minutes" class="countdown-number">00</div>
-                        <div class="text-xs text-white/80">Menit</div>
-                    </div>
-                    <div class="text-center">
-                        <div id="seconds" class="countdown-number">00</div>
-                        <div class="text-xs text-white/80">Detik</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-<!-- Main Content -->
-<main class="relative z-10 max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-8">
-    <!-- Enhanced Event Info Card -->
-    <section id="eventInfo" class="glass-card rounded-2xl p-6 md:p-8 mb-10 md:mb-12">
-        <div class="grid lg:grid-cols-2 gap-6 md:gap-8">
-            <div>
-                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
-                    <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
-                    </svg>
-                    Informasi Acara
-                </h2>
-                <div class="space-y-4 leading-relaxed">
-                    <div class="flex items-start text-gray-700 p-3 bg-blue-50 rounded-lg">
-                        <svg class="w-6 h-6 mr-4 text-blue-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                        <div>
-                            <p class="font-semibold">Mesjid Apung Sayyidina Jafar</p>
-                            <p class="text-sm text-gray-600">Siring Laut</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start text-gray-700 p-3 bg-blue-50 rounded-lg">
-                        <svg class="w-6 h-6 mr-4 text-blue-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3V2h-2v2H8V2H6v2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H3V9h16v11z"/>
-                        </svg>
-                        <div>
-                            <p class="font-semibold">27 - 28 September 2025</p>
-                            <p class="text-sm text-gray-600">2 Hari Pelatihan</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Enhanced Registration Status -->
-            <div>
-                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
-                    <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    Status Pendaftaran
-                </h2>
-                <div class="bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 rounded-xl p-6 mb-4 pulse-glow leading-relaxed">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm font-medium text-gray-600">Status:</span>
-                        <span id="statusBadge" class="inline-flex items-center px-4 py-2 rounded-full text-sm font-bold bg-red-100 text-red-800 transform transition-all duration-300">
-                            🔴 Tutup
-                        </span>
-                    </div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm font-medium text-gray-600">Jumlah Pendaftar:</span>
-                        <span id="registrantCount" class="text-3xl font-bold text-gray-800 counter" data-target="200">0</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm font-medium text-gray-600">Kuota Tersisa:</span>
-                        <span id="remainingQuota" class="text-3xl font-bold text-red-600 counter" data-target="0">0</span>
-                    </div>
-                </div>
-                
-                <!-- Enhanced Progress Bar -->
-                <div class="w-full bg-gray-200 rounded-full h-4 mb-3 overflow-hidden">
-                    <div id="progressBar" class="bg-gradient-to-r from-red-500 to-red-600 h-4 rounded-full transition-all duration-1000 ease-out" style="width: 100%"></div>
-                </div>
-                <p class="text-sm text-center text-gray-600">Kuota Penuh (200/200)</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Registration Closed Notice -->
-    <section id="konfirmasiPeserta" class="glass-card rounded-2xl p-6 md:p-8 mb-6 space-y-6">
-        <!-- Judul & Instruksi -->
-        <div class="text-center">
-          <h2 class="text-xl font-semibold mb-2">
-            Verifikasi Peserta Diklat
-          </h2>
-          <p class="text-gray-700">
-            Tuliskan nama Anda untuk memastikan anda telah terdaftar sebagai peserta 
-            <span class="font-bold">Diklat Standarisasi Metode Tilawati Level 1</span>.
-          </p>
-        </div>
-      
-        <!-- Input Pencarian Nama -->
-        <div class="relative z-50">
-          <input 
-            type="text" 
-            id="namaInput" 
-            placeholder="Ketik minimal 3 huruf nama Anda..." 
-            class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition relative z-50"
-          />
-          <!-- Dropdown Suggestion -->
-          <ul 
-            id="suggestions" 
-            class="absolute left-0 right-0 mt-2 bg-white border rounded-xl shadow-lg hidden max-h-56 overflow-y-auto z-50 divide-y">
-            <!-- Nama hasil pencarian akan tampil di sini -->
-          </ul>
-        </div>
-      
-        <!-- Card Detail Peserta -->
-        <div 
-          id="detailCard" 
-          class="hidden p-5 rounded-2xl shadow-md bg-white border transition-all duration-300"
-        >
-          <h3 class="text-lg font-bold text-blue-600 mb-1" id="detailNama"></h3>
-          <p class="text-gray-600" id="detailTTL"></p>
-        </div>
-      </section>
-      
-
-    <!-- Contact Information -->
-    <section id="kontakInfo" class="glass-card rounded-2xl p-6 md:p-8 border-t-4 border-blue-600 transform hover:scale-[1.02] transition-all duration-300 relative z-10">
-        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
-            <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-            </svg>
-            Hubungi Kami
-        </h2>
-        <div class="grid lg:grid-cols-2 gap-6 md:gap-8 leading-relaxed">
-            <div class="space-y-4">
-                <p class="text-gray-700 text-lg">Untuk informasi lebih lanjut mengenai diklat, perbaikan data, atau pertanyaan lainnya, silakan hubungi:</p>
-                <a href="https://wa.me/6285754048672?text=Assalamu%27alaikum%2C%20saya%20ingin%20bertanya%20tentang%20Diklat%20Standarisasi%20Guru%20Al%20Qur%27an%20Metode%20Tilawati" 
-                   target="_blank" 
-                   class="flex items-center text-gray-700 hover:text-green-600 transition-all duration-300 group p-4 bg-green-50 rounded-lg hover:bg-green-100">
-                    <svg class="w-8 h-8 mr-4 text-green-600 group-hover:text-green-700" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                    </svg>
-                    <div>
-                        <p class="font-semibold text-lg group-hover:underline">Admin Penyelenggara</p>
-                        <p class="text-lg text-green-600 font-bold">085754048672</p>
-                    </div>
-                </a>
-            </div>
-            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
-                <p class="text-blue-800 font-semibold mb-3 text-lg">Catatan Penting:</p>
-                <p class="text-blue-700 leading-relaxed">Pantau terus pengumuman kami untuk informasi diklat periode selanjutnya. Daftar tunggu mungkin akan dibuka jika ada pembatalan.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Countdown to Event Section -->
-    <section id="countdownEvent" class="glass-card rounded-2xl p-6 md:p-8 mb-6 mt-8">
-        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
-            <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-            Hitung Mundur Menuju Acara
-        </h2>
-        <div class="text-center">
-            <p class="text-gray-700 mb-6 text-lg">Diklat Standarisasi Guru Al Qur'an akan dimulai pada:</p>
-            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200 mb-6">
-                <p class="text-2xl font-bold text-blue-800 mb-2">27 September 2025</p>
-                <p class="text-lg text-blue-600">Pukul 08:00 WITA</p>
-            </div>
-            
-            <!-- Countdown Display -->
-            <div class="grid grid-cols-4 gap-2 md:gap-4 lg:gap-6">
-                
-
-                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
-                      <div id="eventDays" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
-                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Hari</div>
-                    </div>
-                  
-                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
-                      <div id="eventHours" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
-                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Jam</div>
-                    </div>
-                  
-                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
-                      <div id="eventMinutes" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
-                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Menit</div>
-                    </div>
-                  
-                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
-                      <div id="eventSeconds" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
-                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Detik</div>
-                    </div>
-                  
-                  </div>                  
-        </div>
-    </section>
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Formulir Pendaftaran Diklat Standarisasi Guru Al Qur'an</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+        
+
+        .arabic-font {
+
+            font-family: 'Amiri', serif;
+
+        }
+
+        
+
+        .gradient-bg {
+
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+
+            background-size: 400% 400%;
+
+            animation: gradientShift 8s ease infinite;
+
+        }
+
+        
+
+        @keyframes gradientShift {
+
+            0% { background-position: 0% 50%; }
+
+            50% { background-position: 100% 50%; }
+
+            100% { background-position: 0% 50%; }
+
+        }
+
+        
+
+        .glass-card {
+
+            background: rgba(255, 255, 255, 0.95);
+
+            backdrop-filter: blur(10px);
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+
+        }
+
+        
+
+        .floating {
+
+            animation: floating 3s ease-in-out infinite;
+
+        }
+
+        
+
+        @keyframes floating {
+
+            0%, 100% { transform: translateY(0px); }
+
+            50% { transform: translateY(-10px); }
+
+        }
+
+        
+
+        .pulse-glow {
+
+            animation: pulseGlow 2s ease-in-out infinite;
+
+        }
+
+        
+
+        @keyframes pulseGlow {
+
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
+
+        }
+
+        
+
+        .countdown-number {
+
+            font-size: 2rem;
+
+            font-weight: bold;
+
+            color: #3b82f6;
+
+        }
+
+        
+
+        @media (max-width: 768px) {
+
+            .countdown-number {
+
+                font-size: 1.5rem;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body class="gradient-bg min-h-screen overflow-x-hidden">
+
+    <!-- Animated Background Elements -->
+
+    
+
+    <!-- Animated Header -->
+
+    <header class="relative z-10 text-white py-8 md:py-12">
+
+        <div class="max-w-6xl mx-auto px-4 md:px-6 text-center">
+
+            <!-- Enhanced Logos Section -->
+
+<div class="flex justify-center items-center gap-4 md:gap-8 mb-6 floating">
+
+  <!-- Logo 1 -->
+
+  <div class="glass-card rounded-xl p-3 md:p-4 transform hover:scale-105 transition-transform duration-300">
+
+    <img src="logo.jpg" 
+
+         alt="Logo Rumah Tahfidz Saijaan" 
+
+         class="w-32 md:w-48 aspect-[2/1] object-contain" 
+
+         onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=\'text-sm text-gray-400\'>Logo gagal dimuat</span>');">
+
+  </div>
+
+  <!-- Logo 2 -->
+
+  <div class="glass-card rounded-xl p-3 md:p-4 transform hover:scale-105 transition-transform duration-300">
+
+    <img src="logo2.jpg" 
+
+         alt="Logo Partner" 
+
+         class="w-32 md:w-48 aspect-[2/1] object-contain" 
+
+         onerror="this.style.display='none'; this.insertAdjacentHTML('afterend','<span class=\'text-sm text-gray-400\'>Logo gagal dimuat</span>');">
+
+  </div>
+
+</div>
+
+            
+
+            <!-- Animated Title -->
+
+            <h1 id="mainTitle" class="text-3xl md:text-4xl lg:text-6xl font-bold mb-2 arabic-font bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200">
+
+                Formulir Pendaftaran
+
+            </h1>
+
+            <h2 id="subTitle" class="text-xl md:text-2xl lg:text-3xl font-semibold mb-4 arabic-font text-white/90">
+
+                Diklat Standarisasi Guru Al Qur'an
+
+            </h2>
+
+            <p id="methodText" class="text-lg md:text-xl lg:text-2xl font-medium text-white/80">
+
+                Metode Tilawati Level 1
+
+            </p>
+
+            
+
+            <!-- Countdown Timer -->
+
+            <div id="countdown" class="mt-8 glass-card rounded-xl p-4 md:p-6 max-w-md mx-auto hidden">
+
+                <h3 class="text-white font-semibold mb-4">Waktu Menuju Pendaftaran Dibuka:</h3>
+
+                <div class="grid grid-cols-4 gap-2 md:gap-4">
+
+                    <div class="text-center">
+
+                        <div id="days" class="countdown-number">00</div>
+
+                        <div class="text-xs text-white/80">Hari</div>
+
+                    </div>
+
+                    <div class="text-center">
+
+                        <div id="hours" class="countdown-number">00</div>
+
+                        <div class="text-xs text-white/80">Jam</div>
+
+                    </div>
+
+                    <div class="text-center">
+
+                        <div id="minutes" class="countdown-number">00</div>
+
+                        <div class="text-xs text-white/80">Menit</div>
+
+                    </div>
+
+                    <div class="text-center">
+
+                        <div id="seconds" class="countdown-number">00</div>
+
+                        <div class="text-xs text-white/80">Detik</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+<!-- Main Content -->
+
+<main class="relative z-10 max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-8">
+
+    <!-- Enhanced Event Info Card -->
+
+    <section id="eventInfo" class="glass-card rounded-2xl p-6 md:p-8 mb-10 md:mb-12">
+
+        <div class="grid lg:grid-cols-2 gap-6 md:gap-8">
+
+            <div>
+
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
+
+                    <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+
+                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+
+                    </svg>
+
+                    Informasi Acara
+
+                </h2>
+
+                <div class="space-y-4 leading-relaxed">
+
+                    <div class="flex items-start text-gray-700 p-3 bg-blue-50 rounded-lg">
+
+                        <svg class="w-6 h-6 mr-4 text-blue-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+
+                        </svg>
+
+                        <div>
+
+                            <p class="font-semibold">Mesjid Apung Sayyidina Jafar</p>
+
+                            <p class="text-sm text-gray-600">Siring Laut</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="flex items-start text-gray-700 p-3 bg-blue-50 rounded-lg">
+
+                        <svg class="w-6 h-6 mr-4 text-blue-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+
+                            <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2-7h-3V2h-2v2H8V2H6v2H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H3V9h16v11z"/>
+
+                        </svg>
+
+                        <div>
+
+                            <p class="font-semibold">27 - 28 September 2025</p>
+
+                            <p class="text-sm text-gray-600">2 Hari Pelatihan</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+
+            <!-- Enhanced Registration Status -->
+
+            <div>
+
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
+
+                    <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+
+                    </svg>
+
+                    Status Pendaftaran
+
+                </h2>
+
+                <div class="bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 rounded-xl p-6 mb-4 pulse-glow leading-relaxed">
+
+                    <div class="flex items-center justify-between mb-4">
+
+                        <span class="text-sm font-medium text-gray-600">Status:</span>
+
+                        <span id="statusBadge" class="inline-flex items-center px-4 py-2 rounded-full text-sm font-bold bg-red-100 text-red-800 transform transition-all duration-300">
+
+                            🔴 Tutup
+
+                        </span>
+
+                    </div>
+
+                    <div class="flex items-center justify-between mb-4">
+
+                        <span class="text-sm font-medium text-gray-600">Jumlah Pendaftar:</span>
+
+                        <span id="registrantCount" class="text-3xl font-bold text-gray-800 counter" data-target="200">0</span>
+
+                    </div>
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="text-sm font-medium text-gray-600">Kuota Tersisa:</span>
+
+                        <span id="remainingQuota" class="text-3xl font-bold text-red-600 counter" data-target="0">0</span>
+
+                    </div>
+
+                </div>
+
+                
+
+                <!-- Enhanced Progress Bar -->
+
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-3 overflow-hidden">
+
+                    <div id="progressBar" class="bg-gradient-to-r from-red-500 to-red-600 h-4 rounded-full transition-all duration-1000 ease-out" style="width: 100%"></div>
+
+                </div>
+
+                <p class="text-sm text-center text-gray-600">Kuota Penuh (200/200)</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Registration Closed Notice -->
+
+    <section id="konfirmasiPeserta" class="glass-card rounded-2xl p-6 md:p-8 mb-6 space-y-6">
+
+        <!-- Judul & Instruksi -->
+
+        <div class="text-center">
+
+          <h2 class="text-xl font-semibold mb-2">
+
+            Verifikasi Peserta Diklat
+
+          </h2>
+
+          <p class="text-gray-700">
+
+            Tuliskan nama Anda untuk memastikan anda telah terdaftar sebagai peserta 
+
+            <span class="font-bold">Diklat Standarisasi Metode Tilawati Level 1</span>.
+
+          </p>
+
+        </div>
+
+      
+
+        <!-- Input Pencarian Nama -->
+
+        <div class="relative z-50">
+
+          <input 
+
+            type="text" 
+
+            id="namaInput" 
+
+            placeholder="Ketik minimal 3 huruf nama Anda..." 
+
+            class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition relative z-50"
+
+          />
+
+          <!-- Dropdown Suggestion -->
+
+          <ul 
+
+            id="suggestions" 
+
+            class="absolute left-0 right-0 mt-2 bg-white border rounded-xl shadow-lg hidden max-h-56 overflow-y-auto z-50 divide-y">
+
+            <!-- Nama hasil pencarian akan tampil di sini -->
+
+          </ul>
+
+        </div>
+
+      
+
+        <!-- Card Detail Peserta -->
+
+        <div 
+
+          id="detailCard" 
+
+          class="hidden p-5 rounded-2xl shadow-md bg-white border transition-all duration-300"
+
+        >
+
+          <h3 class="text-lg font-bold text-blue-600 mb-1" id="detailNama"></h3>
+
+          <p class="text-gray-600" id="detailTTL"></p>
+
+        </div>
+
+      </section>
+
+      
+
+
+
+    <!-- Contact Information -->
+
+    <section id="kontakInfo" class="glass-card rounded-2xl p-6 md:p-8 border-t-4 border-blue-600 transform hover:scale-[1.02] transition-all duration-300 relative z-10">
+
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
+
+            <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+
+            </svg>
+
+            Hubungi Kami
+
+        </h2>
+
+        <div class="grid lg:grid-cols-2 gap-6 md:gap-8 leading-relaxed">
+
+            <div class="space-y-4">
+
+                <p class="text-gray-700 text-lg">Untuk informasi lebih lanjut mengenai diklat, perbaikan data, atau pertanyaan lainnya, silakan hubungi:</p>
+
+                <a href="https://wa.me/6285754048672?text=Assalamu%27alaikum%2C%20saya%20ingin%20bertanya%20tentang%20Diklat%20Standarisasi%20Guru%20Al%20Qur%27an%20Metode%20Tilawati" 
+
+                   target="_blank" 
+
+                   class="flex items-center text-gray-700 hover:text-green-600 transition-all duration-300 group p-4 bg-green-50 rounded-lg hover:bg-green-100">
+
+                    <svg class="w-8 h-8 mr-4 text-green-600 group-hover:text-green-700" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+
+                    </svg>
+
+                    <div>
+
+                        <p class="font-semibold text-lg group-hover:underline">Admin Penyelenggara</p>
+
+                        <p class="text-lg text-green-600 font-bold">085754048672</p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
+
+                <p class="text-blue-800 font-semibold mb-3 text-lg">Catatan Penting:</p>
+
+                <p class="text-blue-700 leading-relaxed">Pantau terus pengumuman kami untuk informasi diklat periode selanjutnya. Daftar tunggu mungkin akan dibuka jika ada pembatalan.</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- Countdown to Event Section -->
+
+    <section id="countdownEvent" class="glass-card rounded-2xl p-6 md:p-8 mb-6 mt-8">
+
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
+
+            <svg class="w-8 h-8 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+
+            </svg>
+
+            Hitung Mundur Menuju Acara
+
+        </h2>
+
+        <div class="text-center">
+
+            <p class="text-gray-700 mb-6 text-lg">Diklat Standarisasi Guru Al Qur'an akan dimulai pada:</p>
+
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200 mb-6">
+
+                <p class="text-2xl font-bold text-blue-800 mb-2">27 September 2025</p>
+
+                <p class="text-lg text-blue-600">Pukul 08:00 WITA</p>
+
+            </div>
+
+            
+
+            <!-- Countdown Display -->
+
+            <div class="grid grid-cols-4 gap-2 md:gap-4 lg:gap-6">
+
+                
+
+
+
+                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
+
+                      <div id="eventDays" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
+
+                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Hari</div>
+
+                    </div>
+
+                  
+
+                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
+
+                      <div id="eventHours" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
+
+                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Jam</div>
+
+                    </div>
+
+                  
+
+                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
+
+                      <div id="eventMinutes" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
+
+                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Menit</div>
+
+                    </div>
+
+                  
+
+                    <div style="background-color: white; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid #bfdbfe; text-align: center; min-width: 80px;">
+
+                      <div id="eventSeconds" style="font-size: 32px; font-weight: bold; color: #2563eb; margin-bottom: 8px;">00</div>
+
+                      <div style="font-size: 14px; color: #4b5563; font-weight: 500;">Detik</div>
+
+                    </div>
+
+                  
+
+                  </div>                  
+
+        </div>
+
+    </section>
+
     
     <section id="cfdWarning" class="glass-card rounded-2xl p-6 md:p-8 mb-6 mt-8 bg-gradient-to-br from-yellow-50 to-orange-50 border border-yellow-200">
   <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
@@ -324,28 +629,48 @@ kemudian
 <span class="font-bold text-red-600"><em>
 Wisma Saijaan</em></span>.
 <br><br>
-<em>Jangan khawatir kalau jalanmu berliku, karena kadang jalan memutar justru membuat kita lebih lama bersama. Meski kita tahu bahwa cinta kita tidak akan pernah berakhir bahagia, karena cinta kita tak akan pernah bisa berakhir. Asiiik...!!</em>
+<em>Jangan khawatir kalau jalanmu berliku, karena kadang jalan memutar justru membuat kita lebih lama bersama. Meski kita tahu bahwa cinta kita tidak mungkin berakhir bahagia, karena cinta kita tidak akan pernah bisa berakhir. Asiiik...!!</em>
       </p>
     </div>
   </div>
 </section>
     
-</main>
-
-
-
-        <!-- Enhanced Footer -->
-        <footer class="text-center mt-12 py-8">
-            <p class="text-white text-xl mb-2 arabic-font">بارك الله فيكم</p>
-            <p class="text-white/80 text-sm">Semoga Allah memberkahi usaha kita dalam mempelajari dan mengajarkan Al Qur'an</p>
-            <div class="mt-4 flex justify-center space-x-4">
-                <div class="w-12 h-1 bg-white/50 rounded-full"></div>
-                <div class="w-12 h-1 bg-white/30 rounded-full"></div>
-                <div class="w-12 h-1 bg-white/50 rounded-full"></div>
-            </div>
-        </footer>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+</main>
+
+
+
+
+
+
+
+        <!-- Enhanced Footer -->
+
+        <footer class="text-center mt-12 py-8">
+
+            <p class="text-white text-xl mb-2 arabic-font">بارك الله فيكم</p>
+
+            <p class="text-white/80 text-sm">Semoga Allah memberkahi usaha kita dalam mempelajari dan mengajarkan Al Qur'an</p>
+
+            <div class="mt-4 flex justify-center space-x-4">
+
+                <div class="w-12 h-1 bg-white/50 rounded-full"></div>
+
+                <div class="w-12 h-1 bg-white/30 rounded-full"></div>
+
+                <div class="w-12 h-1 bg-white/50 rounded-full"></div>
+
+            </div>
+
+        </footer>
+
+    </div>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+
+
