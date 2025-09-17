@@ -137,6 +137,7 @@ const dataPeserta = [
 { nama: "Heliani", ttl: "Kotabaru, 25 November 1983" },
 { nama: "Herdiyanti", ttl: "Makassar, 30 September 1998" },
 { nama: "Herlinawati, S.Sos", ttl: "Kotabaru, 26 Maret 1974" },
+    { nama: "Hilallail", ttl: "Beringin, 19 Desember 1997" },
 { nama: "HJ. Gusnawati", ttl: "Soppeng, 01 Juli 1972" },
 { nama: "Hj. Jurmiah", ttl: "KOTABARU, 02 Februari 1963" },
 { nama: "HJ.SITI AISYAH", ttl: "BANJARMASIN, 26 Oktober 1977" },
@@ -389,6 +390,7 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
 
