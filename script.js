@@ -164,7 +164,7 @@ const dataPeserta = [
 { nama: "Kiki Mardiana", ttl: "Kotabaru, 26 Februari 1990" },
 { nama: "Kolilah", ttl: "Kronto, 09 September 2000" },
 { nama: "Kresna Firman Syah", ttl: "Gresik, 23 Maret 2002" },
-{ nama: "Kurnia", ttl: "Banjarmasin, 10 Oktober 1974" },
+{ nama: "Kurnia", ttl: "Banjarmasin, 06 Oktober 1974" },
 { nama: "Laily Hafifah", ttl: "Tanjung Batu, 09 April 2000" },
 { nama: "Lidiyawati", ttl: "Palingkau, 10 April 1975" },
 { nama: "Linda Kiptiah", ttl: "Sungai Nipah, 10 Agustus 1992" },
@@ -226,7 +226,7 @@ const dataPeserta = [
 { nama: "Putri Amiliyani", ttl: "Jombang, 30 April 1995" },
 { nama: "Putri Nadiya Istiqoma, S.Pd.", ttl: "Mojokerto, 12 Juni 1998" },
 { nama: "Rabiatul Adawiyah", ttl: "Gunung Sari, 26 November 1997" },
-{ nama: "Rabiatul Adlawiyah, S.Pd.I.", ttl: "Teluk Kemuning, 27 Maret 1983" },
+{ nama: "Rabiatul Adlawiah, S.Pd.I.", ttl: "Teluk Kemuning, 27 Maret 1983" },
 { nama: "Rahmat", ttl: "Pesapoang, 15 Agustus 1984" },
 { nama: "Rahmat", ttl: "Kotabaru, 10 Januari 2003" },
 { nama: "Raihana Aulia", ttl: "Martapura, 12 November 1999" },
@@ -350,5 +350,46 @@ adjustKontakInfoPosition();
 
 // Atur posisi saat halaman di-resize
 window.addEventListener("resize", function() {
-adjustKontakInfoPosition();
+    adjustKontakInfoPosition();
+});
+
+// Countdown Timer untuk Acara
+function startCountdown() {
+    // Tanggal acara: 27 September 2025, 08:00 WITA
+    const eventDate = new Date('2025-09-27T08:00:00+08:00').getTime();
+    
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+        
+        if (distance < 0) {
+            // Acara sudah berlalu
+            document.getElementById('eventDays').textContent = '00';
+            document.getElementById('eventHours').textContent = '00';
+            document.getElementById('eventMinutes').textContent = '00';
+            document.getElementById('eventSeconds').textContent = '00';
+            return;
+        }
+        
+        // Hitung waktu tersisa
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        // Update tampilan
+        document.getElementById('eventDays').textContent = days.toString().padStart(2, '0');
+        document.getElementById('eventHours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('eventMinutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('eventSeconds').textContent = seconds.toString().padStart(2, '0');
+    }
+    
+    // Update countdown setiap detik
+    updateCountdown(); // Panggil sekali untuk inisialisasi
+    setInterval(updateCountdown, 1000);
+}
+
+// Jalankan countdown saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    startCountdown();
 });
