@@ -267,9 +267,7 @@ const dataPeserta = [
 { nama: "Suriani", ttl: "Salino, 21 Mei 2000" },
 { nama: "Syaiful Irwandi.S.Pd", ttl: "Kotabaru, 15 Mei 1993" },
 { nama: "Tazkiratun Nufus", ttl: "Kotabaru, 22 Juli 2002" },
-{ nama: "Tia Amalia", ttl: "Tarjun, 12 Desember 2003" },
 { nama: "Tiara Dewi Aisyah, S.Pd", ttl: "Kotabaru, 21 Oktober 1999" },
-{ nama: "Umi hani", ttl: "Manado, 21 Juni 1967" },
 { nama: "UMMU AZKYA SS. ", ttl: "Banjarmasin, 15 Agustus 2005" },
 { nama: "Wahidah", ttl: "Kotabaru, 06 Januari 1983" },
 { nama: "Wahyaturrahmah", ttl: "Kotabaru, 15 Mei 1987" },
@@ -391,6 +389,7 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
 
