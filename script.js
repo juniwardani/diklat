@@ -188,7 +188,8 @@ const dataPeserta = [
 { nama: "Muhammad", ttl: "BANJARMASIN, 10 Februari 1991" },
 { nama: "Muhammad Hafiz Anshari", ttl: "Kotabaru, 06 Mei 1998" },
 { nama: "Muhammad Ridho", ttl: "Martapura, 01 Februari 1996" },
-{ nama: "Muhammad Syaifullah", ttl: "Terangkih, 14 Maret 1991" },
+    { nama: "Muhammad Syaifullah", ttl: "Terangkih, 14 Maret 1991" },
+{ nama: "Muhammad Safi'i", ttl: "Negara, 17 November 1996" },
 { nama: "Muhammad Talib", ttl: "Kotabaru, 29 Juli 1982" },
 { nama: "muhammad yordani", ttl: "Pudi seberang, 13 Februari 1983" },
 { nama: "MUKHTAR SOFIYAN", ttl: "BERANGAS, 06 Agustus 1976" },
@@ -390,6 +391,7 @@ function startEventCountdown() {
 
 // Start countdown when page loads
 window.addEventListener('load', startEventCountdown);
+
 
 
 
