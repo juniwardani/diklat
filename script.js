@@ -130,27 +130,44 @@ const suggestions = document.getElementById("suggestions");
 const detailCard = document.getElementById("detailCard");
 const detailNama = document.getElementById("detailNama");
 const detailTTL = document.getElementById("detailTTL");
+const warningCard = document.getElementById("warningCard");
 
 // Fungsi untuk mengatur posisi kontakInfo
 function adjustKontakInfoPosition() {
 const kontakInfo = document.getElementById("kontakInfo");
 const suggestionsVisible = !suggestions.classList.contains("hidden");
+const warningVisible = !warningCard.classList.contains("hidden");
+const detailVisible = !detailCard.classList.contains("hidden");
+
+let totalHeight = 0;
 
 if (suggestionsVisible) {
 // Hitung tinggi dropdown suggestions
-const suggestionsHeight = suggestions.offsetHeight;
-// Tambahkan margin top pada kontakInfo
-kontakInfo.style.marginTop = (suggestionsHeight + 20) + "px";
-kontakInfo.style.transition = "margin-top 0.3s ease";
-} else {
-// Kembalikan margin top ke normal
-kontakInfo.style.marginTop = "0";
+totalHeight += suggestions.offsetHeight + 20;
 }
+
+if (warningVisible) {
+// Hitung tinggi warning card
+totalHeight += warningCard.offsetHeight + 20;
+}
+
+if (detailVisible) {
+// Hitung tinggi detail card
+totalHeight += detailCard.offsetHeight + 20;
+}
+
+// Tambahkan margin top pada kontakInfo
+kontakInfo.style.marginTop = totalHeight + "px";
+kontakInfo.style.transition = "margin-top 0.3s ease";
 }
 
 input.addEventListener("input", function () {
 const query = this.value.toLowerCase();
 suggestions.innerHTML = "";
+
+// Sembunyikan semua card terlebih dahulu
+detailCard.classList.add("hidden");
+warningCard.classList.add("hidden");
 
 if (query.length >= 3) {
 const filtered = dataPeserta.filter(p =>
@@ -167,10 +184,11 @@ filtered.forEach(p => {
     suggestions.classList.add("hidden");
     adjustKontakInfoPosition(); // Atur posisi saat dropdown ditutup
 
-    // Tampilkan card detail
+    // Tampilkan card detail dan sembunyikan warning
     detailNama.textContent = p.nama;
     detailTTL.textContent = p.ttl;
     detailCard.classList.remove("hidden");
+    warningCard.classList.add("hidden");
   });
   suggestions.appendChild(li);
 });
@@ -178,7 +196,10 @@ suggestions.classList.remove("hidden");
 adjustKontakInfoPosition(); // Atur posisi saat dropdown muncul
 } else {
 suggestions.classList.add("hidden");
-adjustKontakInfoPosition(); // Atur posisi saat dropdown kosong
+
+// Tampilkan card peringatan jika tidak ada hasil pencarian
+warningCard.classList.remove("hidden");
+adjustKontakInfoPosition(); // Atur posisi setelah menampilkan warning
 }
 } else {
 suggestions.classList.add("hidden");
@@ -189,6 +210,7 @@ suggestions.classList.add("hidden");
 document.addEventListener("click", function (e) {
 if (!e.target.closest("#namaInput")) {
 suggestions.classList.add("hidden");
+warningCard.classList.add("hidden");
 adjustKontakInfoPosition(); // Atur posisi saat dropdown ditutup dengan klik di luar
 }
 });
