@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download PDF</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #7cfbff 0%, #f3f3f7 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Hero Section Styles */
+.hero {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.hero-media {
+    position: relative;
+    width: 100%;
+    background-color: #e9eef3;
+    background-image: url('hero.jpg'); /* ganti file ini sesuai kebutuhan */
+    background-size: cover;
+    background-position: center;
+    aspect-ratio: 35 / 17; /* rasio 35:17 */
+}
+
+/* Fallback untuk browser tanpa support aspect-ratio */
+@supports not (aspect-ratio: 1 / 1) {
+    .hero-media {
+        height: calc((100vw * 17) / 35);
+        max-height: 400px;
+    }
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+
+.container {
+    background: rgba(39, 147, 235, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 1000px; /* samakan dengan hero */
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.suggestion-item:hover {
+    background-color: #f5f5f5;
+}
+
+.suggestion-item.active {
+    background-color: #667eea;
+    color: white;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #12ec24 0%, #015714 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.pdf-preview {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.pdf-preview h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.document-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.document-section {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.document-section h4 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.pdf-viewer {
+    width: 100%;
+    aspect-ratio: 33 / 21; /* tampilan selalu 33:21 */
+    height: auto;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Syahadah: rasio 21:29 (portrait) */
+#syahadahViewerWrapper {
+    aspect-ratio: 21 / 29;
+}
+
+/* Sertifikat: tegaskan rasio 33:21 (landscape) */
+#sertifikatViewerWrapper {
+    aspect-ratio: 33 / 21;
+}
+
+/* elemen konten PDF di dalam frame agar mengisi ruang tanpa distorsi */
+.pdf-content {
+    display: block;
+    border: 0;
+}
+
+/* khusus canvas agar tidak distorsi, fit contain di dalam wrapper 33:21 */
+.canvas-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+/* iframe isi viewer 33:21 agar mengisi penuh tanpa distorsi */
+.iframe-content {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    border: 0;
+}
+
+.download-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+#downloadSyahadah {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #333;
+}
+
+#downloadSyahadah:hover {
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+/* Styling untuk card motivasi */
+.motivation-card {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border: 2px solid #ffc107;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 15px;
+    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.motivation-content {
+    text-align: center;
+}
+
+.motivation-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    animation: bounce 2s infinite;
+}
+
+.motivation-content h3 {
+    color: #856404;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.motivation-text {
+    color: #6c5b00;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.motivation-encouragement {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-left: 4px solid #ffc107;
+}
+
+.motivation-encouragement p {
+    margin-bottom: 8px;
+    color: #6c5b00;
+}
+
+.next-steps {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.next-steps p {
+    color: #6c5b00;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.next-steps ul {
+    list-style: none;
+    padding: 0;
+}
+
+.next-steps li {
+    color: #6c5b00;
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.next-steps li:before {
+    content: "✓";
+    color: #28a745;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.motivation-footer {
+    border-top: 2px solid rgba(255, 193, 7, 0.3);
+    padding-top: 15px;
+}
+
+.motivation-footer p {
+    color: #6c5b00;
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+/* Animasi */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.preview-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.preview-actions button {
+    flex: 1;
+}
+
+#confirmDownload {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+#cancelDownload {
+    background: linear-gradient(135deg, #f44336 0%, #da190b 100%);
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 20px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .document-options {
+        gap: 15px;
+    }
+    
+    .document-section {
+        padding: 15px;
+    }
+    
+    /* tinggi spesifik tidak diperlukan karena aspect-ratio menjaga proporsi */
+    
+    .document-section h4 {
+        font-size: 1.1rem;
+    }
+    
+    .motivation-card {
+        padding: 20px 15px;
+    }
+    
+    .motivation-icon {
+        font-size: 2.5rem;
+    }
+    
+    .motivation-content h3 {
+        font-size: 1.2rem;
+    }
+    
+    .motivation-text {
+        font-size: 0.9rem;
+    }
+    
+    .motivation-encouragement,
+    .next-steps {
+        padding: 12px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero" aria-label="Hero">
+        <div class="hero-media"></div>
+    </section>
+
+    <div class="container">
+        <h1>Cetak Syahadah dan Sertifikat Digital</h1>
+        <form id="downloadForm">
+            <div class="form-group">
+                <label for="nameInput">Nama Lengkap:</label>
+                <input type="text" id="nameInput" placeholder="Ketik nama..." autocomplete="off">
+                <div id="suggestions" class="suggestions"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="birthDate">Tanggal Lahir:</label>
+                <input type="date" id="birthDate" required>
+            </div>
+            
+            <button type="submit" id="downloadBtn">Lihat Dokumen</button>
+        </form>
+        
+        <div id="pdfPreview" class="pdf-preview" style="display: none;">
+            <h3>Dokumen Tersedia</h3>
+            <div class="document-options">
+                <div id="sertifikatSection" class="document-section">
+                    <h4>🏆 Sertifikat</h4>
+                    <div id="sertifikatViewerWrapper" class="pdf-viewer">
+                        <canvas id="sertifikatCanvas" class="canvas-content"></canvas>
+                    </div>
+                    <button id="downloadSertifikat" class="download-btn">Download Sertifikat</button>
+                </div>
+
+                <div id="syahadahSection" class="document-section" style="display: none;">
+                    <h4>📜 Syahadah</h4>
+                    <div id="syahadahViewerWrapper" class="pdf-viewer">
+                        <iframe id="syahadahViewer" src="" class="iframe-content"></iframe>
+                    </div>
+                    <button id="downloadSyahadah" class="download-btn">Download Syahadah</button>
+                    
+                    <!-- Card motivasi untuk peserta tanpa syahadah -->
+                    <div id="motivationCard" class="motivation-card" style="display: none;">
+                        <div class="motivation-content">
+                            <div class="motivation-icon">🌟</div>
+                            <h3>Terima Kasih atas Partisipasinya!</h3>
+                            <p class="motivation-text">
+                                Mohon maaf, syahadah belum tersedia untuk Anda saat ini. 
+                                Namun, jangan berkecil hati! Perjalanan belajar adalah proses yang berkelanjutan.
+                            </p>
+                            <div class="motivation-encouragement">
+                                <p><strong>💪 Tetap Semangat!</strong></p>
+                                <p>Teruslah meningkatkan kemampuan membaca Al-Qur’an. Setiap langkah kecil yang Anda ambil adalah kemajuan yang bernilai kebaikan di sisi Allah.</p>
+                            </div>
+                            <div class="next-steps">
+                                <p><strong>📚 Langkah Selanjutnya:</strong></p>
+                                <ul>
+                                    <li>Pahami sifat-sifat huruf, hukum tajwid, serta bacaan gharib dan musykilat agar semakin mantap dalam membaca Al-Qur’an</li>
+                                    <li>Terus berlatih membaca Al-Qur’an dengan menerapkan qaidah cara membacanya</li>
+                                    <li>Jangan ragu untuk bertanya dan belajar</li>
+                                    <li>Ikuti diklat tilawati selanjutnya untuk melihat kemajuan Anda</li>                                  
+                                </ul>
+                            </div>
+                            <div class="motivation-footer">
+                                <p>🎯 <em>"Belajar adalah investasi terbaik untuk masa depan"</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="preview-actions">
+                <button id="cancelDownload">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script>
+        // Mock data peserta. Urutan array menentukan nomor halaman sertifikat (1-based)
+const pdfData = [
+{ name: "Abdu Dhohir Fatahillah", syahadah: null, birthDate: "1998-01-13" },
+{ name: "Abdul Halim", syahadah: null, birthDate: "1988-10-26" },
+{ name: "Adelia Sukma Budi Hartanti, S.M", syahadah: null, birthDate: "2001-10-10" },
+{ name: "Adi Darmawan", syahadah: null, birthDate: "1987-07-14" },
+{ name: "Agustin", syahadah: null, birthDate: "1996-08-17" },
+{ name: "Ahmad Dailami", syahadah: null, birthDate: "1979-07-13" },
+{ name: "Ahmad Suryani", syahadah: null, birthDate: "2000-01-05" },
+{ name: "Ahmad Tepu", syahadah: null, birthDate: "1985-04-12" },
+{ name: "Aida Jubaedah", syahadah: null, birthDate: "1969-12-15" },
+{ name: "Akhmad Firdaus", syahadah: null, birthDate: "1994-10-25" },
+{ name: "Akhmad Khairul Fahmi", syahadah: null, birthDate: "1998-05-20" },
+{ name: "Akhmad Multawi", syahadah: null, birthDate: "1990-10-03" },
+{ name: "Akhmad Rifani, S.ST", syahadah: null, birthDate: "1972-02-24" },
+{ name: "Alfa Nurjannah", syahadah: null, birthDate: "1995-12-21" },
+{ name: "Ali Zaenal Abidin", syahadah: null, birthDate: "2002-06-08" },
+{ name: "Alvira Amalia", syahadah: null, birthDate: "2007-08-19" },
+{ name: "Alya Azizah", syahadah: null, birthDate: "2006-07-22" },
+{ name: "Alya Zuhratun Nisa", syahadah: null, birthDate: "2002-01-13" },
+{ name: "Amelia", syahadah: null, birthDate: "1984-02-06" },
+{ name: "Anita Rahmi", syahadah: null, birthDate: "1985-06-18" },
+{ name: "Arbaiyah", syahadah: null, birthDate: "1997-10-16" },
+{ name: "Ashfi Raehani, SE", syahadah: null, birthDate: "1979-03-06" },
+{ name: "Asri Kriswulandari", syahadah: null, birthDate: "1973-04-18" },
+{ name: "Aulia Rahmah", syahadah: null, birthDate: "2006-01-14" },
+{ name: "Awaliyah", syahadah: null, birthDate: "1999-12-10" },
+{ name: "Azizah", syahadah: null, birthDate: "1989-11-10" },
+{ name: "Azizatunnafisah", syahadah: null, birthDate: "2002-02-02" },
+{ name: "Badalia Fahrina Humaira", syahadah: null, birthDate: "1998-01-12" },
+{ name: "Badarudin", syahadah: null, birthDate: "1984-11-15" },
+{ name: "Bagir Muhammad", syahadah: null, birthDate: "2003-10-29" },
+{ name: "Baiq Siti Fathimah, S.Pd", syahadah: null, birthDate: "1964-07-13" },
+{ name: "Binti Khotimah, S.Pd.I", syahadah: null, birthDate: "1969-05-27" },
+{ name: "Bukhari", syahadah: null, birthDate: "1978-05-31" },
+{ name: "Cep Mansur Jalaludin", syahadah: null, birthDate: "1996-10-25" },
+{ name: "Cica Ariska", syahadah: null, birthDate: "1999-07-13" },
+{ name: "Clara Chintya Dewi", syahadah: null, birthDate: "2007-01-08" },
+{ name: "Damayanti, S.Pd", syahadah: null, birthDate: "2000-11-28" },
+{ name: "Dessy Ayu Lazela Fitri", syahadah: null, birthDate: "2001-01-12" },
+{ name: "Desy Aulia Rahman", syahadah: null, birthDate: "2005-12-07" },
+{ name: "Dina Andayani, S.Pd", syahadah: null, birthDate: "2000-03-11" },
+{ name: "Dina Hidayatul Salamah", syahadah: null, birthDate: "2003-06-08" },
+{ name: "Dwi Ella Noviarini", syahadah: null, birthDate: "1992-11-12" },
+{ name: "Dwi Ratna Maulida,S.Pd.I.", syahadah: null, birthDate: "1983-01-27" },
+{ name: "Edy Tansil", syahadah: null, birthDate: "2000-03-14" },
+{ name: "Eka Mustika", syahadah: null, birthDate: "1990-07-21" },
+{ name: "Ella Mairatnawati", syahadah: null, birthDate: "1981-05-27" },
+{ name: "Elvana Nurlaila", syahadah: null, birthDate: "1990-05-18" },
+{ name: "Fadhila Zahra", syahadah: null, birthDate: "2007-07-13" },
+{ name: "Fahrul Rozi Maulana ", syahadah: null, birthDate: "2002-09-30" },
+{ name: "Fariati", syahadah: null, birthDate: "1974-10-02" },
+{ name: "Faridah", syahadah: null, birthDate: "1969-12-10" },
+{ name: "Fathir M. Khaikal", syahadah: null, birthDate: "2004-01-16" },
+{ name: "Fatimahul Jannah", syahadah: null, birthDate: "1969-12-02" },
+{ name: "Fatmawati. S.Ag", syahadah: null, birthDate: "1977-01-01" },
+{ name: "Fauziah", syahadah: null, birthDate: "1964-10-20" },
+{ name: "Hadiatul Adawiyah ", syahadah: null, birthDate: "1979-06-26" },
+{ name: "Haerun Nisa", syahadah: null, birthDate: "1985-05-12" },
+{ name: "Hafsari Ayu Ningtias", syahadah: null, birthDate: "2010-04-15" },
+{ name: "Hairunnisa ", syahadah: null, birthDate: "1995-05-05" },
+{ name: "Haryati", syahadah: null, birthDate: "1980-02-08" },
+{ name: "Herdiyanti", syahadah: null, birthDate: "1998-09-30" },
+{ name: "Herlinawati, S.sos", syahadah: null, birthDate: "1974-03-26" },
+{ name: "Herninawati", syahadah: null, birthDate: "1975-06-10" },
+{ name: "Hilallail, S.Pd", syahadah: null, birthDate: "1997-12-19" },
+{ name: "HJ. Gusnawati", syahadah: null, birthDate: "1972-07-01" },
+{ name: "Hj. Irliany", syahadah: null, birthDate: "1978-03-07" },
+{ name: "Hj. Jurmiah", syahadah: null, birthDate: "1963-02-02" },
+{ name: "HJ. Siti Aisyah", syahadah: null, birthDate: "1977-10-26" },
+{ name: "Ida Isnawati", syahadah: null, birthDate: "1984-11-22" },
+{ name: "Idawati", syahadah: null, birthDate: "1973-07-05" },
+{ name: "Ilda Hendevi ", syahadah: null, birthDate: "1996-12-29" },
+{ name: "Imas Mashlahah, S.Si", syahadah: null, birthDate: "1992-02-28" },
+{ name: "Indra Asmara", syahadah: null, birthDate: "1983-02-24" },
+{ name: "Indra riawan", syahadah: null, birthDate: "2008-06-03" },
+{ name: "Jailani", syahadah: null, birthDate: "1996-10-29" },
+{ name: "Jamiatul Mardiah, S. Pd", syahadah: null, birthDate: "1990-03-31" },
+{ name: "Jariah", syahadah: null, birthDate: "1996-11-10" },
+{ name: "Jariah, S.Pd, Aud", syahadah: null, birthDate: "1984-05-16" },
+{ name: "Jumantan", syahadah: null, birthDate: "1971-08-17" },
+{ name: "Jumiati", syahadah: null, birthDate: "1989-06-02" },
+{ name: "Junaidi", syahadah: null, birthDate: "1985-10-17" },
+{ name: "Kamaliah", syahadah: null, birthDate: "1970-07-15" },
+{ name: "Keyla Chusnaya Wahid", syahadah: null, birthDate: "2003-03-12" },
+{ name: "Khafifah", syahadah: null, birthDate: "1994-02-12" },
+{ name: "Kiki Mardiana", syahadah: null, birthDate: "1990-02-26" },
+{ name: "Kolilah", syahadah: null, birthDate: "2000-09-09" },
+{ name: "Kresna Firman Syah", syahadah: null, birthDate: "2002-03-23" },
+{ name: "Kurnia", syahadah: null, birthDate: "1974-10-06" },
+{ name: "Laily Hafifah", syahadah: null, birthDate: "2000-04-09" },
+{ name: "Lidiyawati", syahadah: null, birthDate: "1975-04-10" },
+{ name: "Linda Kiptiah", syahadah: null, birthDate: "1992-08-10" },
+{ name: "Linda Nurhana", syahadah: null, birthDate: "2006-08-22" },
+{ name: "Lolita Achraeny,S.Psi", syahadah: null, birthDate: "1985-03-04" },
+{ name: "Lumatul asngadiyah", syahadah: null, birthDate: "1995-03-19" },
+{ name: "M. Nashrul Fahmi", syahadah: null, birthDate: "2000-06-28" },
+{ name: "M. Nur Imansyah", syahadah: null, birthDate: "2000-12-29" },
+{ name: "M. Rezki Ramadhan", syahadah: null, birthDate: "2003-03-20" },
+{ name: "M. Syaifullah", syahadah: null, birthDate: "1977-09-28" },
+{ name: "M.Hasanul", syahadah: null, birthDate: "1984-05-21" },
+{ name: "Mahmudatus sopia", syahadah: null, birthDate: "1999-09-15" },
+{ name: "Mardiana ", syahadah: null, birthDate: "1977-05-11" },
+{ name: "Mariana ", syahadah: null, birthDate: "1985-04-06" },
+{ name: "Mariatul Adawiyah", syahadah: null, birthDate: "2002-12-31" },
+{ name: "Mariyani", syahadah: null, birthDate: "1996-06-07" },
+{ name: "Masnun Dahlia", syahadah: null, birthDate: "1977-03-06" },
+{ name: "Mastaniah, A.Ma", syahadah: null, birthDate: "1979-08-06" },
+{ name: "Miftahul Jannah", syahadah: null, birthDate: "1992-02-28" },
+{ name: "Mimi Sa’adah ", syahadah: null, birthDate: "1994-10-15" },
+{ name: "Moch. Arjun Fendi Pradana", syahadah: null, birthDate: "2004-07-12" },
+{ name: "Muh. Syar'i", syahadah: null, birthDate: "1990-12-31" },
+{ name: "Muhammad", syahadah: null, birthDate: "1991-02-10" },
+{ name: "Muhammad Hafiz Anshari", syahadah: null, birthDate: "1998-05-06" },
+{ name: "Muhammad Indra Miftakhussalam", syahadah: null, birthDate: "1999-10-23" },
+{ name: "Muhammad Ridho", syahadah: null, birthDate: "1996-02-01" },
+{ name: "Muhammad Safi'i", syahadah: null, birthDate: "1996-11-17" },
+{ name: "Muhammad Syaifullah", syahadah: null, birthDate: "1991-03-14" },
+{ name: "Muhammad Talib", syahadah: null, birthDate: "1982-07-29" },
+{ name: "Muhammad Yordani", syahadah: null, birthDate: "1983-02-13" },
+{ name: "Mukhtar Sofiyan", syahadah: null, birthDate: "1976-08-06" },
+{ name: "Mulia", syahadah: null, birthDate: "2007-09-27" },
+{ name: "Mulyati", syahadah: null, birthDate: "1975-09-12" },
+{ name: "Murliani", syahadah: null, birthDate: "1966-02-25" },
+{ name: "Murtasiah", syahadah: null, birthDate: "1971-08-28" },
+{ name: "Mustika Amani", syahadah: null, birthDate: "1986-05-12" },
+{ name: "Nahdatul Ihsan Hidayatullah", syahadah: null, birthDate: "2001-05-16" },
+{ name: "Naning Lailatul Azizah", syahadah: null, birthDate: "1991-05-15" },
+{ name: "Nida Hasanah, S. Pd", syahadah: null, birthDate: "1993-07-23" },
+{ name: "Nima", syahadah: null, birthDate: "1975-01-21" },
+{ name: "Ning Ekasari", syahadah: null, birthDate: "1983-08-22" },
+{ name: "Nirwan", syahadah: null, birthDate: "1984-03-26" },
+{ name: "Noor Hijrah", syahadah: null, birthDate: "1985-04-17" },
+{ name: "Noor Hikmah", syahadah: null, birthDate: "1987-07-07" },
+{ name: "Noor Jennah", syahadah: null, birthDate: "1975-01-05" },
+{ name: "Noor Rita Rahmah", syahadah: null, birthDate: "1985-02-11" },
+{ name: "Noor salasiah", syahadah: null, birthDate: "1983-12-12" },
+{ name: "Noorhayati", syahadah: null, birthDate: "1979-04-08" },
+{ name: "Norhana", syahadah: null, birthDate: "1979-12-01" },
+{ name: "Norlaila Hasanah", syahadah: null, birthDate: "2004-09-22" },
+{ name: "Nur Hidayah", syahadah: null, birthDate: "1986-03-12" },
+{ name: "Nur Janah", syahadah: null, birthDate: "1996-01-01" },
+{ name: "Nur Khalishatul Azmi", syahadah: null, birthDate: "2003-09-23" },
+{ name: "Nur Shifa Apreyani", syahadah: null, birthDate: "2002-04-07" },
+{ name: "Nur Shofa Ghaitsa", syahadah: null, birthDate: "2009-08-27" },
+{ name: "Nurjanah", syahadah: null, birthDate: "1988-04-18" },
+{ name: "Nurul Aulia Putri", syahadah: null, birthDate: "2001-07-28" },
+{ name: "Nurul faridah S.Pd", syahadah: null, birthDate: "1979-07-20" },
+{ name: "Nurul Hidayah,S.Pd I", syahadah: null, birthDate: "1992-02-11" },
+{ name: "Putri Amiliyani", syahadah: null, birthDate: "1995-04-30" },
+{ name: "Putri Nadiya Istiqoma, S.Pd", syahadah: null, birthDate: "1998-06-12" },
+{ name: "Rabiatul Adawiyah", syahadah: null, birthDate: "1997-11-26" },
+{ name: "Rahmat ", syahadah: null, birthDate: "2003-01-10" },
+{ name: "Raudhatul Jannah", syahadah: null, birthDate: "1996-06-04" },
+{ name: "Refa Margarita", syahadah: null, birthDate: "2002-03-20" },
+{ name: "Riana Oktaraharti", syahadah: null, birthDate: "1993-10-28" },
+{ name: "Rico Saputra", syahadah: null, birthDate: "2006-12-03" },
+{ name: "Rina Fitriani Pratiwi", syahadah: null, birthDate: "1986-05-26" },
+{ name: "Risdawati", syahadah: null, birthDate: "1997-11-11" },
+{ name: "Rizkie Amelia, S.Si", syahadah: null, birthDate: "1986-04-02" },
+{ name: "Rosita Susilawati", syahadah: null, birthDate: "1982-12-03" },
+{ name: "Rusdiana", syahadah: null, birthDate: "1972-08-16" },
+{ name: "Ruwanti Febrina", syahadah: null, birthDate: "1991-02-19" },
+{ name: "Saddam Husin", syahadah: null, birthDate: "1991-11-17" },
+{ name: "Salasiah", syahadah: null, birthDate: "1966-12-04" },
+{ name: "Saputra Adji Rachman", syahadah: null, birthDate: "1998-11-27" },
+{ name: "Sari Jumaini ", syahadah: null, birthDate: "1982-05-07" },
+{ name: "Sari Mawarni", syahadah: null, birthDate: "1982-03-17" },
+{ name: "Sirajudin", syahadah: null, birthDate: "1984-02-05" },
+{ name: "Siti Aisah", syahadah: null, birthDate: "1988-10-14" },
+{ name: "Siti Aisyah", syahadah: null, birthDate: "2003-12-23" },
+{ name: "Siti Aisyah ", syahadah: null, birthDate: "2002-08-07" },
+{ name: "Siti Hadijah", syahadah: null, birthDate: "1992-06-10" },
+{ name: "Siti Jamilah", syahadah: null, birthDate: "1984-11-09" },
+{ name: "Siti Mariani", syahadah: null, birthDate: "1988-03-23" },
+{ name: "Siti Munirah", syahadah: null, birthDate: "2001-03-19" },
+{ name: "Siti Nur Izza Afkarina", syahadah: null, birthDate: "2002-08-10" },
+{ name: "Siti Raudah", syahadah: null, birthDate: "1998-08-28" },
+{ name: "Siti Raudatul Jannah", syahadah: null, birthDate: "1977-12-10" },
+{ name: "Siti Saniati", syahadah: null, birthDate: "1973-11-20" },
+{ name: "Sitti Mislin", syahadah: null, birthDate: "1995-06-03" },
+{ name: "Sri Mawartiningsih", syahadah: null, birthDate: "1958-10-16" },
+{ name: "Sriyana", syahadah: null, birthDate: "1992-07-09" },
+{ name: "Sukardi", syahadah: null, birthDate: "1985-09-02" },
+{ name: "Sumiyati", syahadah: null, birthDate: "1973-06-09" },
+{ name: "Supriadi, S.Pd", syahadah: null, birthDate: "1993-04-23" },
+{ name: "Suprihati", syahadah: null, birthDate: "1986-09-25" },
+{ name: "Suriani", syahadah: null, birthDate: "2000-05-21" },
+{ name: "Syaiful Irwandi.S.Pd", syahadah: null, birthDate: "1993-05-15" },
+{ name: "Tazkiratun Nufus", syahadah: null, birthDate: "2002-07-22" },
+{ name: "Tiara Dewi Aisyah, S.Pd", syahadah: null, birthDate: "1999-10-21" },
+{ name: "Ummu Azkya SS. ", syahadah: null, birthDate: "2005-08-15" },
+{ name: "Wahidah", syahadah: null, birthDate: "1983-01-06" },
+{ name: "Wahyaturrahmah", syahadah: null, birthDate: "1987-05-15" },
+{ name: "Wilda Al Aluf", syahadah: null, birthDate: "2002-11-11" },
+{ name: "Wresni Tiar Rodhiyani", syahadah: null, birthDate: "1994-08-03" },
+{ name: "Yulia Wulandari", syahadah: null, birthDate: "1988-12-03" }
+];
+
+const nameInput = document.getElementById('nameInput');
+const suggestions = document.getElementById('suggestions');
+const birthDate = document.getElementById('birthDate');
+const downloadForm = document.getElementById('downloadForm');
+const pdfPreview = document.getElementById('pdfPreview');
+const syahadahSection = document.getElementById('syahadahSection');
+const sertifikatSection = document.getElementById('sertifikatSection');
+const syahadahViewer = document.getElementById('syahadahViewer');
+const sertifikatCanvas = document.getElementById('sertifikatCanvas');
+const downloadSyahadah = document.getElementById('downloadSyahadah');
+const downloadSertifikat = document.getElementById('downloadSertifikat');
+const cancelDownload = document.getElementById('cancelDownload');
+const motivationCard = document.getElementById('motivationCard');
+const syahadahViewerWrapper = document.getElementById('syahadahViewerWrapper');
+const sertifikatViewerWrapper = document.getElementById('sertifikatViewerWrapper');
+
+let selectedPerson = null;
+let currentSyahadahFile = null;
+let currentSertifikatFile = null;
+let currentSertifikatPage = 1;
+
+// Fungsi untuk menampilkan saran nama
+function showSuggestions(value) {
+    if (value.length < 3) {
+        suggestions.style.display = 'none';
+        return;
+    }
+
+    const filtered = pdfData.filter(person => 
+        person.name.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (filtered.length === 0) {
+        suggestions.style.display = 'none';
+        return;
+    }
+
+    suggestions.innerHTML = '';
+    filtered.forEach((person, index) => {
+        const div = document.createElement('div');
+        div.className = 'suggestion-item';
+        div.textContent = person.name;
+        div.addEventListener('click', () => selectPerson(person));
+        suggestions.appendChild(div);
+    });
+
+    suggestions.style.display = 'block';
+}
+
+// Fungsi untuk memilih nama
+function selectPerson(person) {
+    selectedPerson = person;
+    nameInput.value = person.name;
+    suggestions.style.display = 'none';
+}
+
+// Event listener untuk input nama
+nameInput.addEventListener('input', (e) => {
+    showSuggestions(e.target.value);
+});
+
+// Sembunyikan saran saat klik di luar
+document.addEventListener('click', (e) => {
+    if (!nameInput.contains(e.target) && !suggestions.contains(e.target)) {
+        suggestions.style.display = 'none';
+    }
+});
+
+// Handle form submission
+downloadForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    if (!selectedPerson) {
+        alert('Silakan pilih nama dari daftar!');
+        return;
+    }
+
+    if (!birthDate.value) {
+        alert('Silakan masukkan tanggal lahir!');
+        return;
+    }
+
+    // Validasi tanggal lahir
+    if (birthDate.value !== selectedPerson.birthDate) {
+        alert('Tanggal lahir tidak sesuai!');
+        return;
+    }
+
+    // Tampilkan dokumen yang tersedia
+    displayAvailableDocuments();
+});
+
+// Fungsi untuk menampilkan dokumen yang tersedia
+function displayAvailableDocuments() {
+    // Reset semua viewer dan card
+    syahadahViewer.src = '';
+    // reset canvas sertifikat
+    const ctxReset = sertifikatCanvas.getContext('2d');
+    ctxReset && ctxReset.clearRect(0, 0, sertifikatCanvas.width, sertifikatCanvas.height);
+    motivationCard.style.display = 'none';
+    downloadSyahadah.style.display = 'block';
+    syahadahViewerWrapper.style.display = 'none';
+    
+    // Sembunyikan semua section terlebih dahulu
+    syahadahSection.style.display = 'none';
+    sertifikatSection.style.display = 'none';
+    
+    // Tampilkan sertifikat (selalu ada) dari satu file multi-halaman (render satu halaman saja)
+    const pageNumber = (pdfData.findIndex(p => p.name === selectedPerson.name) + 1) || 1; // nomor urut 1-based
+    currentSertifikatPage = pageNumber;
+    currentSertifikatFile = `pdf/sertifikat.pdf`;
+    renderSertifikatPage(currentSertifikatFile, currentSertifikatPage);
+    sertifikatSection.style.display = 'block';
+    sertifikatViewerWrapper.style.display = 'block';
+    
+    // Tampilkan syahadah jika tersedia
+    if (selectedPerson.syahadah) {
+        currentSyahadahFile = `pdf/${selectedPerson.syahadah}`;
+        syahadahViewer.src = currentSyahadahFile;
+        syahadahViewerWrapper.style.display = 'block';
+        syahadahSection.style.display = 'block';
+    } else {
+        // Tampilkan card motivasi jika tidak ada syahadah
+        syahadahSection.style.display = 'block';
+        syahadahViewerWrapper.style.display = 'none'; // Sembunyikan viewer wrapper
+        motivationCard.style.display = 'block';
+        downloadSyahadah.style.display = 'none';
+    }
+    
+    // Tampilkan preview
+    pdfPreview.style.display = 'block';
+}
+
+// Download Syahadah
+downloadSyahadah.addEventListener('click', () => {
+    if (currentSyahadahFile) {
+        const link = document.createElement('a');
+        link.href = currentSyahadahFile;
+        link.download = selectedPerson.syahadah;
+        link.click();
+    }
+});
+
+// Download Sertifikat (hanya satu halaman)
+downloadSertifikat.addEventListener('click', async () => {
+    const existingPdfBytes = await fetch(currentSertifikatFile).then(res => res.arrayBuffer());
+    const srcPdf = await PDFLib.PDFDocument.load(existingPdfBytes);
+    const newPdf = await PDFLib.PDFDocument.create();
+    const [copiedPage] = await newPdf.copyPages(srcPdf, [currentSertifikatPage - 1]);
+    newPdf.addPage(copiedPage);
+    const newPdfBytes = await newPdf.save();
+    const blob = new Blob([newPdfBytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Sertifikat_${selectedPerson.name.replace(/\s+/g, '_')}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    URL.revokeObjectURL(url);
+    link.remove();
+});
+
+// Render satu halaman sertifikat ke canvas menggunakan PDF.js
+async function renderSertifikatPage(pdfUrl, pageNumber) {
+    const loadingTask = window['pdfjsLib'].getDocument(pdfUrl);
+    const pdf = await loadingTask.promise;
+    const page = await pdf.getPage(pageNumber);
+    const viewport = page.getViewport({ scale: 1.5 });
+    const canvas = sertifikatCanvas;
+    const context = canvas.getContext('2d');
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+    await page.render({ canvasContext: context, viewport }).promise;
+}
+
+// Tutup preview
+cancelDownload.addEventListener('click', () => {
+    pdfPreview.style.display = 'none';
+    syahadahViewer.src = '';
+    const ctxClear = sertifikatCanvas.getContext('2d');
+    ctxClear && ctxClear.clearRect(0, 0, sertifikatCanvas.width, sertifikatCanvas.height);
+    currentSyahadahFile = null;
+    currentSertifikatFile = null;
+});
+
+// Add this function to handle logo loading errors
+document.addEventListener('DOMContentLoaded', function() {
+    const logos = document.querySelectorAll('.logo');
+    logos.forEach(logo => {
+        logo.addEventListener('error', function() {
+            this.style.display = 'none';
+            console.warn('Logo image failed to load:', this.src);
+        });
+    });
+});
+    </script>
+</body>
+</html>
