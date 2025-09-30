@@ -1978,7 +1978,7 @@
                 
                 <div class="space-y-3">
                     <div class="radio-option" onclick="selectSyahadahStatus('no_syahadah')">
-                        <input id="noSyahadah" type="radio" name="syahadahStatus" value="no_syahadah" class="mr-3" required>
+                        <input id="noSyahadah" type="radio" name="syahadahStatus" value="no_syahadah" class="mr-3">
                         <div>
                             <div class="font-semibold">❌ Belum Mendapat Syahadah Level 1</div>
                             <div class="text-sm text-gray-600">Peserta belum pernah mendapat syahadah dari diklat Level 1 sebelumnya</div>
@@ -1986,7 +1986,7 @@
                     </div>
 
                     <div class="radio-option" onclick="selectSyahadahStatus('has_syahadah')">
-                        <input id="hasSyahadah" type="radio" name="syahadahStatus" value="has_syahadah" class="mr-3" required>
+                        <input id="hasSyahadah" type="radio" name="syahadahStatus" value="has_syahadah" class="mr-3">
                         <div>
                             <div class="font-semibold">✅ Sudah Mendapat Syahadah Level 1</div>
                             <div class="text-sm text-gray-600">Peserta sudah pernah mendapat syahadah dari diklat Level 1 sebelumnya</div>
@@ -2600,18 +2600,20 @@
             if (level === 'level2') {
 
                 level2Details.style.display = 'block';
+                // Jadikan syahadahStatus wajib saat Level 2
+                document.querySelectorAll('input[name="syahadahStatus"]').forEach(radio => { radio.required = true; });
 
             } else {
 
                 level2Details.style.display = 'none';
-
                 // Reset pilihan syahadah status jika level bukan 2
-
                 document.querySelectorAll('input[name="syahadahStatus"]').forEach(radio => {
 
                     radio.checked = false;
 
                     radio.closest('.radio-option').classList.remove('selected');
+                    // syahadahStatus tidak wajib saat Level 1
+                    radio.required = false;
 
                 });
 
@@ -3568,4 +3570,3 @@
     </script>
 
 </html>
-
