@@ -1972,6 +1972,31 @@
 
 
 
+            <!-- Level 2 Additional Info Section -->
+            <div id="level2Details" class="form-section" style="display: none;">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Informasi Tambahan Level 2 <span class="required">*</span></h3>
+                
+                <div class="space-y-3">
+                    <div class="radio-option" onclick="selectSyahadahStatus('no_syahadah')">
+                        <input id="noSyahadah" type="radio" name="syahadahStatus" value="no_syahadah" class="mr-3" required>
+                        <div>
+                            <div class="font-semibold">❌ Belum Mendapat Syahadah Level 1</div>
+                            <div class="text-sm text-gray-600">Peserta belum pernah mendapat syahadah dari diklat Level 1 sebelumnya</div>
+                        </div>
+                    </div>
+
+                    <div class="radio-option" onclick="selectSyahadahStatus('has_syahadah')">
+                        <input id="hasSyahadah" type="radio" name="syahadahStatus" value="has_syahadah" class="mr-3" required>
+                        <div>
+                            <div class="font-semibold">✅ Sudah Mendapat Syahadah Level 1</div>
+                            <div class="text-sm text-gray-600">Peserta sudah pernah mendapat syahadah dari diklat Level 1 sebelumnya</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
             <!-- Jenis Pembayaran Section -->
 
             <div class="form-section">
@@ -2566,6 +2591,46 @@
 
             });
 
+            
+
+            // Tampilkan/sembunyikan form Level 2
+
+            const level2Details = document.getElementById('level2Details');
+
+            if (level === 'level2') {
+
+                level2Details.style.display = 'block';
+
+            } else {
+
+                level2Details.style.display = 'none';
+
+                // Reset pilihan syahadah status jika level bukan 2
+
+                document.querySelectorAll('input[name="syahadahStatus"]').forEach(radio => {
+
+                    radio.checked = false;
+
+                    radio.closest('.radio-option').classList.remove('selected');
+
+                });
+
+            }
+
+        }
+
+        
+
+        function selectSyahadahStatus(status) {
+
+            document.querySelectorAll('input[name="syahadahStatus"]').forEach(radio => {
+
+                radio.checked = radio.value === status;
+
+                radio.closest('.radio-option').classList.toggle('selected', radio.checked);
+
+            });
+
         }
 
 
@@ -2900,6 +2965,26 @@
 
             }
 
+            
+
+            // Validasi Level 2 - syahadah status wajib jika level 2 dipilih
+
+            const selectedLevel = document.querySelector('input[name="level"]:checked');
+
+            if (selectedLevel && selectedLevel.value === 'level2') {
+
+                if (!document.querySelector('input[name="syahadahStatus"]:checked')) {
+
+                    missing.push('Status Syahadah Level 1 (untuk Level 2)');
+
+                    focusIf(document.querySelector('input[name="syahadahStatus"]'));
+
+                    isValid = false;
+
+                }
+
+            }
+
             if (!document.querySelector('input[name="paymentType"]:checked')) {
 
                 missing.push('Jenis Pembayaran');
@@ -3073,6 +3158,8 @@
                 organization: document.getElementById('organization').value.trim(),
 
                 level: (document.querySelector('input[name="level"]:checked')||{}).value || null,
+
+                syahadah_status: (document.querySelector('input[name="syahadahStatus"]:checked')||{}).value || null,
 
                 payment_type: (document.querySelector('input[name="paymentType"]:checked')||{}).value || null,
 
@@ -3322,7 +3409,7 @@
 
                         <div class="contact-buttons">
 
-                            <a href="https://wa.me/628114871981" target="_blank" rel="noopener noreferrer" class="contact-btn wa-btn">
+                            <a href="https://wa.me/6281253538910" target="_blank" rel="noopener noreferrer" class="contact-btn wa-btn">
 
                                 <span><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
 
