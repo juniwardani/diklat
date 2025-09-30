@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KPA Tilawati Kotabaru</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             box-sizing: border-box;
         }
-        .gradient-bg {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        .yellow-bg {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+        .header-footer {
+            background: linear-gradient(135deg, #047857 0%, #065f46 100%);
         }
         .card-hover {
             transition: all 0.3s ease;
@@ -19,21 +23,51 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        .icon-feature {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover .icon-feature {
+            transform: scale(1.1);
+        }
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        .justify-text {
+            text-align: justify;
+        }
+        .wa-btn {
+            transition: all 0.3s ease;
+        }
+        .wa-btn:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
-<body class="min-h-screen gradient-bg">
+<body class="min-h-screen yellow-bg">
     <!-- Header -->
-    <header class="bg-white shadow-lg">
+    <header class="header-footer shadow-lg sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-6">
-            <div class="flex items-center justify-center space-x-4">
-                <!-- Logo -->
-                <div class="w-16 h-16 bg-emerald-600 flex items-center justify-center overflow-hidden rounded-lg">
-                    <img src="img/logo2.jpg" alt="Logo" class="w-14 h-14 object-contain" />
-                </div>
-                
-                <div class="text-center">
-                    <h1 class="text-3xl font-bold text-emerald-800">KPA Tilawati Kotabaru</h1>
-                    <p class="text-emerald-600 text-lg">Koordinator Pengembang Al-Qur'an</p>
+            <div class="flex flex-col md:flex-row items-center justify-center">
+                <div class="flex items-center space-x-4">
+                    <!-- Logo -->
+                    <div class="w-16 h-16 bg-white flex items-center justify-center overflow-hidden rounded-lg shadow-md">
+                                           <img src="img/logo2.jpg" alt="Logo 2" class="w-12 h-12 object-contain" />
+                    </div>
+                    
+                    <div class="text-center md:text-left">
+                        <h1 class="text-2xl md:text-3xl font-bold text-white">KPA Tilawati Kotabaru</h1>
+                        <p class="text-emerald-100 text-sm md:text-lg">Koordinator Pengembang Al-Qur'an</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,97 +77,183 @@
     <main class="max-w-6xl mx-auto px-4 py-12">
         <div class="grid md:grid-cols-2 gap-8">
             <!-- Card 1: Pendaftaran Diklat -->
-            <div class="bg-white rounded-xl shadow-lg p-8 card-hover">
-                <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.168 18.477 18.582 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                        </svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Pendaftaran Diklat</h2>
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover fade-in">
+                <div class="bg-emerald-600 py-4 px-6">
+                    <h2 class="text-xl font-bold text-white flex items-center">
+                        <i class="fas fa-book-open mr-3"></i>
+                        Pendaftaran Diklat
+                    </h2>
                 </div>
                 
-                <div class="space-y-4 mb-8">
-                    <div class="bg-emerald-50 p-4 rounded-lg">
-                        <h3 class="font-semibold text-emerald-800 mb-2">Program Diklat:</h3>
-                        <p class="text-gray-700">Standarisasi Guru Al-Qur'an Metode Tilawati</p>
+                <div class="p-6">
+                    <div class="flex justify-center mb-6">
+                        <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center icon-feature">
+                            <i class="fas fa-graduation-cap text-3xl text-emerald-600"></i>
+                        </div>
                     </div>
                     
-                    <div class="bg-emerald-50 p-4 rounded-lg">
-                        <h3 class="font-semibold text-emerald-800 mb-2">Level:</h3>
-                        <p class="text-gray-700">Level 1 dan Level 2</p>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-book text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Program Diklat:</h3>
+                                <p class="text-gray-600 justify-text">Standarisasi Guru Al-Qur'an Metode Tilawati</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-layer-group text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Level:</h3>
+                                <p class="text-gray-600 justify-text">Level 1 dan Level 2</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-calendar-alt text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Tanggal Pelaksanaan:</h3>
+                                <p class="text-gray-600 font-medium justify-text">29 - 30 November 2025</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-map-marker-alt text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Tempat:</h3>
+                                <p class="text-gray-600 justify-text">Gedung Ya Tarim Serongga</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-user-tie text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Nara Hubung:</h3>
+                                <p class="text-gray-600 justify-text">Ustadzah Sulis</p>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="bg-emerald-50 p-4 rounded-lg">
-                        <h3 class="font-semibold text-emerald-800 mb-2">Tanggal Pelaksanaan:</h3>
-                        <p class="text-gray-700 font-medium">29 - 30 November 2025</p>
-                    </div>
-                    
-                    <div class="bg-emerald-50 p-4 rounded-lg">
-                        <h3 class="font-semibold text-emerald-800 mb-2">Tempat:</h3>
-                        <p class="text-gray-700">Gedung Ya Tarim Serongga</p>
+                    <div class="space-y-3">
+                        <a href="pendaftaran.html" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 btn-primary flex items-center justify-center">
+                            <i class="fas fa-edit mr-2"></i>
+                            Daftar Sekarang
+                        </a>
+                        
+                        <a href="https://wa.me/628114871981?text=Assalamualaikum%20Ustadzah%20Sulis,%20saya%20mau%20bertanya%20tentang%20diklat%20Tilawati" target="_blank" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 wa-btn flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-2"></i>
+                            Hubungi Ustadzah Sulis via WhatsApp
+                        </a>
                     </div>
                 </div>
-                
-                <a href="pendaftaran.html" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-300 transform hover:scale-105 flex items-center justify-center">
-                    <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                    </svg>
-                    Daftar Sekarang
-                </a>
-                
             </div>
 
             <!-- Card 2: Download Sertifikat -->
-            <div class="bg-white rounded-xl shadow-lg p-8 card-hover">
-                <div class="text-center mb-6">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Sertifikat & Syahadah</h2>
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover fade-in" style="animation-delay: 0.2s;">
+                <div class="bg-blue-600 py-4 px-6">
+                    <h2 class="text-xl font-bold text-white flex items-center">
+                        <i class="fas fa-certificate mr-3"></i>
+                        Sertifikat & Syahadah
+                    </h2>
                 </div>
                 
-                <div class="space-y-4 mb-6">
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <h3 class="font-semibold text-blue-800 mb-3">Diklat Standarisasi Guru Al-Qur'an Metode Tilawati Level 1</h3>
-                        <p class="text-gray-700 mb-1">📅 Tanggal: 27 – 28 September 2025</p>
-                        <p class="text-gray-700">📍 Tempat: Masjid Kapal Pesiar Siring Laut</p>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-gray-800 mb-3">Keterangan:</h4>
-                        <div class="space-y-3 text-sm text-gray-700">
-                            <p>• Sertifikat merupakan bentuk penghargaan yang diberikan kepada seluruh peserta yang telah berpartisipasi dalam kegiatan ini.</p>
-                            
-                            <p>• Syahadah adalah dokumen resmi yang diterbitkan oleh Tilawati Pusat bagi peserta yang telah memperoleh predikat Al-Qur'an pada saat Munaqasyah.</p>
-                            
-                            <p>• Syahadah dilengkapi dengan barcode terpusat, sehingga apabila terdapat pihak yang mencoba melakukan pemalsuan, akan mudah terdeteksi.</p>
-                            
-                            <p>• Tilawati Pusat berhak menempuh jalur hukum apabila ditemukan adanya tindak pemalsuan.</p>
-                            
-                            <p class="font-medium text-red-600">• Masa berlaku Syahadah adalah 2 (dua) tahun sejak tanggal diterbitkan.</p>
+                <div class="p-6">
+                    <div class="flex justify-center mb-6">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center icon-feature">
+                            <i class="fas fa-award text-3xl text-blue-600"></i>
                         </div>
                     </div>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h3 class="font-semibold text-blue-800 mb-2">Diklat Standarisasi Guru Al-Qur'an Metode Tilawati Level 1</h3>
+                            <div class="flex items-center text-gray-700 mb-1">
+                                <i class="fas fa-calendar-day mr-2 text-blue-600"></i>
+                                <span>27 – 28 September 2025</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-location-dot mr-2 text-blue-600"></i>
+                                <span>Masjid Kapal Pesiar Siring Laut</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-info-circle mr-2 text-gray-600"></i>
+                                Keterangan:
+                            </h4>
+                            <div class="space-y-3 text-sm text-gray-700">
+                                <div class="flex">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <p class="justify-text">Sertifikat merupakan bentuk penghargaan yang diberikan kepada seluruh peserta yang telah berpartisipasi dalam kegiatan ini.</p>
+                                </div>
+                                
+                                <div class="flex">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <p class="justify-text">Syahadah adalah dokumen resmi yang diterbitkan oleh Tilawati Pusat bagi peserta yang telah memperoleh predikat Al-Qur'an pada saat Munaqasyah.</p>
+                                </div>
+                                
+                                <div class="flex">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <p class="justify-text">Syahadah dilengkapi dengan barcode terpusat, sehingga apabila terdapat pihak yang mencoba melakukan pemalsuan, akan mudah terdeteksi.</p>
+                                </div>
+                                
+                                <div class="flex">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <p class="justify-text">Tilawati Pusat berhak menempuh jalur hukum apabila ditemukan adanya tindak pemalsuan.</p>
+                                </div>
+                                
+                                <div class="flex">
+                                    <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-2"></i>
+                                    <p class="font-medium text-red-600 justify-text">Masa berlaku Syahadah adalah 2 (dua) tahun sejak tanggal diterbitkan.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="syahadah.html" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 btn-primary flex items-center justify-center">
+                        <i class="fas fa-download mr-2"></i>
+                        Download Sertifikat & Syahadah
+                    </a>
                 </div>
-                
-                <a href="syahadah.html" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition duration-300 transform hover:scale-105 flex items-center justify-center">
-                    <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                    </svg>
-                    Download Sertifikat & Syahadah
-                </a>
-                
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-emerald-800 text-white py-8 mt-16">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <p class="text-emerald-200">&copy; 2024 KPA Tilawati Kotabaru. Semua hak dilindungi.</p>
-            <p class="text-emerald-300 text-sm mt-2">Koordinator Pengembang Al-Qur'an Tilawati</p>
+    <footer class="header-footer text-white py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-emerald-100">&copy; 2024 KPA Tilawati Kotabaru. Semua hak dilindungi.</p>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="#" class="text-emerald-200 hover:text-white transition-colors">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                    </a>
+                    <a href="#" class="text-emerald-200 hover:text-white transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-emerald-200 hover:text-white transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-emerald-200 hover:text-white transition-colors">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
+</body>
 </html>
