@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPA Tilawati Kotabaru - Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --hijau-utama: #1e7e34;
+            --hijau-muda: #28a745;
+            --hijau-paling-muda: #d4edda;
+            --kuning-utama: #ffc107;
+            --kuning-muda: #fff3cd;
+            --putih: #ffffff;
+            --hitam: #212529;
+            --abu-abu: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--abu-abu);
+            color: var(--hitam);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+            background-color: var(--kuning-utama);
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-direction: column;
+            background-color: var(--hijau-utama);
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            gap: 0;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            z-index: 999;
+        }
+
+        nav ul.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        nav ul li {
+            margin: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul li:last-child {
+            border-bottom: none;
+        }
+
+        nav ul li a {
+            color: var(--putih);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+            display: block;
+            padding: 15px 0;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active {
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--kuning-utama);
+        }
+
+        /* Special style for Pendaftaran Diklat link */
+        nav ul li a.highlight {
+            background-color: var(--kuning-utama);
+            color: var(--hitam);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            margin: 10px 20px;
+            display: inline-block;
+        }
+
+        nav ul li a.highlight:hover {
+            background-color: var(--putih);
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1002;
+            margin-left: 20px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--putih);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+        }
+
+        /* Profile Section */
+        .profile {
+            padding: 60px 0;
+            background-color: var(--hijau-paling-muda);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--hijau-utama);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--kuning-utama);
+        }
+
+        /* Management Team */
+        .management-team {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .management-team img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .management-team h3 {
+            font-size: 1.5rem;
+            color: var(--hijau-utama);
+            margin-bottom: 15px;
+        }
+
+        /* About KPA Tilawati */
+        .about-kpa {
+            background-color: var(--putih);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .about-kpa h3 {
+            font-size: 1.5rem;
+            color: var(--hijau-utama);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .about-kpa p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+
+        /* Office Maps */
+        .office-maps {
+            margin-bottom: 40px;
+        }
+
+        .office-maps h3 {
+            font-size: 1.5rem;
+            color: var(--hijau-utama);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .maps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .map-card {
+            background-color: var(--putih);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-card h4 {
+            font-size: 1.2rem;
+            color: var(--hijau-utama);
+            padding: 15px;
+            background-color: var(--hijau-paling-muda);
+            margin: 0;
+            text-align: center;
+        }
+
+        .map-container {
+            position: relative;
+            height: 0;
+            padding-bottom: 56.25%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Contact Persons */
+        .contact-persons {
+            margin-bottom: 20px;
+        }
+
+        .contact-persons h3 {
+            font-size: 1.5rem;
+            color: var(--hijau-utama);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background-color: var(--putih);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-card i {
+            font-size: 2rem;
+            color: var(--hijau-utama);
+            margin-bottom: 15px;
+        }
+
+        .contact-card h4 {
+            font-size: 1.2rem;
+            color: var(--hijau-utama);
+            margin-bottom: 10px;
+        }
+
+        .contact-card p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .contact-card .position {
+            font-weight: 600;
+            color: var(--hijau-utama);
+            margin-bottom: 10px;
+        }
+
+        .wa-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25D366;
+            color: var(--putih);
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .wa-link:hover {
+            background-color: #128C7E;
+            transform: translateY(-3px);
+        }
+
+        .wa-link i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        /* Footer Styles - Modern & Clean (sesuai header.html) */
+        footer {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 50px;
+        }
+
+        .footer-brand {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .footer-brand .logo-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand .logo-wrapper img {
+            height: 60px;
+            background-color: var(--kuning-utama);
+            border-radius: 8px;
+            padding: 5px;
+            margin-right: 15px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+        }
+
+        .footer-contact {
+            flex: 1;
+            max-width: 450px;
+            text-align: right;
+        }
+
+        .footer-contact h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--kuning-utama);
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .contact-item .contact-icon {
+            color: var(--kuning-utama);
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .contact-item .contact-text a {
+            color: var(--putih);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item .contact-text a:hover {
+            color: var(--kuning-utama);
+            text-decoration: underline;
+        }
+
+        .copyright-bar {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--hijau-utama);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 20px 0;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-nav {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="img/logo2.jpg" alt="Logo KPA Tilawati">
+                    <h1>KPA Tilawati Kotabaru</h1>
+                </div>
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="index.html" class="nav-link">Beranda</a></li>
+                        <li><a href="profile.html" class="nav-link active">Profile</a></li>
+                        <li><a href="produk.html" class="nav-link">Produk Tilawati</a></li>
+                        <li><a href="registrasi.html" class="nav-link highlight">Pendaftaran Diklat</a></li>
+                        <li><a href="donasi.html" class="nav-link">Donasi</a></li>
+                    </ul>
+                    <div class="menu-toggle" id="menu-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Profile Section -->
+        <section class="profile">
+            <div class="container">
+                <div class="section-title">
+                    <h2>KPA Tilawati Kotabaru</h2>
+                </div>
+                
+                <!-- Management Team -->
+                <div class="management-team">
+                    <img src="kpa.jpg" alt="Pengurus KPA Tilawati Kotabaru">
+                    <h3>Pengurus KPA Tilawati Kotabaru</h3>
+                </div>
+                
+                <!-- About KPA Tilawati -->
+                <div class="about-kpa">
+                    <h3>Profil</h3>
+                    <p>KPA Tilawati Kotabaru adalah lembaga yang menjadi pusat koordinasi pembinaan, pelatihan, dan pengembangan metode Tilawati di Kabupaten Kotabaru. Sebagai bagian dari jaringan pendidikan Al-Qur'an Tilawati, lembaga ini hadir untuk memperkuat peran guru Al-Qur'an dalam mendidik generasi Qur'ani yang mampu membaca Al-Qur'an dengan baik, benar, dan sesuai kaidah tajwid.</p>
+                    
+                    <p>Melalui berbagai program seperti pelatihan guru, workshop metodologi, dan pendampingan lembaga pendidikan, KPA Tilawati Kotabaru berkomitmen meningkatkan kualitas pengajaran Al-Qur'an di masyarakat. Upaya ini diharapkan mampu mencetak lebih banyak guru yang kompeten serta santri yang terampil dalam membaca Al-Qur'an dengan lancar dan tartil.</p>
+                    
+                    <p>Metode Tilawati berpegang pada sanad bacaan Al-Qur'an riwayat Imam Hafs bin Sulayman dari gurunya, Imam 'Asim al-Kufi, yang bersambung hingga Rasulullah ﷺ. Dengan sanad yang jelas dan terjaga, KPA Tilawati Kotabaru menanamkan keyakinan bahwa setiap guru dan santri yang belajar serta mengajarkan Al-Qur'an berada dalam mata rantai keilmuan yang sahih, sehingga terjamin keaslian dan kemurnian bacaan Al-Qur'an.</p>
+                    
+                    <p>Harapan kami, keberadaan KPA Tilawati Kotabaru dapat memberi manfaat luas bagi masyarakat, khususnya di Bumi Saijaan. Semoga metode Tilawati menjadi sarana penguatan pendidikan Al-Qur'an, melahirkan generasi yang cinta Al-Qur'an, serta membawa keberkahan bagi Kotabaru.</p>
+                </div>
+                        
+                
+                <!-- Office Maps -->
+                <div class="office-maps">
+                    <h3>Sekretariat KPA Tilawati Kotabaru</h3>
+                    <div class="maps-grid">
+                        <div class="map-card">
+                            <h4>Sekretariat Kotabaru Darat</h4>
+                            <div class="map-container">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.6513442162736!2d115.98307740000001!3d-3.1860542000000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2def473ef6dd282f%3A0x917d2fa0235d1dc5!2sMAJELIS%20TA&#39;LIM%20YATARIM!5e0!3m2!1sid!2sid!4v1759761290264!5m2!1sid!2sid" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+
+                            </div>
+                        </div>
+                        <div class="map-card">
+                            <h4>Sekretariat Pulau Laut</h4>
+                            <div class="map-container">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1991.6999646825063!2d116.2157247279474!3d-3.250366941202616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2def31004ebe3a31%3A0xe95815229d1bc14a!2sRumah%20Tahfidz%20Saijaan%20Kotabaru!5e0!3m2!1sid!2sid!4v1759761544057!5m2!1sid!2sid" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Persons -->
+                <div class="contact-persons">
+                    <h3>Kontak Person KPA Tilawati Kotabaru</h3>
+                    <div class="contacts-grid">
+                        <div class="contact-card">
+                            <i class="fas fa-user"></i>
+                            <h4>Ustadz H. Heriyanto, M.Pd</h4>
+                            <p class="position">Ketua KPA Tilawati Kotabaru</p>
+                            <p>Wilayah Layanan: Kotabaru Darat (Kec. Hampang, Kelumpang Hilir, Pamukan Barat, Sungai Durian dan Sekitarnya)</p>
+                            <a href="https://wa.me/6281253538910" class="wa-link" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+                            </a>
+                        </div>
+                        <div class="contact-card">
+                            <i class="fas fa-user"></i>
+                            <h4>Ustadz Abdur Rahim, S.Pd.I</h4>
+                            <p class="position">Koordinator Pulau Laut</p>
+                            <p>Wilayah Layanan: Pulau Laut (Pulau Laut Utara, Pulau Laut Tengah, Sebuku dan Sekitarnya)</p>
+                            <a href="https://wa.me/6285248462707" class="wa-link" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer - Modern (sesuai header.html) -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo-wrapper">
+                        <img src="img/logo2.jpg" alt="Logo KPA Tilawati">
+                        <h3>KPA Tilawati Kotabaru</h3>
+                    </div>
+                    <p>
+                        Lembaga yang berfokus pada pembinaan, pelatihan, dan pengembangan metode Tilawati bagi guru Al-Qur’an, agar proses pembelajaran lebih mudah, menyenangkan, dan sesuai kaidah tajwid.
+                    </p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Kami</h4>
+                    <ul class="contact-list">
+                        <li class="contact-item">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <span class="contact-text">Jl. Ahmad Yani Gang Empat Lima No.RT. 05, Tegal Rejo, Kec. Kelumpang Hilir, Kab. Kotabaru, Kalimantan Selatan 72161</span>
+                        </li>
+                        <li class="contact-item">
+                            <i class="fas fa-phone contact-icon"></i>
+                            <span class="contact-text">
+                                <a href="mailto:tilawatiktb@gmail.com">tilawatiktb@gmail.com</a> |
+                                <a href="https://wa.me/6281256568899" target="_blank">(+62) 812-5353-8910</a> |
+                                <a href="https://wa.me/628125063356" target="_blank">(+62) 852-4846-2707</a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-bar">
+            <p>&copy; 2023 KPA Tilawati Kotabaru. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        // Menu Toggle
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPA Tilawati Kotabaru - Donasi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --hijau-utama: #1e7e34;
+            --hijau-muda: #28a745;
+            --hijau-paling-muda: #d4edda;
+            --kuning-utama: #ffc107;
+            --kuning-muda: #fff3cd;
+            --putih: #ffffff;
+            --hitam: #212529;
+            --abu-abu: #f8f9fa;
+            --abu-abu-gelap: #e9ecef;
+            --biru-muda: #e3f2fd;
+            --gradient-hijau: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--abu-abu);
+            color: var(--hitam);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+            background-color: var(--kuning-utama);
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-direction: column;
+            background-color: var(--hijau-utama);
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            gap: 0;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            z-index: 999;
+        }
+
+        nav ul.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        nav ul li {
+            margin: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul li:last-child {
+            border-bottom: none;
+        }
+
+        nav ul li a {
+            color: var(--putih);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+            display: block;
+            padding: 15px 0;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active {
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--kuning-utama);
+        }
+
+        nav ul li a.highlight {
+            background-color: var(--kuning-utama);
+            color: var(--hitam);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            margin: 10px 20px;
+            display: inline-block;
+        }
+
+        nav ul li a.highlight:hover {
+            background-color: var(--putih);
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1002;
+            margin-left: 20px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--putih);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+        }
+
+        /* Donation Section */
+        .donation {
+            padding: 10px 0;
+            background-color: var(--hijau-paling-muda);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--hijau-utama);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--kuning-utama);
+        }
+
+        .donation-intro {
+            background: var(--gradient-hijau);
+            border-radius: 15px;
+            padding: 30px;
+            color: var(--putih);
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .donation-intro h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .donation-intro p {
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .donation-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .donation-method {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s;
+        }
+
+        .donation-method:hover {
+            transform: translateY(-5px);
+        }
+
+        .donation-method-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .donation-method-header i {
+            font-size: 1.8rem;
+            margin-right: 15px;
+        }
+
+        .donation-method-header h4 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        /* Bank Info - Simplified Design */
+        .bank-card {
+            background-color: var(--putih);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .bank-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .bank-header {
+            background: var(--gradient-hijau);
+            padding: 20px;
+            color: var(--putih);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bank-logo {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bank-logo i {
+            font-size: 2.5rem;
+        }
+
+        .bank-body {
+            padding: 25px;
+        }
+
+        .account-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--hijau-paling-muda);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .account-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--hijau-utama);
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-icon-btn {
+            width: 40px;
+            height: 40px;
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        .copy-icon-btn:hover {
+            background-color: var(--hijau-muda);
+            transform: scale(1.1);
+        }
+
+        .copy-icon-btn i {
+            font-size: 1.1rem;
+        }
+
+        .account-name {
+            text-align: center;
+            font-size: 1rem;
+            color: var(--hitam);
+            margin-bottom: 15px;
+        }
+
+        .account-name strong {
+            color: var(--hijau-utama);
+        }
+
+        /* WhatsApp Contact Card */
+        .wa-contact-card {
+            background-color: var(--putih);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .wa-contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .wa-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .wa-icon i {
+            font-size: 2.5rem;
+            color: var(--putih);
+        }
+
+        .wa-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--hijau-utama);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .wa-description {
+            font-size: 0.95rem;
+            color: var(--hitam);
+            text-align: center;
+            margin-bottom: 20px;
+            max-width: 400px;
+        }
+
+        .wa-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25D366;
+            color: var(--putih);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+
+        .wa-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .wa-button i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+        .confirmation-section {
+            background-color: var(--putih);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .confirmation-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .confirmation-title h3 {
+            font-size: 1.6rem;
+            color: var(--hijau-utama);
+            margin-bottom: 8px;
+        }
+
+        .confirmation-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--hijau-utama);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--hijau-utama);
+            box-shadow: 0 0 0 3px rgba(30, 126, 52, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            background: var(--gradient-hijau);
+            color: var(--putih);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(30, 126, 52, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(30, 126, 52, 0.4);
+        }
+
+        .btn i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        /* Join Supporter Section */
+        .join-supporter-section {
+            background-color: var(--kuning-muda);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .join-supporter-title {
+            font-size: 1.8rem;
+            color: var(--hijau-utama);
+            margin-bottom: 15px;
+        }
+
+        .join-supporter-description {
+            font-size: 1rem;
+            color: var(--hitam);
+            margin-bottom: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .join-supporter-btn {
+            display: inline-flex;
+            align-items: center;
+            background: var(--gradient-hijau);
+            color: var(--putih);
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(30, 126, 52, 0.3);
+        }
+
+        .join-supporter-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(30, 126, 52, 0.4);
+        }
+
+        .join-supporter-btn i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        .supporters-section {
+            margin-top: 50px;
+            margin-bottom: 80px;
+        }
+
+        .supporters-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .supporters-title h3 {
+            font-size: 1.6rem;
+            color: var(--hijau-utama);
+            margin-bottom: 8px;
+        }
+
+        .supporters-subtitle {
+            color: var(--hitam);
+            font-size: 1rem;
+        }
+
+        .supporters-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .supporter-card {
+            background-color: var(--putih);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .supporter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-hijau);
+        }
+
+        .supporter-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .supporter-logo {
+            width: 100px;
+            height: 100px;
+            background-color: var(--hijau-paling-muda);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .supporter-card:hover .supporter-logo {
+            transform: scale(1.05);
+        }
+
+        .supporter-logo img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .supporter-name {
+            font-size: 0.85rem;
+            color: var(--hijau-utama);
+            font-weight: 600;
+            line-height: 1.3;
+            text-align: center;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--putih);
+            border-radius: 15px;
+            max-width: 550px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transform: translateY(-30px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid var(--abu-abu-gelap);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--hijau-utama);
+            margin: 0;
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--hitam);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close-btn:hover {
+            background-color: var(--abu-abu-gelap);
+            color: var(--hijau-utama);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--hitam);
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .modal-role {
+            font-weight: 600;
+            color: var(--hijau-utama);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--gradient-hijau);
+            color: var(--putih);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease-in-out;
+            font-size: 0.95rem;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification i {
+            margin-right: 8px;
+        }
+
+        /* Footer Styles - Modern & Clean (sesuai header.html) */
+        footer {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 50px;
+        }
+
+        .footer-brand {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .footer-brand .logo-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand .logo-wrapper img {
+            height: 60px;
+            background-color: var(--kuning-utama);
+            border-radius: 8px;
+            padding: 5px;
+            margin-right: 15px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+        }
+
+        .footer-contact {
+            flex: 1;
+            max-width: 450px;
+            text-align: right;
+        }
+
+        .footer-contact h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--kuning-utama);
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .contact-item .contact-icon {
+            color: var(--kuning-utama);
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .contact-item .contact-text a {
+            color: var(--putih);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item .contact-text a:hover {
+            color: var(--kuning-utama);
+            text-decoration: underline;
+        }
+
+        .copyright-bar {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--hijau-utama);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 20px 0;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-nav {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .donation-intro {
+                padding: 25px 20px;
+            }
+
+            .donation-intro h3 {
+                font-size: 1.5rem;
+            }
+
+            .donation-method {
+                padding: 15px;
+            }
+
+            .donation-method-header i {
+                font-size: 1.5rem;
+            }
+
+            .donation-method-header h4 {
+                font-size: 1.1rem;
+            }
+
+            .bank-header {
+                padding: 15px;
+            }
+
+            .bank-logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .bank-logo i {
+                font-size: 2rem;
+            }
+
+            .bank-body {
+                padding: 15px;
+            }
+
+            .account-info {
+                padding: 12px 15px;
+            }
+
+            .account-number {
+                font-size: 1rem;
+            }
+
+            .copy-icon-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .copy-icon-btn i {
+                font-size: 1rem;
+            }
+
+            .wa-contact-card {
+                padding: 20px;
+            }
+
+            .wa-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .wa-icon i {
+                font-size: 2rem;
+            }
+
+            .wa-title {
+                font-size: 1.1rem;
+            }
+
+            .wa-description {
+                font-size: 0.9rem;
+            }
+
+            .confirmation-section {
+                padding: 25px 20px;
+            }
+
+            .confirmation-title h3 {
+                font-size: 1.4rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 0.9rem;
+                padding: 8px 10px;
+            }
+
+            .btn {
+                font-size: 0.95rem;
+                padding: 10px 20px;
+            }
+
+            .join-supporter-section {
+                padding: 25px 20px;
+            }
+
+            .join-supporter-title {
+                font-size: 1.5rem;
+            }
+
+            .join-supporter-description {
+                font-size: 0.95rem;
+            }
+
+            .join-supporter-btn {
+                font-size: 1rem;
+                padding: 12px 25px;
+            }
+
+            .supporter-logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .supporter-name {
+                font-size: 0.8rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+
+            .modal-header {
+                padding: 20px;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="https://tilawatiktb.vercel.app/img/logo2.jpg" alt="Logo KPA Tilawati">
+                    <h1>KPA Tilawati Kotabaru</h1>
+                </div>
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="index.html" class="nav-link">Beranda</a></li>
+                        <li><a href="profile.html" class="nav-link">Profile</a></li>
+                        <li><a href="produk.html" class="nav-link">Produk Tilawati</a></li>
+                        <li><a href="registrasi.html" class="nav-link highlight">Pendaftaran Diklat</a></li>
+                        <li><a href="donasi.html" class="nav-link active">Donasi</a></li>
+                    </ul>
+                    <div class="menu-toggle" id="menu-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Donation Section -->
+        <section class="donation">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Donasi KPA Tilawati Kotabaru</h2>
+                </div>
+                
+                <div class="donation-intro">
+                    <h3>Support Our Mission</h3>
+                    <p>Partisipasi Anda dalam donasi akan membantu kami mencetak generasi Qur'ani yang mampu membaca, memahami, dan mengamalkan Al-Qur'an dalam kehidupan sehari-hari.</p>
+                    
+                    <div class="donation-methods">
+                        <div class="donation-method">
+                            <div class="donation-method-header">
+                                <i class="fas fa-university"></i>
+                                <h4>Transfer Bank</h4>
+                            </div>
+                            
+                            <div class="bank-card">
+                                <div class="bank-header">
+                                    <div class="bank-logo">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="bank-body">
+                                    <div class="account-info">
+                                        <div class="account-number">1234567890</div>
+                                        <button class="copy-icon-btn" id="copy-btn" title="Salin Nomor Rekening">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="account-name">
+                                        <strong>Atas Nama:</strong> Yayasan KPA Tilawati Kotabaru
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="donation-method">
+                            <div class="donation-method-header">
+                                <i class="fas fa-hand-holding-heart"></i>
+                                <h4>Donasi Langsung</h4>
+                            </div>
+                            
+                            <div class="wa-contact-card">
+                                <div class="wa-icon">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <h3 class="wa-title">Hubungi Kami via WhatsApp</h3>
+                                <p class="wa-description">Untuk donasi langsung, silakan hubungi nomor WhatsApp kami di bawah ini:</p>
+                                
+                                <a href="https://wa.me/6281253538910" class="wa-button" target="_blank">
+                                    <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="confirmation-section">
+                    <div class="confirmation-title">
+                        <h3>Konfirmasi Donasi Anda</h3>
+                        <p>Silakan isi form di bawah ini untuk mengonfirmasi donasi Anda</p>
+                    </div>
+                    
+                    <form class="confirmation-form" id="confirmation-form">
+                        <div class="form-group">
+                            <label for="nama">Nama Lengkap</label>
+                            <input type="text" id="nama" name="nama" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telepon">No. Telepon</label>
+                            <input type="tel" id="telepon" name="telepon" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="metode">Metode Donasi</label>
+                            <select id="metode" name="metode" required>
+                                <option value="">-- Pilih Metode --</option>
+                                <option value="transfer">Transfer Bank</option>
+                                <option value="langsung">Donasi Langsung</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="jumlah">Jumlah Donasi</label>
+                            <input type="number" id="jumlah" name="jumlah" min="10000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pesan">Pesan (Opsional)</label>
+                            <textarea id="pesan" name="pesan"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn">
+                            <i class="fab fa-whatsapp"></i> Kirim Konfirmasi
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Join Supporter Section -->
+                <div class="join-supporter-section">
+                    <h3 class="join-supporter-title">Bergabung Menjadi Pendukung</h3>
+                    <p class="join-supporter-description">
+                        Bergabunglah dengan kami sebagai pendukung setia KPA Tilawati Kotabaru. Dukungan Anda tidak hanya berupa donasi, 
+                        tetapi juga doa, partisipasi, dan kepedulian terhadap perkembangan pendidikan Al-Qur'an di daerah kami.
+                    </p>
+                    <a href="https://wa.me/6281253538910?text=Halo%20KPA%20Tilawati%20Kotabaru,%20saya%20ingin%20menawarkan%20diri%20untuk%20menjadi%20pendukung.%20Mohon%20informasi%20mengenai%20cara%20bergabung." class="join-supporter-btn" target="_blank">
+                        <i class="fas fa-handshake"></i> Bergabung Menjadi Pendukung
+                    </a>
+                </div>
+                
+                <div class="supporters-section">
+                    <div class="supporters-title">
+                        <h3>Terima Kasih Kepada Para Pendukung</h3>
+                        <p class="supporters-subtitle">Tanpa dukungan Anda, kami tidak bisa berkembang seperti sekarang</p>
+                    </div>
+                    
+                    <div class="supporters-grid" id="supporters-grid">
+                        <!-- Supporters will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Supporter Modal -->
+    <div class="modal-overlay" id="supporter-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Nama Pendukung</h3>
+                <button class="modal-close-btn" id="modal-close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-role" id="modal-role">Peran Pendukung</div>
+                <p class="modal-description" id="modal-description">
+                    Deskripsi lengkap mengenai peran dan kontribusi pendukung akan ditampilkan di sini.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">No. rekening berhasil disalin!</span>
+    </div>
+
+    <!-- Footer - Modern (sesuai header.html) -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo-wrapper">
+                        <img src="https://tilawatiktb.vercel.app/img/logo2.jpg" alt="Logo KPA Tilawati">
+                        <h3>KPA Tilawati Kotabaru</h3>
+                    </div>
+                    <p>
+                        Lembaga yang berfokus pada pembinaan, pelatihan, dan pengembangan metode Tilawati bagi guru Al-Qur'an, agar proses pembelajaran lebih mudah, menyenangkan, dan sesuai kaidah tajwid.
+                    </p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Kami</h4>
+                    <ul class="contact-list">
+                        <li class="contact-item">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <span class="contact-text">Jl. Ahmad Yani Gang Empat Lima No.RT. 05, Tegal Rejo, Kec. Kelumpang Hilir, Kab. Kotabaru, Kalimantan Selatan 72161</span>
+                        </li>
+                        <li class="contact-item">
+                            <i class="fas fa-phone contact-icon"></i>
+                            <span class="contact-text">
+                                <a href="mailto:tilawatiktb@gmail.com">tilawatiktb@gmail.com</a> |
+                                <a href="https://wa.me/6281256568899" target="_blank">(+62) 812-5353-8910</a> |
+                                <a href="https://wa.me/628125063356" target="_blank">(+62) 852-4846-2707</a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-bar">
+            <p>&copy; 2023 KPA Tilawati Kotabaru. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const copyBtn = document.getElementById('copy-btn');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+        const confirmationForm = document.getElementById('confirmation-form');
+        const supportersGrid = document.getElementById('supporters-grid');
+        
+        // Modal Elements
+        const modalOverlay = document.getElementById('supporter-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalRole = document.getElementById('modal-role');
+        const modalDescription = document.getElementById('modal-description');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+
+        // Supporters data in JavaScript array with role information
+        const supporters = [
+            {
+                name: "Yayasan Pendidikan Al-Qur'an Indonesia",
+                logo: "https://picsum.photos/seed/supporter1/200/200.jpg",
+                role: "Pendukung Utama Program Beasiswa",
+                description: "Yayasan Pendidikan Al-Qur'an Indonesia telah menjadi mitra utama kami dalam program beasiswa bagi guru-guru Tilawati dari daerah terpencil. Melalui dukungan mereka, puluhan guru telah mendapatkan pelatihan bersertifikat yang meningkatkan kualitas mengajar mereka di masing-masing wilayah."
+            },
+            {
+                name: "Bank Kalimantan Syariah",
+                logo: "https://picsum.photos/seed/supporter2/200/200.jpg",
+                role: "Partner Keuangan dan Pengembangan",
+                description: "Bank Kalimantan Syariah tidak hanya memberikan dukungan finansial, tetapi juga membantu kami dalam mengelola donasi dengan transparan dan profesional. Mereka juga aktif dalam program literasi keuangan untuk pengurus yayasan dan guru-guru Tilawati."
+            },
+            {
+                name: "PT. Borneo Indah Mandiri",
+                logo: "https://picsum.photos/seed/supporter3/200/200.jpg",
+                role: "Sponsor Fasilitas dan Infrastruktur",
+                description: "PT. Borneo Indah Mandiri telah membantu kami dalam menyediakan fasilitas belajar yang memadai, termasuk perbaikan ruang kelas, penyediaan audio-visual learning tools, dan pengembangan perpustakaan mini di beberapa titik belajar Tilawati."
+            },
+            {
+                name: "Masjid Agung Kotabaru",
+                logo: "https://picsum.photos/seed/supporter4/200/200.jpg",
+                role: "Partner Spiritual dan Lokasi Kegiatan",
+                description: "Masjid Agung Kotabaru menjadi partner spiritual kami yang menyediakan lokasi untuk berbagai kegiatan besar, seperti wisuda santri, pelatihan intensif, dan tabligh akbar. Mereka juga membantu menyebarkan informasi program-program kami kepada jamaah."
+            }
+        ];
+
+        // Populate supporters grid
+        function populateSupporters() {
+            supportersGrid.innerHTML = '';
+            
+            supporters.forEach((supporter, index) => {
+                const card = document.createElement('div');
+                card.className = 'supporter-card';
+                card.dataset.index = index; // Store index for later use
+                
+                card.innerHTML = `
+                    <div class="supporter-logo">
+                        <img src="${supporter.logo}" alt="${supporter.name}">
+                    </div>
+                    <div class="supporter-name">${supporter.name}</div>
+                `;
+                
+                // Add click event listener to open modal
+                card.addEventListener('click', () => {
+                    openModal(supporter);
+                });
+                
+                supportersGrid.appendChild(card);
+            });
+        }
+
+        // Open modal with supporter information
+        function openModal(supporter) {
+            modalTitle.textContent = supporter.name;
+            modalRole.textContent = supporter.role;
+            modalDescription.textContent = supporter.description;
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        // Close modal
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        // Menu Toggle
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Copy button functionality
+        copyBtn.addEventListener('click', () => {
+            const bankInfo = "1234567890";
+            
+            navigator.clipboard.writeText(bankInfo).then(() => {
+                // Show notification
+                notificationText.textContent = 'No. rekening berhasil disalin!';
+                notification.classList.add('show');
+                
+                // Hide notification after 3 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        });
+
+        // Form submission
+        confirmationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = {
+                nama: document.getElementById('nama').value,
+                email: document.getElementById('email').value,
+                telepon: document.getElementById('telepon').value,
+                metode: document.getElementById('metode').value,
+                jumlah: document.getElementById('jumlah').value,
+                pesan: document.getElementById('pesan').value
+            };
+            
+            // Format the message for WhatsApp
+            const metodeText = formData.metode === 'transfer' ? 'Transfer Bank' : 'Donasi Langsung';
+            const message = `
+Halo KPA Tilawati Kotabaru,
+
+Saya ingin mengkonfirmasi donasi saya dengan detail sebagai berikut:
+
+Nama: ${formData.nama}
+Email: ${formData.email}
+No. Telepon: ${formData.telepon}
+Metode Donasi: ${metodeText}
+Jumlah Donasi: Rp ${parseInt(formData.jumlah).toLocaleString('id-ID')}
+
+Pesan: ${formData.pesan || '-'}
+
+Terima kasih.
+            `.trim();
+            
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Create WhatsApp URL
+            const waUrl = `https://wa.me/6281253538910?text=${encodedMessage}`;
+            
+            // Show notification
+            notificationText.textContent = 'Mengarahkan ke WhatsApp untuk mengirim konfirmasi...';
+            notification.classList.add('show');
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+            
+            // Open WhatsApp in a new tab
+            window.open(waUrl, '_blank');
+            
+            // Reset form
+            confirmationForm.reset();
+        });
+
+        // Modal close button event
+        modalCloseBtn.addEventListener('click', closeModal);
+
+        // Close modal when clicking outside the modal content
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Initialize supporters on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            populateSupporters();
+        });
+    </script>
+</body>
+</html>

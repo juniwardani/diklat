@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artikel - KPA Tilawati Kotabaru</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --hijau-utama: #1e7e34;
+            --hijau-muda: #28a745;
+            --hijau-paling-muda: #d4edda;
+            --kuning-utama: #ffc107;
+            --kuning-muda: #fff3cd;
+            --putih: #ffffff;
+            --hitam: #212529;
+            --abu-abu: #f8f9fa;
+            --abu-gelap: #6c757d;
+            --hijau-modal: rgba(30, 126, 52, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--abu-abu);
+            color: var(--hitam);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles (disamakan dengan index.html) */
+        header {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+            background-color: var(--kuning-utama);
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-direction: column;
+            background-color: var(--hijau-utama);
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            gap: 0;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            z-index: 999;
+        }
+
+        nav ul.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        nav ul li {
+            margin: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul li:last-child {
+            border-bottom: none;
+        }
+
+        nav ul li a {
+            color: var(--putih);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+            display: block;
+            padding: 15px 0;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active {
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--kuning-utama);
+        }
+
+        /* Special style for Pendaftaran Diklat link */
+        nav ul li a.highlight {
+            background-color: var(--kuning-utama);
+            color: var(--hitam);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            margin: 10px 20px;
+            display: inline-block;
+        }
+
+        nav ul li a.highlight:hover {
+            background-color: var(--putih);
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1002;
+            margin-left: 20px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--putih);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 50px 0;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            color: var(--hijau-utama);
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--kuning-utama);
+        }
+
+        /* Artikel Grid */
+        .artikel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .artikel-card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(30, 126, 52, 0.1);
+            text-align: left;
+            padding: 25px;
+            position: relative;
+        }
+
+        .artikel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--hijau-utama), var(--hijau-muda));
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        .artikel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(30, 126, 52, 0.2);
+        }
+
+        .artikel-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--hijau-utama);
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .artikel-desc {
+            color: var(--abu-gelap);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .artikel-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--abu-gelap);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .artikel-date, .artikel-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .artikel-date i, .artikel-author i {
+            margin-right: 8px;
+            color: var(--hijau-utama);
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            color: var(--putih);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(30, 126, 52, 0.2);
+        }
+
+        .read-more i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover {
+            background: linear-gradient(135deg, var(--hijau-muda), var(--hijau-utama));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(30, 126, 52, 0.3);
+        }
+
+        .read-more:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .pagination button {
+            background-color: var(--putih);
+            color: var(--hijau-utama);
+            border: 1px solid var(--hijau-utama);
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .pagination button:hover {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+        }
+
+        .pagination button.active {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--putih), var(--hijau-paling-muda));
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: modalFadeIn 0.5s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            color: var(--putih);
+            padding: 25px 30px;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            padding-right: 40px;
+        }
+
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 25px;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--putih);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 20px;
+            border: none;
+        }
+
+        .close:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(30, 126, 52, 0.2);
+            font-size: 0.95rem;
+            color: var(--abu-gelap);
+        }
+
+        .modal-date, .modal-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-date i, .modal-author i {
+            margin-right: 8px;
+            color: var(--hijau-utama);
+        }
+
+        .modal-content-text {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+            color: var(--hitam);
+        }
+
+        .modal-content-text p {
+            margin-bottom: 20px;
+        }
+
+        .modal-content-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Modal Footer */
+        .modal-footer {
+            padding: 20px 30px 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .modal-close-btn {
+            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            color: var(--putih);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(30, 126, 52, 0.2);
+        }
+
+        .modal-close-btn:hover {
+            background: linear-gradient(135deg, var(--hijau-muda), var(--hijau-utama));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(30, 126, 52, 0.3);
+        }
+
+        /* Footer Styles - Modern & Clean (sesuai header.html) */
+        footer {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 0;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 50px;
+        }
+
+        .footer-brand {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .footer-brand .logo-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand .logo-wrapper img {
+            height: 60px;
+            background-color: var(--kuning-utama);
+            border-radius: 8px;
+            padding: 5px;
+            margin-right: 15px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+        }
+
+        .footer-contact {
+            flex: 1;
+            max-width: 450px;
+            text-align: right;
+        }
+
+        .footer-contact h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--kuning-utama);
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .contact-item .contact-icon {
+            color: var(--kuning-utama);
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .contact-item .contact-text a {
+            color: var(--putih);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item .contact-text a:hover {
+            color: var(--kuning-utama);
+            text-decoration: underline;
+        }
+
+        .copyright-bar {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--hijau-utama);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 20px 0;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .page-title h1 {
+                font-size: 2rem;
+            }
+
+            .artikel-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .modal-header {
+                padding: 20px 25px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-nav {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            .page-title h1 {
+                font-size: 1.8rem;
+            }
+
+            .close {
+                width: 35px;
+                height: 35px;
+                right: 20px;
+                top: 20px;
+                font-size: 18px;
+            }
+
+            .pagination button {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="img/logo2.jpg" alt="Logo KPA Tilawati">
+                    <h1>KPA Tilawati Kotabaru</h1>
+                </div>
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="index.html" class="nav-link">Beranda</a></li>
+                        <li><a href="profile.html" class="nav-link">Profile</a></li>
+                        <li><a href="produk.html" class="nav-link">Produk Tilawati</a></li>
+                        <li><a href="registrasi.html" class="nav-link highlight">Pendaftaran Diklat</a></li>
+                        <li><a href="donasi.html" class="nav-link">Donasi</a></li>
+                        <li><a href="donasi.html" class="nav-link active">Donasi</a></li>
+                    </ul>
+                    <div class="menu-toggle" id="menu-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="page-title">
+                <h1>Artikel Tilawati</h1>
+            </div>
+            
+            <div class="artikel-grid" id="artikel-grid">
+              
+            
+                <!-- Artikel akan ditampilkan di sini melalui JavaScript -->
+            </div>
+            
+            <div class="pagination" id="pagination">
+                <!-- Pagination akan ditampilkan di sini melalui JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal untuk Artikel Lengkap -->
+    <div id="artikelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-meta">
+                    <div class="modal-date" id="modal-date"></div>
+                    <div class="modal-author" id="modal-author"></div>
+                </div>
+                <div class="modal-content-text" id="modal-content"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn modal-close-btn">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo-wrapper">
+                        <img src="img/logo2.jpg" alt="Logo KPA Tilawati">
+                        <h3>KPA Tilawati Kotabaru</h3>
+                    </div>
+                    <p>
+                        Lembaga yang berfokus pada pembinaan, pelatihan, dan pengembangan metode Tilawati bagi guru Al-Qur’an, agar proses pembelajaran lebih mudah, menyenangkan, dan sesuai kaidah tajwid.
+                    </p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Kami</h4>
+                    <ul class="contact-list">
+                        <li class="contact-item">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <span class="contact-text">Jl. Ahmad Yani Gang Empat Lima No.RT. 05, Tegal Rejo, Kec. Kelumpang Hilir, Kab. Kotabaru, Kalimantan Selatan 72161</span>
+                        </li>
+                        <li class="contact-item">
+                            <i class="fas fa-phone contact-icon"></i>
+                            <span class="contact-text">
+                                <a href="mailto:tilawatiktb@gmail.com">tilawatiktb@gmail.com</a> |
+                                <a href="https://wa.me/6281256568899" target="_blank">(+62) 812-5353-8910</a> |
+                                <a href="https://wa.me/628125063356" target="_blank">(+62) 852-4846-2707</a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-bar">
+            <p>&copy; 2023 KPA Tilawati Kotabaru. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Supabase
+        const supabaseUrl = 'https://iwnwqcxigtywetgcmlou.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bndxY3hpZ3R5d2V0Z2NtbG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU4MjQ4MTUsImV4cCI6MjA1MTQwMDgxNX0.fjdJlTVav4Gm8ku9rBmRuLoae5ViFxas7Uu069ItfnY';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        // Data artikel dengan formatting
+        // Data artikel dari Supabase
+        let artikelData = [];
+        
+        // Fungsi untuk mengambil data artikel dari Supabase
+        async function ambilDataArtikel() {
+            try {
+                const { data, error } = await supabase
+                    .from('kpa_artikel')
+                    .select('*')
+                    .order('tanggal', { ascending: false });
+                
+                if (error) {
+                    console.error('Error mengambil data artikel:', error);
+                    return;
+                }
+                
+                artikelData = data;
+                tampilkanArtikel(currentPage);
+                tampilkanPagination();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // DOM Elements
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const artikelGrid = document.getElementById('artikel-grid');
+        const pagination = document.getElementById('pagination');
+        const modal = document.getElementById('artikelModal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDate = document.getElementById('modal-date');
+        const modalAuthor = document.getElementById('modal-author');
+        const modalContent = document.getElementById('modal-content');
+        const closeModal = document.querySelector('.close');
+        const modalCloseBtn = document.querySelector('.modal-close-btn');
+
+        // Pagination variables
+        let currentPage = 1;
+        const articlesPerPage = 5;
+        const totalPages = Math.ceil(artikelData.length / articlesPerPage);
+
+        // Menu Toggle
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+
+        // Fungsi untuk memotong teks
+        function potongTeks(teks, maxLength) {
+            if (teks.length <= maxLength) {
+                return teks;
+            }
+            return teks.substr(0, maxLength) + '...';
+        }
+
+        // Fungsi untuk parsing formatting teks
+        function parseFormatting(text) {
+            // Ganti \n dengan <br> untuk enter
+            let formattedText = text.replace(/\n/g, '<br>');
+            
+            // Ganti **teks** dengan <strong>teks</strong> untuk bold
+            formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // Ganti *teks* dengan <em>teks</em> untuk italic
+            formattedText = formattedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            return formattedText;
+        }
+
+        // Fungsi untuk menampilkan artikel
+        function tampilkanArtikel(page) {
+            // Hitung indeks awal dan akhir artikel untuk halaman ini
+            const startIndex = (page - 1) * articlesPerPage;
+            const endIndex = Math.min(startIndex + articlesPerPage, artikelData.length);
+            
+            // Ambil artikel untuk halaman ini
+            const artikelHalaman = artikelData.slice(startIndex, endIndex);
+            
+            // Kosongkan grid artikel
+            artikelGrid.innerHTML = '';
+            
+            // Tampilkan setiap artikel
+            artikelHalaman.forEach(artikel => {
+                const artikelCard = document.createElement('div');
+                artikelCard.className = 'artikel-card';
+                
+                // Parse deskripsi untuk formatting
+                const deskripsiParsed = parseFormatting(artikel.deskripsi);
+                
+                // Ambil 150 karakter pertama untuk preview
+                const deskripsiPreview = potongTeks(artikel.deskripsi.replace(/\n/g, ' ').replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1'), 150);
+                const perluReadMore = artikel.deskripsi.length > 150;
+                
+                artikelCard.innerHTML = `
+                    <h3 class="artikel-title">${artikel.judul}</h3>
+                    <div class="artikel-meta">
+                        <div class="artikel-date">
+                            <i class="fas fa-calendar-alt"></i> ${artikel.tanggal}
+                        </div>
+                        <div class="artikel-author">
+                            <i class="fas fa-user"></i> ${artikel.penulis}
+                        </div>
+                    </div>
+                    <p class="artikel-desc">${deskripsiPreview}</p>
+                    ${perluReadMore ? `<a href="#" class="read-more" data-id="${artikel.id}">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>` : ''}
+                `;
+                
+                artikelGrid.appendChild(artikelCard);
+            });
+            
+            // Tambahkan event listener untuk tombol "Baca selengkapnya"
+            document.querySelectorAll('.read-more').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const artikelId = parseInt(this.getAttribute('data-id'));
+                    tampilkanArtikelLengkap(artikelId);
+                });
+            });
+        }
+
+        // Fungsi untuk menampilkan pagination
+        function tampilkanPagination() {
+            pagination.innerHTML = '';
+            
+            // Tombol Previous
+            const prevButton = document.createElement('button');
+            prevButton.textContent = 'Previous';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    tampilkanArtikel(currentPage);
+                    tampilkanPagination();
+                }
+            });
+            pagination.appendChild(prevButton);
+            
+            // Nomor halaman
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = i === currentPage ? 'active' : '';
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    tampilkanArtikel(currentPage);
+                    tampilkanPagination();
+                });
+                pagination.appendChild(pageButton);
+            }
+            
+            // Tombol Next
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    tampilkanArtikel(currentPage);
+                    tampilkanPagination();
+                }
+            });
+            pagination.appendChild(nextButton);
+        }
+
+        // Tampilkan artikel lengkap di modal
+        function tampilkanArtikelLengkap(artikelId) {
+            const artikel = artikelData.find(a => a.id === artikelId);
+            
+            if (artikel) {
+                modalTitle.textContent = artikel.judul;
+                modalDate.innerHTML = `<i class="fas fa-calendar-alt"></i> ${artikel.tanggal}`;
+                modalAuthor.innerHTML = `<i class="fas fa-user"></i> ${artikel.penulis}`;
+                
+                // Parse deskripsi untuk formatting
+                const deskripsiParsed = parseFormatting(artikel.deskripsi);
+                modalContent.innerHTML = `<p>${deskripsiParsed}</p>`;
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Mencegah scrolling saat modal terbuka
+            }
+        }
+
+        // Tutup modal
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Mengembalikan scrolling
+        });
+
+        // Tutup modal dengan tombol tutup di bagian bawah
+        modalCloseBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Mengembalikan scrolling
+        });
+
+        // Tutup modal saat klik di luar modal
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Mengembalikan scrolling
+            }
+        });
+
+        // Panggil fungsi untuk mengambil data artikel saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            ambilDataArtikel();
+        });
+
+        // Inisialisasi halaman - tidak diperlukan karena sudah dipanggil dalam ambilDataArtikel()
+        // tampilkanArtikel(currentPage);
+        // tampilkanPagination();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPA Tilawati Kotabaru - Beranda</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --hijau-utama: #1e7e34;
+            --hijau-muda: #28a745;
+            --hijau-paling-muda: #d4edda;
+            --kuning-utama: #ffc107;
+            --kuning-muda: #fff3cd;
+            --putih: #ffffff;
+            --hitam: #212529;
+            --abu-abu: #f8f9fa;
+            --abu-gelap: #6c757d;
+            --hijau-modal: rgba(30, 126, 52, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--abu-abu);
+            color: var(--hitam);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .container-narrow {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5px;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+            background-color: var(--kuning-utama);
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-direction: column;
+            background-color: var(--hijau-utama);
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            gap: 0;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            z-index: 999;
+        }
+
+        nav ul.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        nav ul li {
+            margin: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul li:last-child {
+            border-bottom: none;
+        }
+
+        nav ul li a {
+            color: var(--putih);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+            display: block;
+            padding: 15px 0;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active {
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--kuning-utama);
+        }
+
+        /* Special style for Pendaftaran Diklat link */
+        nav ul li a.highlight {
+            background-color: var(--kuning-utama);
+            color: var(--hitam);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            margin: 10px 20px;
+            display: inline-block;
+        }
+
+        nav ul li a.highlight:hover {
+            background-color: var(--putih);
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1002;
+            margin-left: 20px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--putih);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+        }
+
+        /* Hero Section - Full Height */
+ .hero {
+    background: 
+        linear-gradient(rgba(30, 126, 52, 0.8), rgba(30, 126, 52, 0.8)), 
+        url('https://lembaga-tilawati.nurulfalah.or.id/Untitled-s.png');
+    background-size: cover, 60%;   /* gradient full cover, gambar 80% */
+    background-position: center;   /* gambar tetap di tengah */
+    background-repeat: no-repeat;  /* gambar tidak diulang */
+    color: var(--putih);
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+
+        .hero-buttons .btn {
+            font-size: 1.1rem;
+            padding: 15px 30px;
+            white-space: nowrap;
+            min-width: 200px;
+            border-radius: 8px;
+            font-weight: 700;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Diklat Info Section */
+        .diklat-section {
+            padding: 20px 0;
+            background-color: var(--hijau-paling-muda);
+        }
+
+        .diklat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .diklat-container h2 {
+            font-size: 2.5rem;
+            color: var(--hijau-utama);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .diklat-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--kuning-utama);
+        }
+
+        .diklat-info {
+            background-color: var(--putih);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .diklat-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--hijau-utama);
+        }
+
+        .diklat-table {
+            width: 100%;
+            margin: 15px 0;
+            border-collapse: collapse;
+            background-color: var(--putih);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .diklat-table th, .diklat-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .diklat-table th {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .diklat-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .diklat-table td:first-child {
+            font-weight: 600;
+            width: 30%;
+            color: var(--hijau-utama);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .contact-wa {
+            display: flex;
+            align-items: center;
+        }
+
+        .wa-logo {
+            color: #25D366;
+            font-size: 1.5rem;
+            margin-right: 5px;
+        }
+
+        .wa-number {
+            color: var(--hijau-utama);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .wa-number:hover {
+            color: var(--hijau-muda);
+            text-decoration: underline;
+        }
+
+        .wa-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25D366;
+            color: var(--putih);
+            padding: 10px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(37, 211, 102, 0.3);
+            margin-top: 8px;
+        }
+
+        .wa-button:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(37, 211, 102, 0.4);
+            color: var(--putih);
+        }
+
+        .wa-button i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        /* Countdown Section */
+        .countdown-section {
+            margin-top: 25px;
+        }
+
+        .countdown-title {
+            font-size: 1.5rem;
+            color: var(--hijau-utama);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .countdown-card {
+            flex: 1;
+            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            color: var(--putih);
+            border-radius: 10px;
+            padding: 15px 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .countdown-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Artikel Section */
+        .artikel-section {
+            padding: 50px 0;
+            background-color: var(--putih);
+        }
+
+        .artikel-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .artikel-container h2 {
+            font-size: 2.5rem;
+            color: var(--hijau-utama);
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .artikel-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--kuning-utama);
+        }
+
+        .artikel-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 40px;
+            align-items: center;
+        }
+
+        .artikel-card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(30, 126, 52, 0.1);
+            text-align: left;
+            padding: 30px;
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .artikel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--hijau-utama), var(--hijau-muda));
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        .artikel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(30, 126, 52, 0.2);
+        }
+
+        .artikel-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--hijau-utama);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .artikel-desc {
+            color: var(--abu-gelap);
+            margin-bottom: 25px;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .artikel-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            color: var(--abu-gelap);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .artikel-date, .artikel-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .artikel-date i, .artikel-author i {
+            margin-right: 8px;
+            color: var(--hijau-utama);
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            color: var(--putih);
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(30, 126, 52, 0.2);
+        }
+
+        .read-more i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover {
+            background: linear-gradient(135deg, var(--hijau-muda), var(--hijau-utama));
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(30, 126, 52, 0.3);
+        }
+
+        .read-more:hover i {
+            transform: translateX(3px);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--kuning-utama);
+            color: var(--hitam);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0);
+            overflow-y: auto;
+            backdrop-filter: blur(0px);
+            transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+        }
+        
+        .modal.active {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--putih), var(--hijau-paling-muda));
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform: translateY(30px) scale(0.95);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            color: var(--putih);
+            padding: 25px 30px;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            padding-right: 40px;
+        }
+
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 25px;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--putih);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 20px;
+            border: none;
+        }
+
+        .close:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(30, 126, 52, 0.2);
+            font-size: 0.95rem;
+            color: var(--abu-gelap);
+        }
+
+        .modal-date, .modal-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-date i, .modal-author i {
+            margin-right: 8px;
+            color: var(--hijau-utama);
+        }
+
+        .modal-content-text {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+            color: var(--hitam);
+        }
+
+        .modal-content-text p {
+            margin-bottom: 20px;
+        }
+
+        .modal-content-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .modal-close-btn {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close-btn:hover {
+            background-color: var(--hijau-muda);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(30, 126, 52, 0.3);
+        }
+
+        /* Footer Styles - Modern & Clean (sesuai header.html) */
+        footer {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 50px;
+        }
+
+        .footer-brand {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .footer-brand .logo-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand .logo-wrapper img {
+            height: 60px;
+            background-color: var(--kuning-utama);
+            border-radius: 8px;
+            padding: 5px;
+            margin-right: 15px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+        }
+
+        .footer-contact {
+            flex: 1;
+            max-width: 450px;
+            text-align: right;
+        }
+
+        .footer-contact h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--kuning-utama);
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .contact-item .contact-icon {
+            color: var(--kuning-utama);
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .contact-item .contact-text a {
+            color: var(--putih);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item .contact-text a:hover {
+            color: var(--kuning-utama);
+            text-decoration: underline;
+        }
+
+        .copyright-bar {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-buttons .btn {
+                font-size: 1rem;
+                padding: 12px 25px;
+                min-width: 180px;
+            }
+
+            .diklat-container h2 {
+                font-size: 2rem;
+            }
+
+            .diklat-info h3 {
+                font-size: 1.5rem;
+            }
+
+            .diklat-table th, .diklat-table td {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .artikel-container h2 {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .modal-header {
+                padding: 20px 25px;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-nav {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            .logo img {
+                height: 40px;
+                margin-right: 10px;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero-buttons {
+                gap: 15px;
+            }
+
+            .hero-buttons .btn {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+                min-width: 160px;
+            }
+
+            .diklat-table td:first-child {
+                width: 40%;
+            }
+
+            .countdown-number {
+                font-size: 1.4rem;
+            }
+
+            .countdown-label {
+                font-size: 0.8rem;
+            }
+
+            .countdown-card {
+                padding: 10px 5px;
+            }
+
+            .close {
+                width: 35px;
+                height: 35px;
+                right: 20px;
+                top: 20px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="img/logo2.jpg" alt="Logo KPA Tilawati">
+                    <h1>KPA Tilawati Kotabaru</h1>
+                </div>
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="index.html" class="nav-link active">Beranda</a></li>
+                        <li><a href="profile.html" class="nav-link">Profile</a></li>
+                        <li><a href="produk.html" class="nav-link">Produk Tilawati</a></li>
+                        <li><a href="pendaftaran.html" class="nav-link highlight">Pendaftaran Diklat</a></li>
+                        <li><a href="donasi.html" class="nav-link">Donasi</a></li>
+                    </ul>
+                    <div class="menu-toggle" id="menu-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section - Full Height -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Selamat Datang di KPA Tilawati Kotabaru</h2>
+                <p>Mengembangkan generasi Qur'ani dengan metode Tilawati yang terbukti efektif dan menyenangkan</p>
+                <div class="hero-buttons">
+                    <a href="#diklat" class="btn">Daftar Diklat</a>
+                    <a href="syahadah.html" class="btn">Download Sertifikat</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diklat Info Section -->
+        <section id="diklat" class="diklat-section">
+            <div class="container-narrow">
+                <div class="diklat-container">
+                    <h2>Informasi Pendaftaran Diklat</h2>
+                    <div class="diklat-info">
+                        <h3 id="diklat-judul">Jadwal Diklat Tilawati</h3>
+                        <table class="diklat-table" id="diklat-table">
+                            <tr>
+                                <th colspan="2">Detail Informasi Diklat</th>
+                            </tr>
+                            <!-- Data diklat akan ditampilkan di sini melalui JavaScript -->
+                        </table>
+                        
+                        <div class="countdown-section">
+                            <h3 class="countdown-title">Hitung Mundur Pendaftaran</h3>
+                            <div class="countdown-container">
+                                <div class="countdown-card">
+                                    <div class="countdown-number" id="days">00</div>
+                                    <div class="countdown-label">Hari</div>
+                                </div>
+                                <div class="countdown-card">
+                                    <div class="countdown-number" id="hours">00</div>
+                                    <div class="countdown-label">Jam</div>
+                                </div>
+                                <div class="countdown-card">
+                                    <div class="countdown-number" id="minutes">00</div>
+                                    <div class="countdown-label">Menit</div>
+                                </div>
+                                <div class="countdown-card">
+                                    <div class="countdown-number" id="seconds">00</div>
+                                    <div class="countdown-label">Detik</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="registrasi.html" class="btn">Pendaftaran Diklat</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Artikel Section -->
+        <section class="artikel-section">
+            <div class="container">
+                <div class="artikel-container">
+                    <h2>Artikel Terbaru</h2>
+                    <div class="artikel-grid" id="artikel-grid">
+                        <!-- Artikel akan ditampilkan di sini melalui JavaScript -->
+                    </div>
+                    <a href="artikel.html" class="btn">Lihat Artikel Lainnya</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal untuk Artikel Lengkap -->
+    <div id="artikelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-meta">
+                    <div class="modal-date" id="modal-date"></div>
+                    <div class="modal-author" id="modal-author"></div>
+                </div>
+                <div class="modal-content-text" id="modal-content"></div>
+                <div class="modal-footer">
+                    <button class="btn modal-close-btn">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer - Modern (sesuai header.html) -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo-wrapper">
+                        <img src="img/logo2.jpg" alt="Logo KPA Tilawati">
+                        <h3>KPA Tilawati Kotabaru</h3>
+                    </div>
+                    <p>
+                        Lembaga yang berfokus pada pembinaan, pelatihan, dan pengembangan metode Tilawati bagi guru Al-Qur’an, agar proses pembelajaran lebih mudah, menyenangkan, dan sesuai kaidah tajwid.
+                    </p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Kami</h4>
+                    <ul class="contact-list">
+                        <li class="contact-item">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <span class="contact-text">Jl. Ahmad Yani Gang Empat Lima No.RT. 05, Tegal Rejo, Kec. Kelumpang Hilir, Kab. Kotabaru, Kalimantan Selatan 72161</span>
+                        </li>
+                        <li class="contact-item">
+                            <i class="fas fa-phone contact-icon"></i>
+                            <span class="contact-text">
+                                <a href="mailto:tilawatiktb@gmail.com">tilawatiktb@gmail.com</a> |
+                                <a href="https://wa.me/6281256568899" target="_blank">(+62) 812-5353-8910</a> |
+                                <a href="https://wa.me/628125063356" target="_blank">(+62) 852-4846-2707</a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-bar">
+            <p>&copy; 2023 KPA Tilawati Kotabaru. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+                // Initialize Supabase
+        const supabaseUrl = 'https://iwnwqcxigtywetgcmlou.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bndxY3hpZ3R5d2V0Z2NtbG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU4MjQ4MTUsImV4cCI6MjA1MTQwMDgxNX0.fjdJlTVav4Gm8ku9rBmRuLoae5ViFxas7Uu069ItfnY';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Data diklat
+        const diklatData = {
+            judul: "Standarisasi Guru Al-Qur'an Metode Tilawati Level 1 dan Level 2",
+            detail: [
+                {
+                    icon: 'fas fa-calendar-alt',
+                    label: 'Tanggal Diklat',
+                    value: '29 - 30 November 2025'
+                },
+                {
+                    icon: 'fas fa-map-marker-alt',
+                    label: 'Tempat Diklat',
+                    value: '<strong>Gedung Majelis Yatarim (Serongga)</strong><br>Jl. Ahmad Yani Gang Empat Lima No.RT. 05, Tegal Rejo, Kec. Kelumpang Hilir'
+                },
+                {
+                    icon: 'fas fa-user',
+                    label: 'Nara Hubung',
+                    value: {
+                        name: 'Sdr. Elvian',
+                        wa: '8115114077'
+                    }
+                },
+                {
+                    icon: 'fas fa-money-check-alt',
+                    label: 'Konfirmasi Transfer',
+                    value: {
+                        name: 'KPA Tilawati Kotabaru',
+                        wa: '89876543210'
+                    }
+                }
+            ]
+        };
+
+        // Data artikel dari Supabase
+        let artikelData = [];
+        
+        // Fungsi untuk mengambil data artikel dari Supabase
+        async function ambilDataArtikel() {
+            try {
+                const { data, error } = await supabase
+                    .from('kpa_artikel')
+                    .select('*')
+                    .order('tanggal', { ascending: false });
+                
+                if (error) {
+                    console.error('Error mengambil data artikel:', error);
+                    return;
+                }
+                
+                artikelData = data;
+                tampilkanArtikel();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // DOM Elements
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const artikelGrid = document.getElementById('artikel-grid');
+        const modal = document.getElementById('artikelModal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDate = document.getElementById('modal-date');
+        const modalAuthor = document.getElementById('modal-author');
+        const modalContent = document.getElementById('modal-content');
+        const closeModal = document.querySelector('.close');
+        const modalCloseBtn = document.querySelector('.modal-close-btn');
+        const diklatTable = document.getElementById('diklat-table');
+        const diklatJudul = document.getElementById('diklat-judul');
+
+        // Countdown elements
+        const daysElement = document.getElementById('days');
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
+
+        // Menu Toggle
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fungsi untuk menampilkan data diklat
+        function tampilkanDiklat() {
+            // Tampilkan judul diklat
+            diklatJudul.textContent = diklatData.judul;
+            
+            // Kosongkan tabel kecuali header
+            diklatTable.innerHTML = `
+                <tr>
+                    <th colspan="2">Detail Informasi Diklat</th>
+                </tr>
+            `;
+            
+            // Tampilkan setiap data diklat
+            diklatData.detail.forEach(item => {
+                const row = document.createElement('tr');
+                
+                if (typeof item.value === 'object' && item.value !== null) {
+                    // Jika value adalah objek (untuk kontak)
+                    let buttonText = '';
+                    let messageText = '';
+                    
+                    if (item.label === 'Nara Hubung') {
+                        buttonText = 'Pertanyaan';
+                        messageText = 'Halo, saya ingin bertanya tentang diklat Tilawati.';
+                    } else if (item.label === 'Konfirmasi Transfer') {
+                        buttonText = 'Konfirmasi';
+                        messageText = 'Halo, saya ingin konfirmasi transfer untuk pendaftaran diklat Tilawati.';
+                    }
+                    
+                    row.innerHTML = `
+                        <td><i class="${item.icon}"></i> ${item.label}</td>
+                        <td>
+                            <div class="contact-info">
+                                <div class="contact-name">${item.value.name}</div>
+                                <div class="contact-wa">
+                                    <a href="https://wa.me/62${item.value.wa.replace('-', '')}?text=${encodeURIComponent(messageText)}" class="wa-button" target="_blank">
+                                        <i class="fab fa-whatsapp"></i> ${buttonText}
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    `;
+                } else {
+                    // Jika value adalah string
+                    row.innerHTML = `
+                        <td><i class="${item.icon}"></i> ${item.label}</td>
+                        <td>${item.value}</td>
+                    `;
+                }
+                
+                diklatTable.appendChild(row);
+            });
+        }
+
+        // Fungsi untuk memotong teks
+        function potongTeks(teks, maxLength) {
+            if (teks.length <= maxLength) {
+                return teks;
+            }
+            return teks.substr(0, maxLength) + '...';
+        }
+
+        // Tampilkan artikel terbaru
+        function tampilkanArtikel() {
+            // Kosongkan grid artikel
+            artikelGrid.innerHTML = '';
+            
+            // Jika tidak ada data artikel, tampilkan pesan
+            if (artikelData.length === 0) {
+                artikelGrid.innerHTML = '<div class="artikel-card"><p>Tidak ada artikel yang tersedia saat ini.</p></div>';
+                return;
+            }
+            
+            // Ambil 3 artikel terbaru
+            const artikelTerbaru = artikelData.slice(0, 3);
+            
+            // Tampilkan setiap artikel
+            artikelTerbaru.forEach(artikel => {
+                const artikelCard = document.createElement('div');
+                artikelCard.className = 'artikel-card';
+                
+                // Cek apakah deskripsi lebih dari 120 karakter
+                const deskripsiSingkat = potongTeks(artikel.deskripsi, 120);
+                const perluReadMore = artikel.deskripsi.length > 120;
+                
+                artikelCard.innerHTML = `
+                    <h3 class="artikel-title">${artikel.judul}</h3>
+                    <div class="artikel-meta">
+                        <div class="artikel-date">
+                            <i class="fas fa-calendar-alt"></i> ${artikel.tanggal}
+                        </div>
+                        <div class="artikel-author">
+                            <i class="fas fa-user"></i> ${artikel.penulis}
+                        </div>
+                    </div>
+                    <p class="artikel-desc">${deskripsiSingkat}</p>
+                    ${perluReadMore ? `<a href="#" class="read-more" data-id="${artikel.id}">Baca selengkapnya <i class="fas fa-arrow-right"></i></a>` : ''}
+                `;
+                
+                artikelGrid.appendChild(artikelCard);
+            });
+            
+            // Tambahkan event listener untuk tombol "Baca selengkapnya"
+            document.querySelectorAll('.read-more').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const artikelId = parseInt(this.getAttribute('data-id'));
+                    tampilkanArtikelLengkap(artikelId);
+                });
+            });
+        }
+
+        // Tampilkan artikel lengkap di modal dengan format yang lebih baik
+        function tampilkanArtikelLengkap(artikelId) {
+            const artikel = artikelData.find(a => a.id === artikelId);
+            
+            if (artikel) {
+                // Format tanggal untuk tampilan yang lebih baik
+                const tanggalObj = new Date(artikel.tanggal);
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const tanggalFormatted = tanggalObj.toLocaleDateString('id-ID', options);
+                
+                modalTitle.textContent = artikel.judul;
+                modalDate.innerHTML = `<i class="fas fa-calendar-alt"></i> ${tanggalFormatted}`;
+                modalAuthor.innerHTML = `<i class="fas fa-user"></i> ${artikel.penulis}`;
+                
+                // Format konten artikel dengan paragraf yang lebih baik
+                const paragraphs = artikel.deskripsi.split('\n').filter(p => p.trim() !== '');
+                let formattedContent = '';
+                
+                paragraphs.forEach(paragraph => {
+                    formattedContent += `<p>${paragraph}</p>`;
+                });
+                
+                modalContent.innerHTML = formattedContent || `<p>${artikel.deskripsi}</p>`;
+                
+                // Tambahkan animasi saat membuka modal
+                modal.style.display = 'block';
+                setTimeout(() => {
+                    modal.classList.add('active');
+                }, 10);
+                document.body.style.overflow = 'hidden'; // Mencegah scrolling saat modal terbuka
+            }
+        }
+
+        // Tutup modal
+        closeModal.addEventListener('click', function() {
+            tutupModal();
+        });
+
+        // Tutup modal dengan tombol di bagian bawah
+        modalCloseBtn.addEventListener('click', function() {
+            tutupModal();
+        });
+
+        // Tutup modal saat klik di luar modal
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                tutupModal();
+            }
+        });
+        
+        // Fungsi untuk menutup modal dengan animasi
+        function tutupModal() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Mengembalikan scrolling
+            }, 300); // Waktu sesuai dengan durasi transisi CSS
+        }
+
+        // Countdown timer
+        function updateCountdown() {
+            // Set target date (27 November 2025, akhir hari pertama diklat)
+            const targetDate = new Date('November 29, 2025 23:59:59').getTime();
+            
+            // Get current date
+            const now = new Date().getTime();
+            
+            // Find the distance between now and the target date
+            const distance = targetDate - now;
+            
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Display the result
+            daysElement.textContent = days < 10 ? '0' + days : days;
+            hoursElement.textContent = hours < 10 ? '0' + hours : hours;
+            minutesElement.textContent = minutes < 10 ? '0' + minutes : minutes;
+            secondsElement.textContent = seconds < 10 ? '0' + seconds : seconds;
+            
+            // If the countdown is over, display a message
+            if (distance < 0) {
+                daysElement.textContent = '00';
+                hoursElement.textContent = '00';
+                minutesElement.textContent = '00';
+                secondsElement.textContent = '00';
+            }
+        }
+
+        // Update the countdown every 1 second
+        setInterval(updateCountdown, 1000);
+        
+        // Initial call to display the countdown immediately
+        updateCountdown();
+
+        
+        tampilkanDiklat();
+        
+        // Ambil data artikel dari Supabase dan pastikan tombol "Baca selengkapnya" aktif
+        document.addEventListener('DOMContentLoaded', function() {
+            ambilDataArtikel();
+            
+            // Tambahkan event listener global untuk tombol "Baca selengkapnya"
+            document.body.addEventListener('click', function(e) {
+                if (e.target.classList.contains('read-more') || e.target.parentElement.classList.contains('read-more')) {
+                    e.preventDefault();
+                    const target = e.target.classList.contains('read-more') ? e.target : e.target.parentElement;
+                    const artikelId = parseInt(target.getAttribute('data-id'));
+                    tampilkanArtikelLengkap(artikelId);
+                }
+            });
+        });
+        
+        // Panggil ambilDataArtikel juga di luar DOMContentLoaded untuk memastikan data diambil
+        ambilDataArtikel();
+    </script>
+</body>
+</html>

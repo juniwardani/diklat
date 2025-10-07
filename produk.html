@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPA Tilawati Kotabaru - Produk Tilawati</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --hijau-utama: #1e7e34;
+            --hijau-muda: #28a745;
+            --hijau-paling-muda: #d4edda;
+            --kuning-utama: #ffc107;
+            --kuning-muda: #fff3cd;
+            --putih: #ffffff;
+            --hitam: #212529;
+            --abu-abu: #f8f9fa;
+            --abu-abu-gelap: #e9ecef;
+            --biru-muda: #e3f2fd;
+            --gradient-hijau: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            --merah-peringatan: #dc3545;
+            --merah-muda: #f8d7da;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--abu-abu);
+            color: var(--hitam);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+            background-color: var(--kuning-utama);
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-direction: column;
+            background-color: var(--hijau-utama);
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            gap: 0;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            z-index: 999;
+        }
+
+        nav ul.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        nav ul li {
+            margin: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav ul li:last-child {
+            border-bottom: none;
+        }
+
+        nav ul li a {
+            color: var(--putih);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+            display: block;
+            padding: 15px 0;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active {
+            color: var(--kuning-utama);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--kuning-utama);
+        }
+
+        nav ul li a.highlight {
+            background-color: var(--kuning-utama);
+            color: var(--hitam);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            margin: 10px 20px;
+            display: inline-block;
+        }
+
+        nav ul li a.highlight:hover {
+            background-color: var(--putih);
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            z-index: 1002;
+            margin-left: 20px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--putih);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 40px 0;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 20px 0 60px;
+            background-color: var(--putih);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--hijau-utama);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--kuning-utama);
+        }
+
+        .products-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .products-table thead {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+        }
+
+        .products-table th,
+        .products-table td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        /* Center align price columns */
+        .products-table th:nth-child(3),
+        .products-table th:nth-child(4),
+        .products-table td:nth-child(3),
+        .products-table td:nth-child(4) {
+            text-align: center;
+        }
+
+        .products-table tbody tr:nth-child(even) {
+            background-color: var(--hijau-paling-muda);
+        }
+
+        .products-table tbody tr:nth-child(odd) {
+            background-color: var(--putih);
+        }
+
+        .products-table tbody tr:hover {
+            background-color: var(--kuning-muda);
+        }
+
+        /* Attention Card Styles */
+        .attention-card {
+            background-color: var(--merah-muda);
+            border-left: 5px solid var(--merah-peringatan);
+            border-radius: 10px;
+            padding: 25px 15px;
+            margin: 40px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .attention-card h3 {
+            color: var(--merah-peringatan);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .attention-card h3 i {
+            margin-right: 10px;
+        }
+
+        .attention-card ol {
+            padding-left: 20px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .attention-card li {
+            margin-bottom: 15px;
+            text-align: justify; /* Memastikan setiap list item juga justify */
+        }
+
+        .attention-card .flow-diagram {
+            background-color: rgba(220, 53, 69, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .attention-card .sub-points {
+            margin-left: 20px;
+            margin-top: 10px;
+            text-align: justify; /* Memastikan sub-points juga justify */
+        }
+
+        .attention-card .sub-point {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 15px;
+            text-align: justify; /* Memastikan setiap sub-point juga justify */
+        }
+
+        .attention-card .sub-point:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--merah-peringatan);
+            font-weight: bold;
+        }
+
+        .attention-card .emphasis {
+            font-weight: 600;
+            color: var(--merah-peringatan);
+        }
+
+        .attention-card .signature {
+            text-align: right;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        .attention-card .signature p {
+            margin-bottom: 5px;
+        }
+
+        .attention-card .signature .name {
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* Contact Person Section - Updated */
+        .contact-persons-products {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .contact-card-products {
+            background-color: var(--hijau-paling-muda);
+            border-radius: 10px;
+            border-top: 3px solid var(--hijau-utama);
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: calc(50% - 15px);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .contact-card-products:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-card-products p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .contact-card-products .area {
+            font-weight: 600;
+            color: var(--hijau-utama);
+            margin-bottom: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(30, 126, 52, 0.2);
+            padding-bottom: 8px;
+        }
+
+        .wa-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25D366;
+            color: var(--putih);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .wa-link:hover {
+            background-color: #128C7E;
+            transform: translateY(-3px);
+        }
+
+        .wa-link i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        /* Footer Styles - Modern & Clean */
+        footer {
+            background-color: var(--hijau-utama);
+            color: var(--putih);
+            padding: 0;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 50px;
+        }
+
+        .footer-brand {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .footer-brand .logo-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand .logo-wrapper img {
+            height: 60px;
+            background-color: var(--kuning-utama);
+            border-radius: 8px;
+            padding: 5px;
+            margin-right: 15px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .footer-brand p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 10px;
+        }
+
+        .footer-contact {
+            flex: 1;
+            max-width: 450px;
+            text-align: right;
+        }
+
+        .footer-contact h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--kuning-utama);
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .contact-item .contact-icon {
+            color: var(--kuning-utama);
+            margin-right: 15px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .contact-item .contact-text a {
+            color: var(--putih);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item .contact-text a:hover {
+            color: var(--kuning-utama);
+            text-decoration: underline;
+        }
+
+        .copyright-bar {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--hijau-utama);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 20px 0;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-contact {
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .contact-item {
+                justify-content: center;
+            }
+
+            .products-table {
+                font-size: 0.8rem;
+            }
+
+            .products-table th,
+            .products-table td {
+                padding: 8px 10px;
+            }
+
+            /* Updated contact card for mobile */
+            .contact-persons-products {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .contact-card-products {
+                width: 100%;
+                padding: 20px 15px;
+            }
+
+            .contact-card-products .area {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+
+            .wa-link {
+                width: 90%;
+                padding: 12px;
+                font-size: 1rem;
+                justify-content: center;
+            }
+
+            .wa-link i {
+                font-size: 1.4rem;
+            }
+
+            /* Attention card mobile styles */
+            .attention-card {
+                padding: 20px 10px;
+            }
+
+            .attention-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .attention-card ol {
+                padding-left: 15px;
+                text-align: justify; /* Tetap justify di mobile */
+            }
+
+            .attention-card li {
+                font-size: 0.9rem;
+                text-align: justify; /* Tetap justify di mobile */
+            }
+
+            .attention-card .flow-diagram {
+                font-size: 0.85rem;
+            }
+
+            .attention-card .sub-points {
+                text-align: justify; /* Tetap justify di mobile */
+            }
+
+            .attention-card .sub-point {
+                text-align: justify; /* Tetap justify di mobile */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+
+            .products-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            /* Mengatur agar kolom jenis produk bisa wrap text di layar kecil */
+            .products-table th:nth-child(2),
+            .products-table td:nth-child(2) {
+                white-space: normal;
+                max-width: 200px;
+            }
+
+            /* Enhanced mobile contact card */
+            .contact-card-products {
+                width: 100%;
+                padding: 20px 15px;
+            }
+
+            .contact-card-products .area {
+                font-size: 1.2rem;
+            }
+
+            .wa-link {
+                width: 100%;
+                padding: 15px;
+                font-size: 1.1rem;
+            }
+
+            .wa-link i {
+                font-size: 1.5rem;
+            }
+
+            /* Enhanced mobile attention card */
+            .attention-card {
+                padding: 15px 8px;
+            }
+
+            .attention-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .attention-card li {
+                font-size: 0.85rem;
+                margin-bottom: 10px;
+                text-align: justify; /* Tetap justify di mobile */
+            }
+
+            .attention-card .signature {
+                font-size: 0.85rem;
+            }
+
+            .attention-card .flow-diagram {
+                font-size: 0.8rem;
+                padding: 8px;
+            }
+
+            .attention-card .sub-points {
+                text-align: justify; /* Tetap justify di mobile */
+            }
+
+            .attention-card .sub-point {
+                text-align: justify; /* Tetap justify di mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <img src="https://tilawatiktb.vercel.app/img/logo2.jpg" alt="Logo KPA Tilawati">
+                    <h1>KPA Tilawati Kotabaru</h1>
+                </div>
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="index.html" class="nav-link">Beranda</a></li>
+                        <li><a href="profile.html" class="nav-link">Profile</a></li>
+                        <li><a href="produk.html" class="nav-link active">Produk Tilawati</a></li>
+                        <li><a href="registrasi.html" class="nav-link highlight">Pendaftaran Diklat</a></li>
+                        <li><a href="donasi.html" class="nav-link">Donasi</a></li>
+                        
+                    </ul>
+                    <div class="menu-toggle" id="menu-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Products Section -->
+        <section class="products">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Daftar Harga Produk Tilawati</h2>
+                </div>
+                <div class="products-container">
+                    <table class="products-table" id="products-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Jenis Produk</th>
+                                <th>Harga Lembaga</th>
+                                <th>Harga Santri</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-tbody">
+                            <!-- Products will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+
+                    <!-- Attention Card -->
+                    <div class="attention-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Perhatian Penting:</h3>
+                        <ol>
+                            <li>
+                                Produk Tilawati yang original dan resmi hanya didistribusikan melalui jalur berikut:
+                                <div class="flow-diagram">
+                                    Tilawati Pusat → Tilawati Cabang → KPA Tilawati Daerah → Lembaga Pengguna Tilawati → Santri
+                                </div>
+                            </li>
+                            <li>
+                                Produk Tilawati tidak dijual bebas, apalagi secara online.
+                                Kebijakan ini diterapkan demi menjaga kelangsungan dakwah Tilawati dan memastikan distribusi dilakukan oleh pihak yang bertanggung jawab terhadap pengajarannya.
+                            </li>
+                            <li>
+                                Segala bentuk pelanggaran, seperti memperbanyak sendiri atau memperjualbelikan di luar jalur resmi, merupakan:
+                                <div class="sub-points">
+                                    <div class="sub-point"><span class="emphasis">Tindakan ilegal</span>,</div>
+                                    <div class="sub-point"><span class="emphasis">Tidak diridhai muallif</span>,</div>
+                                    <div class="sub-point"><span class="emphasis">Melanggar Undang-Undang Hak Cipta</span>,</div>
+                                    <div class="sub-point"><span class="emphasis">Melanggar hak muallif, ahli waris, serta seluruh pengelola Tilawati</span>.</div>
+                                </div>
+                                Karenanya, tindakan tersebut <span class="emphasis">tidak halal</span> dan <span class="emphasis">tidak membawa keberkahan</span>.
+                            </li>
+                            <li>
+                                Bagi lembaga yang ingin mendapatkan produk Tilawati secara resmi, silakan menghubungi KPA Tilawati di daerah masing-masing.
+                            </li>
+                        </ol>
+                        <div class="signature">
+                            <p>Banjarbaru, 1 Oktober 2025</p>
+                            <p>Kepala Cabang Tilawati Al Baqir Kalimantan Selatan</p>
+                            <p class="name">KH. Umairah Baqir</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-persons-products">
+                        <div class="contact-card-products">
+                            <p class="area">Untuk layanan Pulau Laut (Pulau Laut Utara dan Sekitarnya)</p>
+                            <a href="https://wa.me/6285248462707" class="wa-link" target="_blank">
+                                <i class="fab fa-whatsapp"></i> (+62) 852-4846-2707
+                            </a>
+                        </div>
+                        <div class="contact-card-products">
+                            <p class="area">Untuk layanan Kotabaru Darat (Tarjun, Serongga dan Sekitarnya)</p>
+                            <a href="https://wa.me/6281253538910" class="wa-link" target="_blank">
+                                <i class="fab fa-whatsapp"></i> (+62) 812-5353-8910
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo-wrapper">
+                        <img src="https://tilawatiktb.vercel.app/img/logo2.jpg" alt="Logo KPA Tilawati">
+                        <h3>KPA Tilawati Kotabaru</h3>
+                    </div>
+                    <p>
+                        Lembaga yang berfokus pada pembinaan, pelatihan, dan pengembangan metode Tilawati bagi guru Al-Qur'an, agar proses pembelajaran lebih mudah, menyenangkan, dan sesuai kaidah tajwid.
+                    </p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Hubungi Kami</h4>
+                    <ul class="contact-list">
+                        <li class="contact-item">
+                            <i class="fas fa-map-marker-alt contact-icon"></i>
+                            <span class="contact-text">Jl. Ahmad Yani Gang Empat Lima No.RT. 05, Tegal Rejo, Kec. Kelumpang Hilir, Kab. Kotabaru, Kalimantan Selatan 72161</span>
+                        </li>
+                        <li class="contact-item">
+                            <i class="fas fa-phone contact-icon"></i>
+                            <span class="contact-text">
+                                <a href="mailto:tilawatiktb@gmail.com">tilawatiktb@gmail.com</a> |
+                                <a href="https://wa.me/6281256568899" target="_blank">(+62) 812-5353-8910</a> |
+                                <a href="https://wa.me/628125063356" target="_blank">(+62) 852-4846-2707</a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-bar">
+            <p>&copy; 2023 KPA Tilawati Kotabaru. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const productsTableBody = document.getElementById('products-tbody');
+
+        // Products data in JavaScript array
+        const products = [
+            { no: 1, name: 'Tilawati 1-6', priceTpa: 'Rp. 11.000', priceSantri: 'Rp. 15.000' },
+            { no: 2, name: 'Kitabati 1-5', priceTpa: 'Rp. 11.000', priceSantri: 'Rp. 15.000' },
+            { no: 3, name: 'Aqidah Akhlak', priceTpa: 'Rp. 11.000', priceSantri: 'Rp. 15.000' },
+            { no: 4, name: 'Materi Hafalan', priceTpa: 'Rp. 11.000', priceSantri: 'Rp. 15.000' },
+            { no: 5, name: 'Tilawati PAUD', priceTpa: 'Rp. 12.000', priceSantri: 'Rp. 15.000' },
+            { no: 6, name: 'Kitabati PAUD 1-2', priceTpa: 'Rp. 13.000', priceSantri: 'Rp. 20.000' },
+            { no: 7, name: 'Tilawati Hard Cover', priceTpa: 'Rp. 60.000', priceSantri: 'Rp. 60.000' },
+            { no: 8, name: 'Peraga Tilawati 1-6', priceTpa: 'Rp. 55.000', priceSantri: 'Rp. 55.000' },
+            { no: 9, name: 'Peraga Kalender PAUD', priceTpa: 'Rp. 45.000', priceSantri: 'Rp. 45.000' },
+            { no: 10, name: 'Peraga Kartu PAUD', priceTpa: 'Rp. 55.000', priceSantri: 'Rp. 55.000' },
+            { no: 11, name: 'Tilawati Remaja/Dewasa', priceTpa: 'Rp. 25.000', priceSantri: 'Rp. 35.000' },
+            { no: 12, name: 'Tajwid Mudah', priceTpa: 'Rp. 8.000', priceSantri: 'Rp. 10.000' },
+            { no: 13, name: 'Panduan Kurikulum Praktis TPQ', priceTpa: 'Rp. 10.000', priceSantri: 'Rp. 15.000' },
+            { no: 14, name: 'Raport Tilawati/ Al Qur\'an', priceTpa: 'Rp. 8.000', priceSantri: 'Rp. 10.000' },
+            { no: 15, name: 'Buku Prestasi', priceTpa: 'Rp. 5.000', priceSantri: 'Rp. 7.500' },
+            { no: 16, name: 'Buku Makharijul Huruf', priceTpa: 'Rp. 10.000', priceSantri: 'Rp. 15.000' },
+            { no: 17, name: 'Buku Strategi Pembelajaran', priceTpa: 'Rp. 15.000', priceSantri: 'Rp. 15.000' },
+            { no: 18, name: 'Buku Teknik Munaqasyah', priceTpa: 'Rp. 15.000', priceSantri: 'Rp. 15.000' },
+            { no: 19, name: 'Al Qur\'an Juz 1-30', priceTpa: 'Rp. 10.000', priceSantri: 'Rp. 15.000' },
+            { no: 20, name: 'Al Qur\'an AMM Juz 1-30', priceTpa: 'Rp. 5.000', priceSantri: 'Rp. 8.000' },
+            { no: 21, name: 'Al Qur\'an Tilawati 30 Juz', priceTpa: 'Rp. 110.000', priceSantri: 'Rp. 125.000' },
+            { no: 22, name: 'CD MP3 Tilawati', priceTpa: 'Rp. 15.000', priceSantri: 'Rp. 20.000' },
+            { no: 23, name: 'VCD Strategi Pembelajaran Tilawati', priceTpa: 'Rp. 25.000', priceSantri: 'Rp. 30.000' },
+            { no: 24, name: 'Batik Tilawati Santri (Hijau, 2 meter)', priceTpa: 'Rp. 100.000', priceSantri: 'Rp. 110.000' },
+            { no: 25, name: 'Batik Tilawati Guru (Coklat, 2 Meter)', priceTpa: 'Rp. 150.000', priceSantri: 'Rp. 150.000' },
+            { no: 26, name: 'Al Qur\'an Tahfizh', priceTpa: 'Rp. 10.000', priceSantri: 'Rp. 15.000' },
+            { no: 27, name: 'Terjemah Lafzhiyah', priceTpa: 'Rp. 25.000', priceSantri: 'Rp. 30.000' }
+        ];
+
+        // Populate products table
+        function populateProductsTable() {
+            productsTableBody.innerHTML = '';
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.no}</td>
+                    <td>${product.name}</td>
+                    <td>${product.priceTpa}</td>
+                    <td>${product.priceSantri}</td>
+                `;
+                productsTableBody.appendChild(row);
+            });
+        }
+
+        // Menu Toggle
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+
+        // Initialize products table on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            populateProductsTable();
+        });
+    </script>
+</body>
+</html>
