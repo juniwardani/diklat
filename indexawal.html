@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPA Tilawati Kotabaru</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .yellow-bg {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        }
+        .header-footer {
+            background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .icon-feature {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover .icon-feature {
+            transform: scale(1.1);
+        }
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        .justify-text {
+            text-align: justify;
+        }
+        .wa-btn {
+            transition: all 0.3s ease;
+        }
+        .wa-btn:hover {
+            transform: scale(1.05);
+        }
+        .countdown-card {
+            background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        .countdown-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .countdown-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+        @media (max-width: 640px) {
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+            .countdown-label {
+                font-size: 0.7rem;
+            }
+        }
+        
+        /* Animasi untuk tombol Daftar Sekarang */
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.3);
+                transform: scale(1.02);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+                transform: scale(1);
+            }
+        }
+        
+        .heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+            14% {
+                transform: scale(1.05);
+            }
+            28% {
+                transform: scale(1);
+            }
+            42% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(1);
+            }
+        }
+        
+        .register-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .register-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .register-btn:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen yellow-bg">
+    <!-- Header -->
+    <header class="header-footer shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row items-center justify-center">
+                <div class="flex items-center space-x-4">
+                    <!-- Logo -->
+                    <div class="w-16 h-16 bg-white flex items-center justify-center overflow-hidden rounded-lg shadow-md">
+                                           <img src="img/logo2.jpg" alt="Logo 2" class="w-12 h-12 object-contain" />
+                    </div>
+                    
+                    <div class="text-center md:text-left">
+                        <h1 class="text-2xl md:text-3xl font-bold text-white">KPA Tilawati Kotabaru</h1>
+                        <p class="text-emerald-100 text-sm md:text-lg">Koordinator Pengembang Al-Qur'an</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Card 1: Pendaftaran Diklat -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover fade-in">
+                <div class="bg-emerald-600 py-4 px-6">
+                    <h2 class="text-xl font-bold text-white flex items-center">
+                        <i class="fas fa-book-open mr-3"></i>
+                        Pendaftaran Diklat
+                    </h2>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex justify-center mb-6">
+                        <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center icon-feature">
+                            <i class="fas fa-graduation-cap text-3xl text-emerald-600"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-book text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Program Diklat:</h3>
+                                <p class="text-gray-600 justify-text">Standarisasi Guru Al-Qur'an Metode Tilawati</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-layer-group text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Level:</h3>
+                                <p class="text-gray-600 justify-text">Level 1 dan Level 2</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-calendar-alt text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Tanggal Pelaksanaan:</h3>
+                                <p class="text-gray-600 font-medium justify-text">29 - 30 November 2025</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-map-marker-alt text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Tempat:</h3>
+                                <p class="text-gray-600 justify-text">Gedung Ya Tarim Serongga</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-user-tie text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Nara Hubung:</h3>
+                                <p class="text-gray-600 justify-text">Bapak Elvian</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                                <i class="fas fa-money-bill text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Konfirmasi Pembayaran:</h3>
+                                <p class="text-gray-600 justify-text">KPA Tilawati Kotabaru</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                        <i class="fas fa-file-signature text-emerald-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Permasalahan Pendaftaran:</h3>
+                                <p class="text-gray-600 justify-text">Juni Wardani</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="mb-6">
+                        <h3 class="text-center font-semibold text-gray-700 mb-3">Hitung Mundur Pendaftaran</h3>
+                        <div class="grid grid-cols-4 gap-2">
+                            <div class="countdown-card rounded-lg p-3 text-center text-white">
+                                <div id="days" class="countdown-number">00</div>
+                                <div class="countdown-label text-xs mt-1">Hari</div>
+                            </div>
+                            <div class="countdown-card rounded-lg p-3 text-center text-white">
+                                <div id="hours" class="countdown-number">00</div>
+                                <div class="countdown-label text-xs mt-1">Jam</div>
+                            </div>
+                            <div class="countdown-card rounded-lg p-3 text-center text-white">
+                                <div id="minutes" class="countdown-number">00</div>
+                                <div class="countdown-label text-xs mt-1">Menit</div>
+                            </div>
+                            <div class="countdown-card rounded-lg p-3 text-center text-white">
+                                <div id="seconds" class="countdown-number">00</div>
+                                <div class="countdown-label text-xs mt-1">Detik</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <a href="pendaftaran.html" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 btn-primary flex items-center justify-center register-btn pulse-glow heartbeat">
+                            <i class="fas fa-edit mr-2"></i>
+                            Daftar Sekarang
+                        </a>
+                        
+                        <a href="https://wa.me/628115114077?text=Assalamualaikum%20Bapak%20Elvian,%20saya%20mau%20bertanya%20tentang%20diklat%20Tilawati" target="_blank" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 wa-btn flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-2"></i>
+                            Pertanyaan Seputar Diklat Tilawati
+                        </a>
+
+                        <a href="https://wa.me/6281253538910?text=Assalamualaikum,%20saya%20ingin%20mengkonfirmasi%20pembayaran%20transfer%20diklat%20Tilawati" target="_blank" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 wa-btn flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-2"></i>
+                            Konfirmasi Transfer Pembayaran
+                        </a>
+
+                        
+                        <a href="https://wa.me/6285754048672?text=Assalamualaikum,%20saya%20ingin%20mengadukan%20permasalahan%20form%20pendaftaran%20diklat%20Tilawati" target="_blank" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 wa-btn flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-2"></i>
+                            Aduan Permasalahan Form Pendaftaran
+                        </a>
+                        
+                 <a href="https://pcnukotabaru.vercel.app" target="_blank" class="w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center transform hover:scale-105">
+    <img src="https://pcnukotabaru.vercel.app/img/logo.jpg" alt="PCNU Kotabaru" class="h-8 mr-3 animate-pulse">
+    Kunjungi Website PCNU Kotabaru
+</a>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Download Sertifikat -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover fade-in" style="animation-delay: 0.2s;">
+                <div class="bg-blue-600 py-4 px-6">
+                    <h2 class="text-xl font-bold text-white flex items-center">
+                        <i class="fas fa-certificate mr-3"></i>
+                        Sertifikat & Syahadah
+                    </h2>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex justify-center mb-6">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center icon-feature">
+                            <i class="fas fa-award text-3xl text-blue-600"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+                            <h3 class="font-semibold text-blue-800 mb-2">Diklat Standarisasi Guru Al-Qur'an Metode Tilawati Level 1</h3>
+                            <div class="flex items-center text-gray-700 mb-1">
+                                <i class="fas fa-calendar-day mr-2 text-blue-600"></i>
+                                <span>27 – 28 September 2025</span>
+                            </div>
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-location-dot mr-2 text-blue-600"></i>
+                                <span>Masjid Kapal Pesiar Siring Laut</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-info-circle mr-2 text-gray-600"></i>
+                                Keterangan:
+                            </h4>
+                            <div class="space-y-3 text-sm text-gray-700">
+                                <div class="flex">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <p class="justify-text">Sertifikat merupakan bentuk penghargaan yang diberikan kepada seluruh peserta yang telah berpartisipasi dalam kegiatan ini.</p>
+                                </div>
+                                
+                                <div class="flex">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <p class="justify-text">Syahadah adalah dokumen resmi yang diterbitkan oleh Tilawati Pusat bagi peserta yang telah memperoleh predikat Al-Qur'an pada saat Munaqasyah.</p>
+                                </div>
+                                
+                                <div class="flex">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <p class="justify-text">Syahadah dilengkapi dengan barcode terpusat, sehingga apabila terdapat pihak yang mencoba melakukan pemalsuan, akan mudah terdeteksi.</p>
+                                </div>
+                                
+                                <div class="flex">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <p class="justify-text">Tilawati Pusat berhak menempuh jalur hukum apabila ditemukan adanya tindak pemalsuan.</p>
+                                </div>
+                                
+                                <div class="flex">
+                                    <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-2"></i>
+                                    <p class="font-medium text-red-600 justify-text">Masa berlaku Syahadah adalah 2 (dua) tahun sejak tanggal diterbitkan.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="syahadah.html" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 btn-primary flex items-center justify-center">
+                        <i class="fas fa-download mr-2"></i>
+                        Download Sertifikat & Syahadah
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="header-footer text-white py-8 mt-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-emerald-100">&copy; 2024 KPA Tilawati Kotabaru. Semua hak dilindungi.</p>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <a href="#" class="text-emerald-200 hover:text-white transition-colors">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                    </a>
+                    <a href="#" class="text-emerald-200 hover:text-white transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-emerald-200 hover:text-white transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-emerald-200 hover:text-white transition-colors">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date("Nov 29, 2025 08:00:00").getTime();
+        
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+            // Get today's date and time
+            var now = new Date().getTime();
+            
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+            
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Display the result in the elements with id
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("days").innerHTML = "00";
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+                
+                // Optionally show a message that registration is closed
+                const countdownContainer = document.querySelector('.countdown-card').parentElement.parentElement;
+                const message = document.createElement('div');
+                message.className = 'text-center text-red-600 font-semibold mt-2';
+                message.textContent = 'Pendaftaran telah ditutup';
+                countdownContainer.appendChild(message);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
