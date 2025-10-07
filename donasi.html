@@ -303,18 +303,10 @@
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .bank-header {
-            background: var(--gradient-hijau);
-            padding: 20px;
-            color: var(--putih);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
 
         .bank-logo {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 60px;
             background-color: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             display: flex;
@@ -324,6 +316,30 @@
 
         .bank-logo i {
             font-size: 2.5rem;
+        }
+
+        .bank-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .bank-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            border-radius: 15px 15px 0 0;
+        }
+
+        .bank-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--putih);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            margin-left: 15px;
         }
 
         .bank-body {
@@ -729,6 +745,22 @@
             align-items: center;
         }
 
+        .modal-title-container {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .modal-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--hijau-paling-muda);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
         .modal-title {
             font-size: 1.5rem;
             font-weight: 700;
@@ -973,12 +1005,24 @@
             }
 
             .bank-logo {
-                width: 60px;
-                height: 60px;
+                width: 100px;
+                height: 50px;
             }
 
             .bank-logo i {
                 font-size: 2rem;
+            }
+
+            .bank-logo img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                border-radius: 8px;
+            }
+
+            .bank-name {
+                font-size: 1.4rem;
+                margin-left: 10px;
             }
 
             .bank-body {
@@ -1086,6 +1130,12 @@
                 font-size: 1.3rem;
             }
 
+            .modal-logo {
+                width: 35px;
+                height: 35px;
+                margin-right: 12px;
+            }
+
             .modal-body {
                 padding: 20px;
             }
@@ -1106,6 +1156,7 @@
                         <li><a href="index.html" class="nav-link">Beranda</a></li>
                         <li><a href="profile.html" class="nav-link">Profile</a></li>
                         <li><a href="produk.html" class="nav-link">Produk Tilawati</a></li>
+                        <li><a href="artikel.html" class="nav-link">Artikel Tilawati</a></li>
                         <li><a href="registrasi.html" class="nav-link highlight">Pendaftaran Diklat</a></li>
                         <li><a href="donasi.html" class="nav-link active">Donasi</a></li>
                     </ul>
@@ -1130,7 +1181,7 @@
                 
                 <div class="donation-intro">
                     <h3>Support Our Mission</h3>
-                    <p>Partisipasi Anda dalam donasi akan membantu kami mencetak generasi Qur'ani yang mampu membaca, memahami, dan mengamalkan Al-Qur'an dalam kehidupan sehari-hari.</p>
+                    <p>Donasi Anda membantu kami memperkuat pembinaan guru dan santri, agar cahaya Al-Qur’an terus menyinari Kotabaru. Melalui dukungan Anda, KPA Tilawati Kotabaru dapat melaksanakan lebih banyak pelatihan, pendampingan, dan program pengembangan bagi para pengajar Al-Qur’an.</p>
                     
                     <div class="donation-methods">
                         <div class="donation-method">
@@ -1142,13 +1193,14 @@
                             <div class="bank-card">
                                 <div class="bank-header">
                                     <div class="bank-logo">
-                                        <i class="fas fa-university"></i>
+                                        <img src="img/logobank.jpg" alt="Logo Bank" />
                                     </div>
+                                    <div class="bank-name">BSI</div>
                                 </div>
                                 
                                 <div class="bank-body">
                                     <div class="account-info">
-                                        <div class="account-number">1234567890</div>
+                                        <div class="account-number">7676747420</div>
                                         <button class="copy-icon-btn" id="copy-btn" title="Salin Nomor Rekening">
                                             <i class="fas fa-copy"></i>
                                         </button>
@@ -1259,7 +1311,10 @@
     <div class="modal-overlay" id="supporter-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="modal-title">Nama Pendukung</h3>
+                <div class="modal-title-container">
+                    <img class="modal-logo" id="modal-logo" src="" alt="Logo Pendukung" />
+                    <h3 class="modal-title" id="modal-title">Nama Pendukung</h3>
+                </div>
                 <button class="modal-close-btn" id="modal-close-btn">
                     <i class="fas fa-times"></i>
                 </button>
@@ -1335,30 +1390,31 @@
 
         // Supporters data in JavaScript array with role information
         const supporters = [
-            {
-                name: "Yayasan Pendidikan Al-Qur'an Indonesia",
-                logo: "https://picsum.photos/seed/supporter1/200/200.jpg",
-                role: "Pendukung Utama Program Beasiswa",
-                description: "Yayasan Pendidikan Al-Qur'an Indonesia telah menjadi mitra utama kami dalam program beasiswa bagi guru-guru Tilawati dari daerah terpencil. Melalui dukungan mereka, puluhan guru telah mendapatkan pelatihan bersertifikat yang meningkatkan kualitas mengajar mereka di masing-masing wilayah."
-            },
-            {
-                name: "Bank Kalimantan Syariah",
-                logo: "https://picsum.photos/seed/supporter2/200/200.jpg",
-                role: "Partner Keuangan dan Pengembangan",
-                description: "Bank Kalimantan Syariah tidak hanya memberikan dukungan finansial, tetapi juga membantu kami dalam mengelola donasi dengan transparan dan profesional. Mereka juga aktif dalam program literasi keuangan untuk pengurus yayasan dan guru-guru Tilawati."
-            },
-            {
-                name: "PT. Borneo Indah Mandiri",
-                logo: "https://picsum.photos/seed/supporter3/200/200.jpg",
-                role: "Sponsor Fasilitas dan Infrastruktur",
-                description: "PT. Borneo Indah Mandiri telah membantu kami dalam menyediakan fasilitas belajar yang memadai, termasuk perbaikan ruang kelas, penyediaan audio-visual learning tools, dan pengembangan perpustakaan mini di beberapa titik belajar Tilawati."
-            },
-            {
-                name: "Masjid Agung Kotabaru",
-                logo: "https://picsum.photos/seed/supporter4/200/200.jpg",
-                role: "Partner Spiritual dan Lokasi Kegiatan",
-                description: "Masjid Agung Kotabaru menjadi partner spiritual kami yang menyediakan lokasi untuk berbagai kegiatan besar, seperti wisuda santri, pelatihan intensif, dan tabligh akbar. Mereka juga membantu menyebarkan informasi program-program kami kepada jamaah."
-            }
+        {
+    name: "Tilawati Al Baqir Kalsel",
+    logo: "img/logo1.jpg",
+    role: "Mitra Utama Pembinaan Guru Al-Qur’an",
+    description: "Tilawati Al Baqir Kalimantan Selatan menjadi mitra utama dalam pelaksanaan program diklat dan pembinaan guru-guru Al-Qur’an di Kotabaru. Melalui dukungan mereka, puluhan guru berhasil meraih Syahadah Al-Qur’an yang meningkatkan kompetensi dan kualitas pembelajaran di masing-masing TPA."
+},
+{
+    name: "H. Sudian Noor (Komisi VIII DPR RI)",
+    logo: "img/logo5.jpg",
+    role: "Pendukung Pengembangan dan Kemitraan Strategis",
+    description: "Sebagai anggota Komisi VIII DPR RI, H. Sudian Noor berperan aktif dalam mendukung pengembangan program pembinaan guru dan santri Tilawati di Kotabaru. Dukungan beliau mencakup bantuan keuangan, penguatan kelembagaan, serta fasilitasi jejaring kemitraan strategis."
+},
+{
+    name: "Majelis Yatarim Serongga",
+    logo: "img/logo3.jpg",
+    role: "Sponsor Fasilitas dan Infrastruktur",
+    description: "Majelis Yatarim Serongga turut berkontribusi dalam penyediaan fasilitas kegiatan, seperti perbaikan ruang belajar, sarana pendukung pelatihan/diklat, serta dukungan logistik untuk kegiatan keagamaan dan sosial yang diinisiasi oleh KPA Tilawati Kotabaru."
+},
+{
+    name: "Rumah Tahfidz Saijaan",
+    logo: "img/logo4.jpg",
+    role: "Partner dan Koordinator Wilayah",
+    description: "Rumah Tahfidz Saijaan berperan sebagai partner dan koordinator wilayah dalam pelaksanaan berbagai program pembinaan Tilawati di Pulau Laut dan sekitarnya. Melalui koordinasi yang baik, lembaga ini menjadi pusat kegiatan seperti pelatihan guru, wisuda santri, kajian rutin, serta distribusi produk Tilawati yang memperkuat jaringan pembelajaran Al-Qur’an di Kabupaten Kotabaru."
+}
+
         ];
 
         // Populate supporters grid
@@ -1388,6 +1444,9 @@
 
         // Open modal with supporter information
         function openModal(supporter) {
+            const modalLogo = document.getElementById('modal-logo');
+            modalLogo.src = supporter.logo;
+            modalLogo.alt = supporter.name;
             modalTitle.textContent = supporter.name;
             modalRole.textContent = supporter.role;
             modalDescription.textContent = supporter.description;
@@ -1415,10 +1474,58 @@
 
         // Copy button functionality
         copyBtn.addEventListener('click', () => {
-            const bankInfo = "1234567890";
+            const bankInfo = "7676747420";
             
-            navigator.clipboard.writeText(bankInfo).then(() => {
-                // Show notification
+            // Simple and reliable copy method
+            function copyToClipboard(text) {
+                // Create a temporary textarea element
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                
+                // Make it invisible but still selectable
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                textArea.style.opacity = "0";
+                textArea.style.pointerEvents = "none";
+                textArea.setAttribute('readonly', '');
+                
+                // Add to DOM, select, and copy
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                textArea.setSelectionRange(0, 99999); // For mobile devices
+                
+                let success = false;
+                try {
+                    // Try the modern clipboard API first (only if secure context)
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(text).then(() => {
+                            success = true;
+                        }).catch(() => {
+                            // If clipboard API fails, try execCommand
+                            success = document.execCommand('copy');
+                        });
+                    } else {
+                        // Use execCommand for non-secure contexts
+                        success = document.execCommand('copy');
+                    }
+                } catch (err) {
+                    console.warn('Copy failed:', err);
+                    success = false;
+                }
+                
+                // Clean up
+                document.body.removeChild(textArea);
+                
+                return success;
+            }
+            
+            // Execute copy
+            const copySuccess = copyToClipboard(bankInfo);
+            
+            if (copySuccess) {
+                // Show success notification
                 notificationText.textContent = 'No. rekening berhasil disalin!';
                 notification.classList.add('show');
                 
@@ -1426,9 +1533,21 @@
                 setTimeout(() => {
                     notification.classList.remove('show');
                 }, 3000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
+            } else {
+                // Show fallback notification with selectable text
+                notificationText.innerHTML = `
+                    <div style="text-align: left;">
+                        <strong>Salin manual nomor rekening:</strong><br>
+                        <span style="background: #f0f0f0; padding: 5px; border-radius: 3px; font-family: monospace; user-select: all; -webkit-user-select: all; -moz-user-select: all; -ms-user-select: all;">${bankInfo}</span>
+                    </div>
+                `;
+                notification.classList.add('show');
+                
+                // Hide notification after 8 seconds for manual copy
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 8000);
+            }
         });
 
         // Form submission
