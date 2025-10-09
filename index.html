@@ -1208,7 +1208,7 @@
                 { key: "level", icon: "fas fa-layer-group", label: "Level", text: "Level 1 dan Level 2" },
                 { key: "tanggal", icon: "fas fa-calendar-alt", label: "Tanggal Pelaksanaan", text: "29 - 30 November 2025" },
                 { key: "tempat", icon: "fas fa-map-marker-alt", label: "Tempat", text: "Gedung Ya Tarim Serongga" },
-                { key: "narahubung", icon: "fas fa-user-tie", label: "Nara Hubung", text: "Bapak Elvian" },
+                { key: "narahubung", icon: "fas fa-user-tie", label: "Nara Hubung", text: "Sdr. Elvian" },
                 { key: "konfirmasi", icon: "fas fa-money-bill", label: "Konfirmasi Pembayaran", text: "KPA Tilawati Kotabaru" },
                 { key: "permasalahan", icon: "fas fa-file-signature", label: "Permasalahan Pendaftaran", text: "Juni Wardani" },
                 { key: "countdown", label: "Hitung Mundur Pendaftaran" }
@@ -1433,6 +1433,9 @@
         // Render Diklat from config
         function renderDiklat() {
             setCountdownFromTanggal();
+            const nowMs = Date.now();
+            const targetMs = typeof diklatConfig.countdownTarget === 'number' ? diklatConfig.countdownTarget : new Date(diklatConfig.countdownTarget || 0).getTime();
+            const isClosed = Number.isFinite(targetMs) && nowMs > targetMs;
             const header = `
                 <div class="bg-emerald-600 py-4 px-6">
                     <h2 class="text-xl font-bold text-white flex items-center">
@@ -1443,6 +1446,7 @@
 
             const itemsHtml = diklatConfig.content.map(item => {
                 if (item.key === 'countdown') {
+                    if (isClosed) return '';
                     return `
                         <div class="mb-2 mt-6">
                             <h3 class="text-center font-semibold text-gray-700 mb-3">${item.label}</h3>
@@ -1478,9 +1482,16 @@
                     </div>`;
             }).join('');
 
-            const actionsHtml = `
+            const filteredActions = isClosed
+                ? diklatConfig.actions.filter(a =>
+                    (a.text && a.text.toLowerCase().includes('pertanyaan')) ||
+                    (a.href && a.href.includes('pcnukotabaru'))
+                  )
+                : diklatConfig.actions;
+
+            const actionsHtml = (arr) => `
                 <div class="space-y-3">
-                    ${diklatConfig.actions.map(a => `
+                    ${arr.map(a => `
                         <a href="${a.href}" ${a.target ? `target="${a.target}"` : ''} class="${a.classes}">
                             ${a.img ? `<img src="${a.img.src}" alt="${a.img.alt}" class="${a.img.classes}">` : `<i class="${a.icon} mr-2"></i>`}
                             ${a.text}
@@ -1488,19 +1499,34 @@
                     `).join('')}
                 </div>`;
 
+            const closedBanner = isClosed ? `
+                <div class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-red-700 flex items-start">
+                    <i class="fas fa-circle-exclamation mr-3 mt-1"></i>
+                    <div>
+                        <h3 class="font-semibold">Pendaftaran Telah Ditutup</h3>
+                        <p class="text-sm">Terima kasih atas minat Anda. Silakan pantau jadwal berikutnya atau hubungi admin untuk informasi diklat selanjutnya.</p>
+                    </div>
+                </div>` : '';
+
             const bantuanHtml = '';
 
-            diklatContent.innerHTML = `
-                ${header}
-                <div class="p-6">
+            const bodyHtml = isClosed
+                ? `${closedBanner}${actionsHtml(filteredActions)}`
+                : `
                     <div class="flex justify-center mb-6">
                         <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center icon-feature">
                             <i class="fas fa-graduation-cap text-3xl text-emerald-600"></i>
                         </div>
                     </div>
                     <div class="space-y-4 mb-6">${itemsHtml}</div>
-                    ${actionsHtml}
+                    ${actionsHtml(filteredActions)}
                     ${bantuanHtml}
+                `;
+
+            diklatContent.innerHTML = `
+                ${header}
+                <div class="p-6">
+                    ${bodyHtml}
                 </div>`;
 
             // Bind countdown elements after render
