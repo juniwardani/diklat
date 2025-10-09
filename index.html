@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KPA Tilawati Kotabaru - Beranda</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
@@ -265,6 +266,45 @@
             background-color: var(--hijau-paling-muda);
         }
 
+        /* Card style to match pendaftaranawal.html */
+        .diklat-card {
+            background: var(--putih);
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .diklat-card-header {
+            background: linear-gradient(135deg, var(--hijau-utama), var(--hijau-muda));
+            color: var(--putih);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .diklat-card-header .header-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .diklat-card-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .diklat-card-body {
+            padding: 20px;
+        }
+
         .diklat-container {
             max-width: 800px;
             margin: 0 auto;
@@ -293,9 +333,9 @@
         .diklat-info {
             background-color: var(--putih);
             border-radius: 10px;
-            padding: 25px;
-            margin: 15px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 0; /* padding moved to .diklat-card-body */
+            margin: 0;
+            box-shadow: none;
         }
 
         .diklat-info h3 {
@@ -443,6 +483,48 @@
             letter-spacing: 1px;
         }
 
+        /* Action buttons (match pendaftaranawal.html feel) */
+        .action-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--putih);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .action-link i {
+            margin-right: 8px;
+        }
+
+        .action-link.primary {
+            background-color: #0f9f4a; /* emerald-600 */
+        }
+
+        .action-link.primary:hover {
+            background-color: #0c7d3a; /* emerald-700 */
+            transform: translateY(-2px);
+        }
+
+        .action-link.wa {
+            background-color: #22c55e; /* green-500 */
+        }
+
+        .action-link.wa:hover {
+            background-color: #16a34a; /* green-600 */
+            transform: translateY(-2px);
+        }
+
         /* Artikel Section */
         .artikel-section {
             padding: 50px 0;
@@ -454,6 +536,32 @@
             margin: 0 auto;
             text-align: center;
         }
+        /* ===== Tailwind-based utility styles to match pendaftaranawal.html ===== */
+        body { box-sizing: border-box; }
+        .yellow-bg { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+        .header-footer { background: linear-gradient(135deg, #047857 0%, #065f46 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .icon-feature { transition: all 0.3s ease; }
+        .card-hover:hover .icon-feature { transform: scale(1.1); }
+        .btn-primary { transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.8s ease-out; }
+        .justify-text { text-align: justify; }
+        .wa-btn { transition: all 0.3s ease; }
+        .wa-btn:hover { transform: scale(1.05); }
+        .countdown-card { background: linear-gradient(135deg, #047857 0%, #065f46 100%); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); transition: all 0.3s ease; }
+        .countdown-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .countdown-number { font-size: 1.8rem; font-weight: bold; line-height: 1; }
+        @media (max-width: 640px) { .countdown-number { font-size: 1.5rem; } .countdown-label { font-size: 0.7rem; } }
+        .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); transform: scale(1); } 50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0.3); transform: scale(1.02); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); transform: scale(1); } }
+        .heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+        @keyframes heartbeat { 0% { transform: scale(1); } 14% { transform: scale(1.05); } 28% { transform: scale(1); } 42% { transform: scale(1.05); } 70% { transform: scale(1); } }
+        .register-btn { position: relative; overflow: hidden; }
+        .register-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s; }
+        .register-btn:hover::before { left: 100%; }
 
         .artikel-container h2 {
             font-size: 2.5rem;
@@ -1003,44 +1111,11 @@
             </div>
         </section>
 
-        <!-- Diklat Info Section -->
-        <section id="diklat" class="diklat-section">
-            <div class="container-narrow">
-                <div class="diklat-container">
-                    <h2>Informasi Pendaftaran Diklat</h2>
-                    <div class="diklat-info">
-                        <h3 id="diklat-judul">Jadwal Diklat Tilawati</h3>
-                        <table class="diklat-table" id="diklat-table">
-                            <tr>
-                                <th colspan="2">Detail Informasi Diklat</th>
-                            </tr>
-                            <!-- Data diklat akan ditampilkan di sini melalui JavaScript -->
-                        </table>
-                        
-                        <div class="countdown-section">
-                            <h3 class="countdown-title">Hitung Mundur Pendaftaran</h3>
-                            <div class="countdown-container">
-                                <div class="countdown-card">
-                                    <div class="countdown-number" id="days">00</div>
-                                    <div class="countdown-label">Hari</div>
-                                </div>
-                                <div class="countdown-card">
-                                    <div class="countdown-number" id="hours">00</div>
-                                    <div class="countdown-label">Jam</div>
-                                </div>
-                                <div class="countdown-card">
-                                    <div class="countdown-number" id="minutes">00</div>
-                                    <div class="countdown-label">Menit</div>
-                                </div>
-                                <div class="countdown-card">
-                                    <div class="countdown-number" id="seconds">00</div>
-                                    <div class="countdown-label">Detik</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <a href="pendaftaran.html" class="btn">Pendaftaran Diklat</a>
-                    </div>
+        <!-- Diklat Info Section - centered professional layout, rendered via JS config -->
+        <section id="diklat" class="yellow-bg">
+            <div class="px-4 py-12">
+                <div class="max-w-4xl mx-auto">
+                    <div id="diklat-content" class="bg-white rounded-2xl shadow-xl overflow-hidden"></div>
                 </div>
             </div>
         </section>
@@ -1123,37 +1198,51 @@
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         // Data diklat
-        const diklatData = {
-            judul: "Standarisasi Guru Al-Qur'an Metode Tilawati Level 1 dan Level 2",
-            detail: [
-                {
-                    icon: 'fas fa-calendar-alt',
-                    label: 'Tanggal Diklat',
-                    value: '29 - 30 November 2025'
-                },
-                {
-                    icon: 'fas fa-map-marker-alt',
-                    label: 'Tempat Diklat',
-                    value: '<strong>Gedung Majelis Yatarim (Serongga)</strong><br>Jl. Ahmad Yani Gang Empat Lima No.RT. 05, Tegal Rejo, Kec. Kelumpang Hilir'
-                },
-                {
-                    icon: 'fas fa-user',
-                    label: 'Nara Hubung',
-                    value: {
-                        name: 'Sdr. Elvian',
-                        wa: '8115114077'
-                    }
-                },
-                {
-                    icon: 'fas fa-money-check-alt',
-                    label: 'Konfirmasi Transfer',
-                    value: {
-                        name: 'KPA Tilawati Kotabaru',
-                        wa: '81253538910'
-                    }
-                }
+        const diklatConfig = {
+            header: {
+                title: "Pendaftaran Diklat",
+                icon: "fas fa-book-open"
+            },
+            content: [
+                { key: "program", icon: "fas fa-book", label: "Program Diklat", text: "Standarisasi Guru Al-Qur'an Metode Tilawati" },
+                { key: "level", icon: "fas fa-layer-group", label: "Level", text: "Level 1 dan Level 2" },
+                { key: "tanggal", icon: "fas fa-calendar-alt", label: "Tanggal Pelaksanaan", text: "29 - 30 November 2025" },
+                { key: "tempat", icon: "fas fa-map-marker-alt", label: "Tempat", text: "Gedung Ya Tarim Serongga" },
+                { key: "narahubung", icon: "fas fa-user-tie", label: "Nara Hubung", text: "Bapak Elvian" },
+                { key: "konfirmasi", icon: "fas fa-money-bill", label: "Konfirmasi Pembayaran", text: "KPA Tilawati Kotabaru" },
+                { key: "permasalahan", icon: "fas fa-file-signature", label: "Permasalahan Pendaftaran", text: "Juni Wardani" },
+                { key: "countdown", label: "Hitung Mundur Pendaftaran" }
+            ],
+            actions: [
+                { text: "Daftar Sekarang", href: "pendaftaran.html", classes: "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 btn-primary flex items-center justify-center register-btn pulse-glow heartbeat", icon: "fas fa-edit" },
+                { text: "Pertanyaan Diklat Tilawati", href: "https://wa.me/628115114077?text=Assalamualaikum%20Bapak%20Elvian,%20saya%20mau%20bertanya%20tentang%20diklat%20Tilawati", classes: "w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 wa-btn flex items-center justify-center", icon: "fab fa-whatsapp", target: "_blank" },
+                { text: "Konfirmasi Transfer", href: "https://wa.me/6281253538910?text=Assalamualaikum,%20saya%20ingin%20mengkonfirmasi%20pembayaran%20transfer%20diklat%20Tilawati", classes: "w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 wa-btn flex items-center justify-center", icon: "fab fa-whatsapp", target: "_blank" },
+                { text: "Aduan Form Pendaftaran", href: "https://wa.me/6285754048672?text=Assalamualaikum,%20saya%20ingin%20mengadukan%20permasalahan%20form%20pendaftaran%20diklat%20Tilawati", classes: "w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 wa-btn flex items-center justify-center", icon: "fab fa-whatsapp", target: "_blank" },
+                { text: "Kunjungi Website PCNU Kotabaru", href: "https://pcnukotabaru.vercel.app", classes: "w-full bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center transform hover:scale-105", img: { src: "https://pcnukotabaru.vercel.app/img/logo.jpg", alt: "PCNU Kotabaru", classes: "h-8 mr-3 animate-pulse" }, target: "_blank" }
             ]
         };
+
+        // Helper: set countdownTarget based on tanggal text (use first date in range at 08:00)
+        function setCountdownFromTanggal() {
+            const tanggalItem = diklatConfig.content.find(i => i.key === 'tanggal');
+            if (!tanggalItem || !tanggalItem.text) return;
+            const text = tanggalItem.text.trim();
+            // Example formats: "29 - 30 November 2025", "27 – 28 September 2025", "5 Oktober 2025"
+            const monthMap = {
+                'januari': 0, 'februari': 1, 'maret': 2, 'april': 3, 'mei': 4, 'juni': 5,
+                'juli': 6, 'agustus': 7, 'september': 8, 'oktober': 9, 'november': 10, 'desember': 11
+            };
+            const re = /(\d{1,2})\s*(?:[–\-]\s*\d{1,2})?\s+([A-Za-zÀ-ÿ]+)\s+(\d{4})/i;
+            const m = text.match(re);
+            if (!m) return;
+            const day = parseInt(m[1], 10);
+            const monthName = m[2].toLowerCase();
+            const year = parseInt(m[3], 10);
+            const monthIdx = monthMap[monthName];
+            if (monthIdx == null) return;
+            const dt = new Date(year, monthIdx, day, 8, 0, 0); // 08:00 local time
+            diklatConfig.countdownTarget = dt.getTime();
+        }
 
         // Data artikel dari Supabase
         let artikelData = [];
@@ -1189,14 +1278,14 @@
         const modalContent = document.getElementById('modal-content');
         const closeModal = document.querySelector('.close');
         const modalCloseBtn = document.querySelector('.modal-close-btn');
-        const diklatTable = document.getElementById('diklat-table');
-        const diklatJudul = document.getElementById('diklat-judul');
+        // Diklat dynamic elements removed in Tailwind layout
 
         // Countdown elements
         const daysElement = document.getElementById('days');
         const hoursElement = document.getElementById('hours');
         const minutesElement = document.getElementById('minutes');
         const secondsElement = document.getElementById('seconds');
+        const diklatContent = document.getElementById('diklat-content');
 
         // Menu Toggle
         menuToggle.addEventListener('click', () => {
@@ -1222,59 +1311,7 @@
             });
         });
 
-        // Fungsi untuk menampilkan data diklat
-        function tampilkanDiklat() {
-            // Tampilkan judul diklat
-            diklatJudul.textContent = diklatData.judul;
-            
-            // Kosongkan tabel kecuali header
-            diklatTable.innerHTML = `
-                <tr>
-                    <th colspan="2">Detail Informasi Diklat</th>
-                </tr>
-            `;
-            
-            // Tampilkan setiap data diklat
-            diklatData.detail.forEach(item => {
-                const row = document.createElement('tr');
-                
-                if (typeof item.value === 'object' && item.value !== null) {
-                    // Jika value adalah objek (untuk kontak)
-                    let buttonText = '';
-                    let messageText = '';
-                    
-                    if (item.label === 'Nara Hubung') {
-                        buttonText = 'Pertanyaan';
-                        messageText = 'Assalamualaikum, saya ingin bertanya tentang diklat Tilawati.';
-                    } else if (item.label === 'Konfirmasi Transfer') {
-                        buttonText = 'Konfirmasi';
-                        messageText = 'Assalamualaikum, saya ingin konfirmasi transfer untuk pendaftaran diklat Tilawati.';
-                    }
-                    
-                    row.innerHTML = `
-                        <td><i class="${item.icon}"></i> ${item.label}</td>
-                        <td>
-                            <div class="contact-info">
-                                <div class="contact-name">${item.value.name}</div>
-                                <div class="contact-wa">
-                                    <a href="https://wa.me/62${item.value.wa.replace('-', '')}?text=${encodeURIComponent(messageText)}" class="wa-button" target="_blank">
-                                        <i class="fab fa-whatsapp"></i> ${buttonText}
-                                    </a>
-                                </div>
-                            </div>
-                        </td>
-                    `;
-                } else {
-                    // Jika value adalah string
-                    row.innerHTML = `
-                        <td><i class="${item.icon}"></i> ${item.label}</td>
-                        <td>${item.value}</td>
-                    `;
-                }
-                
-                diklatTable.appendChild(row);
-            });
-        }
+        // Fungsi diklat lama dihapus karena layout sekarang statis berbasis Tailwind
 
         // Fungsi untuk memotong teks
         function potongTeks(teks, maxLength) {
@@ -1393,16 +1430,99 @@
             }, 300); // Waktu sesuai dengan durasi transisi CSS
         }
 
-        // Countdown timer
+        // Render Diklat from config
+        function renderDiklat() {
+            setCountdownFromTanggal();
+            const header = `
+                <div class="bg-emerald-600 py-4 px-6">
+                    <h2 class="text-xl font-bold text-white flex items-center">
+                        <i class="${diklatConfig.header.icon} mr-3"></i>
+                        ${diklatConfig.header.title}
+                    </h2>
+                </div>`;
+
+            const itemsHtml = diklatConfig.content.map(item => {
+                if (item.key === 'countdown') {
+                    return `
+                        <div class="mb-2 mt-6">
+                            <h3 class="text-center font-semibold text-gray-700 mb-3">${item.label}</h3>
+                            <div class="grid grid-cols-4 gap-2">
+                                <div class="countdown-card rounded-lg p-3 text-center text-white">
+                                    <div id="days" class="countdown-number">00</div>
+                                    <div class="countdown-label text-xs mt-1">Hari</div>
+                                </div>
+                                <div class="countdown-card rounded-lg p-3 text-center text-white">
+                                    <div id="hours" class="countdown-number">00</div>
+                                    <div class="countdown-label text-xs mt-1">Jam</div>
+                                </div>
+                                <div class="countdown-card rounded-lg p-3 text-center text-white">
+                                    <div id="minutes" class="countdown-number">00</div>
+                                    <div class="countdown-label text-xs mt-1">Menit</div>
+                                </div>
+                                <div class="countdown-card rounded-lg p-3 text-center text-white">
+                                    <div id="seconds" class="countdown-number">00</div>
+                                    <div class="countdown-label text-xs mt-1">Detik</div>
+                                </div>
+                            </div>
+                        </div>`;
+                }
+                return `
+                    <div class="flex items-start">
+                        <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
+                            <i class="${item.icon} text-emerald-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">${item.label}:</h3>
+                            <p class="text-gray-600 justify-text">${item.text || ''}</p>
+                        </div>
+                    </div>`;
+            }).join('');
+
+            const actionsHtml = `
+                <div class="space-y-3">
+                    ${diklatConfig.actions.map(a => `
+                        <a href="${a.href}" ${a.target ? `target="${a.target}"` : ''} class="${a.classes}">
+                            ${a.img ? `<img src="${a.img.src}" alt="${a.img.alt}" class="${a.img.classes}">` : `<i class="${a.icon} mr-2"></i>`}
+                            ${a.text}
+                        </a>
+                    `).join('')}
+                </div>`;
+
+            const bantuanHtml = '';
+
+            diklatContent.innerHTML = `
+                ${header}
+                <div class="p-6">
+                    <div class="flex justify-center mb-6">
+                        <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center icon-feature">
+                            <i class="fas fa-graduation-cap text-3xl text-emerald-600"></i>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-6">${itemsHtml}</div>
+                    ${actionsHtml}
+                    ${bantuanHtml}
+                </div>`;
+
+            // Bind countdown elements after render
+            window.__countdown = {
+                days: document.getElementById('days'),
+                hours: document.getElementById('hours'),
+                minutes: document.getElementById('minutes'),
+                seconds: document.getElementById('seconds')
+            };
+        }
+
+        // Countdown timer (uses diklatConfig)
         function updateCountdown() {
-            // Set target date (27 November 2025, akhir hari pertama diklat)
-            const targetDate = new Date('November 29, 2025 23:59:59').getTime();
+            const targetMs = typeof diklatConfig.countdownTarget === 'number'
+                ? diklatConfig.countdownTarget
+                : new Date(diklatConfig.countdownTarget).getTime();
             
             // Get current date
             const now = new Date().getTime();
             
             // Find the distance between now and the target date
-            const distance = targetDate - now;
+            const distance = targetMs - now;
             
             // Time calculations for days, hours, minutes and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -1411,28 +1531,25 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
             // Display the result
-            daysElement.textContent = days < 10 ? '0' + days : days;
-            hoursElement.textContent = hours < 10 ? '0' + hours : hours;
-            minutesElement.textContent = minutes < 10 ? '0' + minutes : minutes;
-            secondsElement.textContent = seconds < 10 ? '0' + seconds : seconds;
+            const cd = window.__countdown || {};
+            if (cd.days) cd.days.textContent = days < 10 ? '0' + days : days;
+            if (cd.hours) cd.hours.textContent = hours < 10 ? '0' + hours : hours;
+            if (cd.minutes) cd.minutes.textContent = minutes < 10 ? '0' + minutes : minutes;
+            if (cd.seconds) cd.seconds.textContent = seconds < 10 ? '0' + seconds : seconds;
             
             // If the countdown is over, display a message
-            if (distance < 0) {
-                daysElement.textContent = '00';
-                hoursElement.textContent = '00';
-                minutesElement.textContent = '00';
-                secondsElement.textContent = '00';
+            if (distance < 0 && window.__countdown) {
+                window.__countdown.days.textContent = '00';
+                window.__countdown.hours.textContent = '00';
+                window.__countdown.minutes.textContent = '00';
+                window.__countdown.seconds.textContent = '00';
             }
         }
 
-        // Update the countdown every 1 second
+        // Render and start countdown
+        renderDiklat();
         setInterval(updateCountdown, 1000);
-        
-        // Initial call to display the countdown immediately
         updateCountdown();
-
-        
-        tampilkanDiklat();
         
         // Ambil data artikel dari Supabase dan pastikan tombol "Baca selengkapnya" aktif
         document.addEventListener('DOMContentLoaded', function() {
