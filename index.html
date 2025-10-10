@@ -1067,6 +1067,23 @@
                 top: 20px;
                 font-size: 18px;
             }
+
+            /* Responsive table for Diklat detail: stack label over value */
+            #diklat-content table thead tr th { width: 100% !important; text-align: center; }
+            #diklat-content table { width: 100% !important; }
+            #diklat-content tbody { display: block; width: 100% !important; }
+            #diklat-content tbody tr { display: block; width: 100% !important; }
+            #diklat-content tbody td { display: block; width: 100% !important; }
+            #diklat-content tbody tr {
+                border-bottom: 1px solid #f1f5f9; /* slate-100 */
+                padding: 6px 0;
+            }
+            #diklat-content tbody td:first-child {
+                padding-bottom: 4px;
+            }
+            #diklat-content tbody td:last-child {
+                padding-top: 0;
+            }
         }
     </style>
 </head>
@@ -1114,8 +1131,8 @@
         <!-- Diklat Info Section - centered professional layout, rendered via JS config -->
         <section id="diklat" class="yellow-bg">
             <div class="px-4 py-12">
-                <div class="max-w-4xl mx-auto">
-                    <div id="diklat-content" class="bg-white rounded-2xl shadow-xl overflow-hidden"></div>
+                <div class="max-w-full md:max-w-4xl mx-auto">
+                    <div id="diklat-content" class="w-full bg-white rounded-2xl shadow-xl overflow-hidden"></div>
                 </div>
             </div>
         </section>
@@ -1203,16 +1220,14 @@
                 title: "Pendaftaran Diklat",
                 icon: "fas fa-book-open"
             },
-            content: [
-                { key: "program", icon: "fas fa-book", label: "Program Diklat", text: "Standarisasi Guru Al-Qur'an Metode Tilawati" },
-                { key: "level", icon: "fas fa-layer-group", label: "Level", text: "Level 1 dan Level 2" },
-                { key: "tanggal", icon: "fas fa-calendar-alt", label: "Tanggal Pelaksanaan", text: "29 - 30 November 2025" },
-                { key: "tempat", icon: "fas fa-map-marker-alt", label: "Tempat", text: "Gedung Ya Tarim Serongga" },
-                { key: "narahubung", icon: "fas fa-user-tie", label: "Nara Hubung", text: "Sdr. Elvian" },
-                { key: "konfirmasi", icon: "fas fa-money-bill", label: "Konfirmasi Pembayaran", text: "KPA Tilawati Kotabaru" },
-                { key: "permasalahan", icon: "fas fa-file-signature", label: "Permasalahan Pendaftaran", text: "Juni Wardani" },
-                { key: "countdown", label: "Hitung Mundur Pendaftaran" }
-            ],
+            values: {
+                level: "Level 1 dan Level 2",
+                tanggal: "29 - 30 November 2025",
+                tempat: "Gedung Ya Tarim Serongga",
+                narahubung: "Sdr. Elvian",
+                konfirmasi: "KPA Tilawati Kotabaru",
+                permasalahan: "Juni Wardani"
+            },
             actions: [
                 { text: "Daftar Sekarang", href: "pendaftaran.html", classes: "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 btn-primary flex items-center justify-center register-btn pulse-glow heartbeat", icon: "fas fa-edit" },
                 { text: "Pertanyaan Diklat Tilawati", href: "https://wa.me/628115114077?text=Assalamualaikum%20Bapak%20Elvian,%20saya%20mau%20bertanya%20tentang%20diklat%20Tilawati", classes: "w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 wa-btn flex items-center justify-center", icon: "fab fa-whatsapp", target: "_blank" },
@@ -1224,9 +1239,7 @@
 
         // Helper: set countdownTarget based on tanggal text (use first date in range at 08:00)
         function setCountdownFromTanggal() {
-            const tanggalItem = diklatConfig.content.find(i => i.key === 'tanggal');
-            if (!tanggalItem || !tanggalItem.text) return;
-            const text = tanggalItem.text.trim();
+            const text = (diklatConfig.values && diklatConfig.values.tanggal ? diklatConfig.values.tanggal : '').trim();
             // Example formats: "29 - 30 November 2025", "27 – 28 September 2025", "5 Oktober 2025"
             const monthMap = {
                 'januari': 0, 'februari': 1, 'maret': 2, 'april': 3, 'mei': 4, 'juni': 5,
@@ -1444,43 +1457,64 @@
                     </h2>
                 </div>`;
 
-            const itemsHtml = diklatConfig.content.map(item => {
-                if (item.key === 'countdown') {
-                    if (isClosed) return '';
-                    return `
-                        <div class="mb-2 mt-6">
-                            <h3 class="text-center font-semibold text-gray-700 mb-3">${item.label}</h3>
-                            <div class="grid grid-cols-4 gap-2">
-                                <div class="countdown-card rounded-lg p-3 text-center text-white">
-                                    <div id="days" class="countdown-number">00</div>
-                                    <div class="countdown-label text-xs mt-1">Hari</div>
-                                </div>
-                                <div class="countdown-card rounded-lg p-3 text-center text-white">
-                                    <div id="hours" class="countdown-number">00</div>
-                                    <div class="countdown-label text-xs mt-1">Jam</div>
-                                </div>
-                                <div class="countdown-card rounded-lg p-3 text-center text-white">
-                                    <div id="minutes" class="countdown-number">00</div>
-                                    <div class="countdown-label text-xs mt-1">Menit</div>
-                                </div>
-                                <div class="countdown-card rounded-lg p-3 text-center text-white">
-                                    <div id="seconds" class="countdown-number">00</div>
-                                    <div class="countdown-label text-xs mt-1">Detik</div>
-                                </div>
-                            </div>
-                        </div>`;
-                }
-                return `
-                    <div class="flex items-start">
-                        <div class="bg-emerald-100 p-2 rounded-full mr-3 mt-1">
-                            <i class="${item.icon} text-emerald-600"></i>
+            const itemsHtml = isClosed ? '' : `
+                <div class="overflow-hidden rounded-lg border border-gray-100 mb-6">
+                    <table class="w-full text-left bg-white">
+                        <thead>
+                            <tr class="bg-emerald-600 text-white">
+                                <th colspan="2" class="py-3 px-4 text-center font-semibold">Detail Informasi Diklat</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr>
+                                <td class="py-2 px-3 font-semibold text-emerald-800 w-1/3 align-top"><i class="fas fa-layer-group text-emerald-600 mr-2"></i>Level:</td>
+                                <td class="py-2 px-3 text-gray-700">${diklatConfig.values.level}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-semibold text-emerald-800 w-1/3 align-top"><i class="fas fa-calendar-alt text-emerald-600 mr-2"></i>Tanggal Pelaksanaan:</td>
+                                <td class="py-2 px-3 text-gray-700">${diklatConfig.values.tanggal}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-semibold text-emerald-800 w-1/3 align-top"><i class="fas fa-map-marker-alt text-emerald-600 mr-2"></i>Tempat:</td>
+                                <td class="py-2 px-3 text-gray-700">${diklatConfig.values.tempat}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-semibold text-emerald-800 w-1/3 align-top"><i class="fas fa-user-tie text-emerald-600 mr-2"></i>Nara Hubung:</td>
+                                <td class="py-2 px-3 text-gray-700">${diklatConfig.values.narahubung}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-semibold text-emerald-800 w-1/3 align-top"><i class="fas fa-money-bill text-emerald-600 mr-2"></i>Konfirmasi Pembayaran:</td>
+                                <td class="py-2 px-3 text-gray-700">${diklatConfig.values.konfirmasi}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-semibold text-emerald-800 w-1/3 align-top"><i class="fas fa-file-signature text-emerald-600 mr-2"></i>Permasalahan Pendaftaran:</td>
+                                <td class="py-2 px-3 text-gray-700">${diklatConfig.values.permasalahan}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mb-2 mt-6">
+                    <h3 class="text-center font-semibold text-gray-700 mb-3">Hitung Mundur Pendaftaran</h3>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div class="countdown-card rounded-lg p-3 text-center text-white">
+                            <div id="days" class="countdown-number">00</div>
+                            <div class="countdown-label text-xs mt-1">Hari</div>
                         </div>
-                        <div>
-                            <h3 class="font-semibold text-gray-800">${item.label}:</h3>
-                            <p class="text-gray-600 justify-text">${item.text || ''}</p>
+                        <div class="countdown-card rounded-lg p-3 text-center text-white">
+                            <div id="hours" class="countdown-number">00</div>
+                            <div class="countdown-label text-xs mt-1">Jam</div>
                         </div>
-                    </div>`;
-            }).join('');
+                        <div class="countdown-card rounded-lg p-3 text-center text-white">
+                            <div id="minutes" class="countdown-number">00</div>
+                            <div class="countdown-label text-xs mt-1">Menit</div>
+                        </div>
+                        <div class="countdown-card rounded-lg p-3 text-center text-white">
+                            <div id="seconds" class="countdown-number">00</div>
+                            <div class="countdown-label text-xs mt-1">Detik</div>
+                        </div>
+                    </div>
+                </div>
+            `;
 
             const filteredActions = isClosed
                 ? diklatConfig.actions.filter(a =>
