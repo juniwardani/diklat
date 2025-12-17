@@ -1225,7 +1225,7 @@
                 // Initialize Supabase
         const supabaseUrl = 'https://iwnwqcxigtywetgcmlou.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bndxY3hpZ3R5d2V0Z2NtbG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU4MjQ4MTUsImV4cCI6MjA1MTQwMDgxNX0.fjdJlTVav4Gm8ku9rBmRuLoae5ViFxas7Uu069ItfnY';
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         // Data diklat
         const diklatConfig = {
@@ -1276,7 +1276,7 @@
         // Fungsi untuk mengambil data artikel dari Supabase
         async function ambilDataArtikel() {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('kpa_artikel')
                     .select('*')
                     .order('tanggal', { ascending: false });
@@ -1606,6 +1606,9 @@
             // Display the result
             const cd = window.__countdown || {};
             if (cd.days) cd.days.textContent = days < 10 ? '0' + days : days;
+            else {
+                return; // Stop if elements don't exist
+            }
             if (cd.hours) cd.hours.textContent = hours < 10 ? '0' + hours : hours;
             if (cd.minutes) cd.minutes.textContent = minutes < 10 ? '0' + minutes : minutes;
             if (cd.seconds) cd.seconds.textContent = seconds < 10 ? '0' + seconds : seconds;
