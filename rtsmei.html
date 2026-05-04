@@ -685,7 +685,7 @@
                 <div id="syahadahSection" class="document-section" style="display: none;">
                     <h4>📜 Syahadah</h4>
                     <div id="syahadahViewerWrapper" class="pdf-viewer">
-                        <iframe id="syahadahViewer" src="" class="iframe-content"></iframe>
+                        <canvas id="syahadahCanvas" class="canvas-content"></canvas>
                     </div>
                     <button id="downloadSyahadah" class="download-btn">Download Syahadah</button>
 
@@ -790,7 +790,7 @@
         const pdfPreview = document.getElementById('pdfPreview');
         const syahadahSection = document.getElementById('syahadahSection');
         const sertifikatSection = document.getElementById('sertifikatSection');
-        const syahadahViewer = document.getElementById('syahadahViewer');
+        const syahadahCanvas = document.getElementById('syahadahCanvas');
         const sertifikatCanvas = document.getElementById('sertifikatCanvas');
         const downloadSyahadah = document.getElementById('downloadSyahadah');
         const downloadSertifikat = document.getElementById('downloadSertifikat');
@@ -878,10 +878,11 @@
         // Fungsi untuk menampilkan dokumen yang tersedia
         function displayAvailableDocuments() {
             // Reset semua viewer dan card
-            syahadahViewer.src = '';
-            // reset canvas sertifikat
-            const ctxReset = sertifikatCanvas.getContext('2d');
-            ctxReset && ctxReset.clearRect(0, 0, sertifikatCanvas.width, sertifikatCanvas.height);
+            const ctxCert = sertifikatCanvas.getContext('2d');
+            ctxCert && ctxCert.clearRect(0, 0, sertifikatCanvas.width, sertifikatCanvas.height);
+            const ctxSyah = syahadahCanvas.getContext('2d');
+            ctxSyah && ctxSyah.clearRect(0, 0, syahadahCanvas.width, syahadahCanvas.height);
+            
             motivationCard.style.display = 'none';
             downloadSyahadah.style.display = 'block';
             syahadahViewerWrapper.style.display = 'none';
@@ -901,7 +902,7 @@
             // Tampilkan syahadah jika tersedia
             if (selectedPerson.syahadah) {
                 currentSyahadahFile = `pdf2/${selectedPerson.syahadah}`;
-                syahadahViewer.src = currentSyahadahFile;
+                renderPdfToCanvas(currentSyahadahFile, 1, syahadahCanvas);
                 syahadahViewerWrapper.style.display = 'block';
                 syahadahSection.style.display = 'block';
             } else {
@@ -945,25 +946,34 @@
             link.remove();
         });
 
-        // Render satu halaman sertifikat ke canvas menggunakan PDF.js
+        // Fungsi umum untuk me-render PDF ke canvas menggunakan PDF.js
+        async function renderPdfToCanvas(pdfUrl, pageNumber, canvas) {
+            try {
+                const loadingTask = window['pdfjsLib'].getDocument(pdfUrl);
+                const pdf = await loadingTask.promise;
+                const page = await pdf.getPage(pageNumber);
+                const viewport = page.getViewport({ scale: 2 }); // Skala lebih tinggi untuk kualitas lebih baik
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                await page.render({ canvasContext: context, viewport }).promise;
+            } catch (error) {
+                console.error('Error rendering PDF:', error);
+            }
+        }
+
+        // Keep the old name for backward compatibility if needed elsewhere
         async function renderSertifikatPage(pdfUrl, pageNumber) {
-            const loadingTask = window['pdfjsLib'].getDocument(pdfUrl);
-            const pdf = await loadingTask.promise;
-            const page = await pdf.getPage(pageNumber);
-            const viewport = page.getViewport({ scale: 1.5 });
-            const canvas = sertifikatCanvas;
-            const context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            await page.render({ canvasContext: context, viewport }).promise;
+            return renderPdfToCanvas(pdfUrl, pageNumber, sertifikatCanvas);
         }
 
         // Tutup preview
         cancelDownload.addEventListener('click', () => {
             pdfPreview.style.display = 'none';
-            syahadahViewer.src = '';
-            const ctxClear = sertifikatCanvas.getContext('2d');
-            ctxClear && ctxClear.clearRect(0, 0, sertifikatCanvas.width, sertifikatCanvas.height);
+            const ctxCert = sertifikatCanvas.getContext('2d');
+            ctxCert && ctxCert.clearRect(0, 0, sertifikatCanvas.width, sertifikatCanvas.height);
+            const ctxSyah = syahadahCanvas.getContext('2d');
+            ctxSyah && ctxSyah.clearRect(0, 0, syahadahCanvas.width, syahadahCanvas.height);
             currentSyahadahFile = null;
             currentSertifikatFile = null;
         });
